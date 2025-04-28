@@ -103,7 +103,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
           <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Create a New Menu</h2>
           <p className="text-gray-600 mt-1">Choose from our templates to get started quickly</p>
         </div>
-        <div className="px-8 py-6">
+        <div className="p-8">
           <TemplateSelector onTemplateSelected={handleTemplateSelected} />
         </div>
       </div>
