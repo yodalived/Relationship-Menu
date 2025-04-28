@@ -92,22 +92,33 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow p-6">
-      <div className="flex items-start justify-between mb-6">
-        <div className="flex">
-          <div className="w-14 h-14 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] mr-4 shadow-sm flex-shrink-0 self-center mt-1">
+      <div className="flex flex-col sm:flex-row sm:items-start mb-2 sm:mb-6">
+        <div className="flex flex-1 mb-2 sm:mb-0">
+          <div className="w-14 h-14 hidden sm:flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] mr-4 shadow-sm flex-shrink-0 self-center mt-1">
             <TemplateIcon icon={selectedTemplate.icon} />
           </div>
-          <div>
-            <h3 className="text-xl font-semibold text-[var(--main-text-color)] mb-1">
-              {selectedTemplate.title}
-            </h3>
+          <div className="flex-1">
+            <div className="flex justify-between items-start">
+              <h3 className="text-xl font-semibold text-[var(--main-text-color)] mb-1">
+                {selectedTemplate.title}
+              </h3>
+              <button 
+                onClick={onCancel}
+                className="flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] px-3 py-1.5 rounded-lg border border-[rgba(158,198,204,0.2)] bg-[rgba(158,198,204,0.1)] hover:bg-[rgba(158,198,204,0.2)] transition-colors text-sm whitespace-nowrap ml-3 flex-shrink-0"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to templates
+              </button>
+            </div>
             {selectedTemplate.stats && (
-              <div className="flex items-center space-x-3 mt-2">
+              <div className="hidden sm:flex items-center gap-3 mt-2">
                 <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
-                  {selectedTemplate.stats.sections} sections
+                  {selectedTemplate.stats.sections} topics
                 </div>
                 <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -119,20 +130,28 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
             )}
           </div>
         </div>
-        <button 
-          onClick={onCancel}
-          className="rounded-full p-2 hover:bg-[rgba(158,198,204,0.2)] transition-colors"
-          aria-label="Cancel"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       </div>
       
-      <p className="text-gray-600 mb-6 leading-relaxed">
+      <p className="text-gray-600 mb-3 sm:mb-6 leading-relaxed">
         {selectedTemplate.description}
       </p>
+      
+      {selectedTemplate.stats && (
+        <div className="flex sm:hidden items-center gap-3 mb-6">
+          <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            {selectedTemplate.stats.sections} topics
+          </div>
+          <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            {selectedTemplate.stats.items} items
+          </div>
+        </div>
+      )}
       
       <form onSubmit={handleSubmit}>
         <div className="mb-8">
@@ -143,29 +162,31 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
           <div className="space-y-4">
             {people.map((person, index) => (
               <div key={index} className="flex items-center group bg-[rgba(158,198,204,0.05)] rounded-lg p-1 pl-2 border border-[rgba(158,198,204,0.1)] hover:border-[rgba(158,198,204,0.3)] transition-colors">
-                <div className="w-7 h-7 flex items-center justify-center mr-3 text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.2)] rounded-full shadow-sm">
+                <div className="w-7 h-7 flex items-center justify-center mr-2 sm:mr-3 text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.2)] rounded-full shadow-sm flex-shrink-0">
                   {index + 1}
                 </div>
-                <input
-                  type="text"
-                  value={person}
-                  onChange={(e) => {
-                    const newPeople = [...people];
-                    newPeople[index] = e.target.value;
-                    setPeople(newPeople);
-                  }}
-                  placeholder={`Name of person ${index + 1}`}
-                  className="flex-grow p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:bg-white transition-colors"
-                  required
-                />
+                <div className="flex-grow flex items-center">
+                  <input
+                    type="text"
+                    value={person}
+                    onChange={(e) => {
+                      const newPeople = [...people];
+                      newPeople[index] = e.target.value;
+                      setPeople(newPeople);
+                    }}
+                    placeholder={`Name of person ${index + 1}`}
+                    className="w-full p-2 sm:p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:bg-white transition-colors text-sm sm:text-base"
+                    required
+                  />
+                </div>
                 {people.length > 2 && (
                   <button
                     type="button"
                     onClick={() => handleRemovePerson(index)}
-                    className="ml-2 p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50"
+                    className="ml-1 sm:ml-2 p-1 sm:p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50 flex-shrink-0"
                     aria-label="Remove person"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                   </button>
@@ -177,9 +198,9 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
           <button
             type="button"
             onClick={handleAddPerson}
-            className="mt-5 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors bg-[rgba(158,198,204,0.1)] hover:bg-[rgba(158,198,204,0.2)] px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)]"
+            className="mt-5 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors bg-[rgba(158,198,204,0.1)] hover:bg-[rgba(158,198,204,0.2)] px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)] text-sm sm:text-base"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
             </svg>
             Add Another Person
@@ -187,18 +208,18 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
         </div>
         
         {error && (
-          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="mb-6 p-3 sm:p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span className="font-medium">{error}</span>
+            <span className="font-medium text-sm sm:text-base">{error}</span>
           </div>
         )}
         
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className={`px-6 py-3 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] shadow-sm ${
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] shadow-sm text-sm sm:text-base ${
               hasAtLeastTwoValidNames 
                 ? 'bg-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]' 
                 : 'bg-gray-300'
@@ -329,9 +350,9 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
             <div 
               key={template.id}
               onClick={() => handleTemplateClick(template)}
-              className="relative bg-white rounded-xl p-6 cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.1)] border border-gray-200 shadow hover:shadow-md hover:border-[var(--main-bg-color)] group"
+              className="relative bg-white rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.1)] border border-gray-200 shadow hover:shadow-md hover:border-[var(--main-bg-color)] group"
             >
-              <div className="flex items-stretch space-x-5">
+              <div className="flex items-stretch space-x-3 sm:space-x-5">
                 <div className="hidden sm:block flex-shrink-0 pt-1">
                   <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] shadow-sm">
                     <TemplateIcon icon={template.icon} />
@@ -339,42 +360,42 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
                 </div>
                 
                 <div className="flex-grow flex flex-col">
-                  <div className="flex items-center sm:hidden mb-3">
+                  <div className="flex items-center sm:hidden mb-2">
                     <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] mr-3 shadow-sm">
                       <TemplateIcon icon={template.icon} />
                     </div>
-                    <h3 className="text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors">
+                    <h3 className="text-lg sm:text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors break-words">
                       {template.title}
                     </h3>
                   </div>
                   
-                  <h3 className="hidden sm:block text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors mb-1">
+                  <h3 className="hidden sm:block text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors mb-1 break-words">
                     {template.title}
                   </h3>
                   
-                  <p className="text-gray-600 mt-2 mb-4 leading-relaxed">
+                  <p className="text-gray-600 mt-1 sm:mt-2 mb-3 sm:mb-4 leading-relaxed break-words">
                     {template.description}
                   </p>
                   
                   {template.stats ? (
-                    <div className="flex flex-wrap mt-auto items-center justify-between">
-                      <div className="flex flex-wrap gap-2">
-                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] px-3.5 py-2 rounded-lg text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <div className="flex mt-auto items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm whitespace-nowrap">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                           </svg>
-                          <span className="text-gray-800">{template.stats.sections} sections</span>
+                          <span className="text-gray-800">{template.stats.sections} Topics </span>
                         </div>
-                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] px-3.5 py-2 rounded-lg text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm whitespace-nowrap">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                           </svg>
-                          <span className="text-gray-800">{template.stats.items} items</span>
+                          <span className="text-gray-800">{template.stats.items} Items</span>
                         </div>
                       </div>
                       
-                      <div className="sm:hidden flex items-center">
-                        <div className="h-8 w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
+                      <div className="ml-2 flex sm:hidden items-center">
+                        <div className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
@@ -382,8 +403,8 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
                       </div>
                     </div>
                   ) : (
-                    <div className="flex justify-end sm:hidden mt-auto">
-                      <div className="h-8 w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
+                    <div className="flex justify-end mt-auto">
+                      <div className="h-7 w-7 sm:h-8 sm:w-8 flex sm:hidden items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>

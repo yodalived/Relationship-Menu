@@ -31,9 +31,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <header>
             <div className="title-bar">
-              <h1>Non-Escalator Relationship Menu</h1>
-              {/* ConditionalSubtitle temporarily removed due to TypeScript error */}
-              {/* <ConditionalSubtitle /> */}
+              <h1>Relationship Menu</h1>
             </div>
             <ShowLegendWhenMenuActive />
           </header>
