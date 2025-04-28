@@ -447,17 +447,17 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         <div className="item-name">
           {isEditing ? (
             <div className="relative flex items-start flex-col w-full">
-              <div className="flex w-full mb-2">
+              <div className="flex flex-col sm:flex-row w-full mb-2 gap-2">
                 <button 
                   type="button"
                   onClick={() => toggleIconPicker(catIndex, itemIndex)}
-                  className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 mr-3 ${
+                  className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 sm:mr-3 ${
                     item.icon ? ICON_OPTIONS.find(opt => opt.value === item.icon)?.bgColor : 'bg-white'
                   }`}
                   aria-label="Select icon"
                 >
                   {renderIcon(item.icon)}
-                  <span className="text-sm text-gray-700">
+                  <span className="text-sm text-gray-700 truncate max-w-[180px]">
                     {ICON_OPTIONS.find(opt => opt.value === item.icon)?.label || 'Not set'}
                   </span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -477,7 +477,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               {activeIconPicker && 
                activeIconPicker.catIndex === catIndex && 
                activeIconPicker.itemIndex === itemIndex && (
-                <div className="absolute z-10 mt-1 left-0 top-10 bg-white rounded-lg shadow-xl p-3 border border-gray-100 w-[320px]">
+                <div className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white rounded-lg shadow-xl p-3 border border-gray-100 w-full sm:w-[320px]">
                   <div className="grid grid-cols-2 gap-3">
                     {ICON_OPTIONS.map((option) => {
                       return (
@@ -516,7 +516,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               placeholder="Add a note..."
               style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
             />
-            <div className="mt-4 p-3 border border-gray-200 rounded-md bg-gray-50 flex justify-between items-center">
+            <div className="mt-4 p-2 sm:p-3 border border-gray-200 rounded-md bg-gray-50 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
               <button 
                 type="button" 
                 onClick={() => handleDeleteItem(catIndex, itemIndex)}
@@ -576,59 +576,61 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <div className="menu-header">
-          {isEditing ? (
-            <div className="flex flex-col">
-              <h2 className="text-xl font-bold mb-2">Menu for:</h2>
-              <div className="space-y-2">
-                {people.map((personName, index) => (
-                  <div key={index} className="flex items-center">
-                    <input
-                      type="text"
-                      value={personName}
-                      onChange={(e) => handlePersonNameChange(index, e.target.value)}
-                      className="p-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:border-transparent"
-                      placeholder="Person name"
-                    />
-                    {people.length > 2 && (
-                      <button
-                        type="button"
-                        onClick={() => handleDeletePerson(index)}
-                        className="ml-2 p-1 text-gray-500 hover:text-red-500 transition-colors"
-                        title="Remove person"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={handleAddPerson}
-                  className="mt-2 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  Add Person
-                </button>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div className="w-full md:w-auto">
+          <div className="menu-header w-full">
+            {isEditing ? (
+              <div className="flex flex-col">
+                <h2 className="text-xl font-bold mb-2">Menu for:</h2>
+                <div className="space-y-2">
+                  {people.map((personName, index) => (
+                    <div key={index} className="flex items-center">
+                      <input
+                        type="text"
+                        value={personName}
+                        onChange={(e) => handlePersonNameChange(index, e.target.value)}
+                        className="p-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-text-color)] focus:border-transparent"
+                        placeholder="Person name"
+                      />
+                      {people.length > 2 && (
+                        <button
+                          type="button"
+                          onClick={() => handleDeletePerson(index)}
+                          className="ml-2 p-1 text-gray-500 hover:text-red-500 transition-colors"
+                          title="Remove person"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={handleAddPerson}
+                    className="mt-2 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Add Person
+                  </button>
+                </div>
               </div>
-            </div>
-          ) : (
-            <h2>Menu for {formatPeople(people)}</h2>
-          )}
-        </div>
-        <div className="flex flex-col md:flex-row items-end md:items-center gap-2 md:gap-4">
-          <div className="text-sm text-gray-600 text-right">
-            <p>Last updated: {formatDate(last_update)}</p>
+            ) : (
+              <>
+                <h2 className="truncate max-w-[calc(100vw-20px)] md:max-w-none mb-0">Menu for {formatPeople(people)}</h2>
+                <p className="text-sm text-gray-600 mb-1">Last updated: {formatDate(last_update)}</p>
+              </>
+            )}
           </div>
-          <div className="flex gap-2 flex-wrap justify-end">
+        </div>
+        <div className="flex flex-col w-full md:w-auto md:flex-row items-end md:items-center gap-2 md:gap-4">
+          <div className="flex gap-2 flex-wrap justify-end w-full md:w-auto">
             <button
               onClick={handleToggleEdit}
-              className="px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium min-w-[100px] flex items-center justify-center"
+              className="px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium flex-grow md:flex-grow-0 min-w-[100px] flex items-center justify-center"
               title={isEditing ? "Exit edit mode" : "Edit this menu"}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -637,10 +639,10 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               {isEditing ? 'Done' : 'Edit Menu'}
             </button>
             
-            <div className="relative" ref={shareDropdownRef}>
+            <div className="relative flex-grow md:flex-grow-0" ref={shareDropdownRef}>
               <button
                 onClick={toggleShareDropdown}
-                className="px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium min-w-[100px] flex items-center justify-center"
+                className="px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium w-full md:w-auto min-w-[100px] flex items-center justify-center"
                 title="Share this menu"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -653,7 +655,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               </button>
               
               {shareDropdownOpen && (
-                <div className="absolute right-0 z-10 mt-1 bg-white rounded-lg shadow-xl p-2 border border-gray-100 w-[220px]">
+                <div className="absolute right-0 z-10 mt-1 bg-white rounded-lg shadow-xl p-2 border border-gray-100 w-[280px]">
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() => {
@@ -686,7 +688,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
             
             <button
               onClick={handleResetWithConfirm}
-              className="px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium min-w-[100px] flex items-center justify-center"
+              className="px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium flex-grow md:flex-grow-0 min-w-[100px] flex items-center justify-center"
               title="Create a new menu"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

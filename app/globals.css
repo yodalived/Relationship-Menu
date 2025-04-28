@@ -233,6 +233,15 @@ footer:before {
   display: inline-block;
 }
 
+.menu-header h2 {
+  margin-bottom: 0.2rem;
+}
+
+.menu-header p {
+  margin-top: 0;
+  line-height: 1.2;
+}
+
 @media only screen and (max-width: 640px) {
   .category {
     flex: 100%;
@@ -240,7 +249,88 @@ footer:before {
   }
   
   .legend {
-    font-size: 14px;
+    font-size: 12px;
+    padding: 8px 5px;
+    margin: 0 5px 10px 5px;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+  }
+  
+  .legend div {
+    margin: 0 5px;
+  }
+  
+  .title-bar h1 {
+    font-size: 1.8rem;
+  }
+  
+  .wrapper {
+    margin: 5px;
+  }
+  
+  .menu-header {
+    font-size: 1.3rem;
+  }
+  
+  .category .item {
+    padding: 5px 15px 15px 15px;
+  }
+  
+  .category .item .item-note {
+    padding: 0 15px;
+  }
+  
+  .category .item .item-name {
+    padding-right: 0;
+  }
+  
+  .category .title {
+    font-size: 1.3em;
+    padding: 8px 0;
+  }
+}
+
+/* Medium screens - between 480px and 640px */
+@media only screen and (min-width: 481px) and (max-width: 640px) {
+  .category .item .item-note {
+    padding: 0;
+    margin-left: 32px; /* Slightly larger margin for medium screens */
+  }
+  
+  .category .item .item-name {
+    align-items: flex-start;
+  }
+  
+  .icon-container {
+    margin-top: 2px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .title-bar h1 {
+    font-size: 1.6rem;
+  }
+  
+  .legend {
+    font-size: 10px;
+  }
+  
+  .category .item {
+    padding: 5px 10px 12px 10px;
+  }
+  
+  .category .item .item-note {
+    padding: 0;
+    margin-left: 28px; /* Aligns with the text in the item-name after the icon */
+  }
+  
+  .category .item .item-name {
+    align-items: flex-start;
+  }
+  
+  .icon-container {
+    margin-top: 2px;
   }
 }
 
@@ -250,53 +340,102 @@ footer:before {
     max-width: 90%;
   }
   
-  .title-bar h1 {
-    font-size: 1.8rem;
+  /* Improve button layout on small screens */
+  .flex.flex-col.md\\:flex-row {
+    gap: 10px;
+  }
+  
+  /* Make icon pickers more mobile-friendly */
+  .absolute.z-10 {
+    width: 280px;
+    left: 0;
   }
 }
 
-/* Icon styles */
+/* Icon containers */
 .icon-container {
-  width: 20px;
-  height: 20px;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 8px;
+  flex-shrink: 0;
 }
 
 .icon-must {
-  color: #6CBCFA;
+  color: #3B82F6;
 }
 
 .icon-like {
-  color: #87E77E;
+  color: #22C55E;
 }
 
 .icon-maybe {
-  color: #E9B467;
+  color: #F59E0B;
 }
 
 .icon-off-limit {
-  color: #D26666;
+  color: #EF4444;
 }
 
 .icon-talk {
-  color: #A69BE8;
+  color: #8B5CF6;
 }
 
-/* Override item highlighting in the icon picker dropdown */
 .absolute button span {
-  background-image: none !important;
-  border-radius: 0 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Remove highlighting from selector button */
 button.flex.items-center span {
-  background-image: none !important;
-  border-radius: 0 !important;
-  padding: 2px 5px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Add more space to the top of the first item in each category */
+/* Override whitespace rules for dropdown menu items */
+.absolute.right-0.z-10 .flex.flex-col button span {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+}
+
+/* Add spacing between first category item and header */
 .category > div > .item:first-child {
   padding-top: 15px;
+}
+
+/* Make form elements more mobile-friendly */
+@media only screen and (max-width: 640px) {
+  input[type="text"], textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+  
+  button {
+    min-height: 44px; /* Better touch targets */
+  }
+  
+  /* Improve menu edit controls spacing */
+  .flex.items-center.w-full.justify-between {
+    flex-wrap: wrap;
+  }
+  
+  /* Adjust spacing for icon pickers */
+  .flex.w-full.mb-2 {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .flex.w-full.mb-2 > button,
+  .flex.w-full.mb-2 > input {
+    width: 100%;
+  }
+  
+  /* Adjust dropdown position */
+  .absolute.right-0.z-10 {
+    width: 100%;
+    right: auto;
+    left: 0;
+  }
 }
