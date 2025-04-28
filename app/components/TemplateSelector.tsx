@@ -91,10 +91,10 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
   const hasAtLeastTwoValidNames = people.filter(person => person.trim() !== '').length >= 2;
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow p-6">
       <div className="flex flex-col sm:flex-row sm:items-start mb-2 sm:mb-6">
         <div className="flex flex-1 mb-2 sm:mb-0">
-          <div className="w-14 h-14 hidden sm:flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] mr-4 shadow-sm flex-shrink-0 self-center mt-1">
+          <div className="w-14 h-14 hidden sm:flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] dark:bg-[rgba(158,198,204,0.15)] mr-4 shadow-sm flex-shrink-0 self-center mt-1">
             <TemplateIcon icon={selectedTemplate.icon} />
           </div>
           <div className="flex-1">
@@ -114,13 +114,13 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
             </div>
             {selectedTemplate.stats && (
               <div className="hidden sm:flex items-center gap-3 mt-2">
-                <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
+                <div className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                   {selectedTemplate.stats.sections} topics
                 </div>
-                <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
+                <div className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
@@ -132,19 +132,19 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
         </div>
       </div>
       
-      <p className="text-gray-600 mb-3 sm:mb-6 leading-relaxed">
+      <p className="text-gray-600 dark:text-gray-300 mb-3 sm:mb-6 leading-relaxed">
         {selectedTemplate.description}
       </p>
       
       {selectedTemplate.stats && (
         <div className="flex sm:hidden items-center gap-3 mb-6">
-          <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
+          <div className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
             {selectedTemplate.stats.sections} topics
           </div>
-          <div className="flex items-center text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.1)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
+          <div className="flex items-center text-sm font-medium text-gray-600 dark:text-gray-300 bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] px-3 py-1.5 rounded-md border border-[rgba(158,198,204,0.2)]">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
@@ -161,8 +161,8 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
           
           <div className="space-y-4">
             {people.map((person, index) => (
-              <div key={index} className="flex items-center group bg-[rgba(158,198,204,0.05)] rounded-lg p-1 pl-2 border border-[rgba(158,198,204,0.1)] hover:border-[rgba(158,198,204,0.3)] transition-colors">
-                <div className="w-7 h-7 flex items-center justify-center mr-2 sm:mr-3 text-sm font-medium text-gray-600 bg-[rgba(158,198,204,0.2)] rounded-full shadow-sm flex-shrink-0">
+              <div key={index} className="flex items-center group bg-[rgba(158,198,204,0.05)] dark:bg-[rgba(158,198,204,0.03)] rounded-lg p-1 pl-2 border border-[rgba(158,198,204,0.1)] hover:border-[rgba(158,198,204,0.3)] transition-colors">
+                <div className="w-7 h-7 flex items-center justify-center mr-2 sm:mr-3 text-sm font-medium text-gray-600 dark:text-gray-300 bg-[rgba(158,198,204,0.2)] dark:bg-[rgba(158,198,204,0.15)] rounded-full shadow-sm flex-shrink-0">
                   {index + 1}
                 </div>
                 <div className="flex-grow flex items-center">
@@ -175,7 +175,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
                       setPeople(newPeople);
                     }}
                     placeholder={`Name of person ${index + 1}`}
-                    className="w-full p-2 sm:p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:bg-white transition-colors text-sm sm:text-base"
+                    className="w-full p-2 sm:p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:bg-white dark:focus:bg-gray-700 transition-colors text-sm sm:text-base"
                     required
                   />
                 </div>
@@ -183,7 +183,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
                   <button
                     type="button"
                     onClick={() => handleRemovePerson(index)}
-                    className="ml-1 sm:ml-2 p-1 sm:p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50 flex-shrink-0"
+                    className="ml-1 sm:ml-2 p-1 sm:p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 flex-shrink-0"
                     aria-label="Remove person"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -198,7 +198,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
           <button
             type="button"
             onClick={handleAddPerson}
-            className="mt-5 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors bg-[rgba(158,198,204,0.1)] hover:bg-[rgba(158,198,204,0.2)] px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)] text-sm sm:text-base"
+            className="mt-5 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] hover:bg-[rgba(158,198,204,0.2)] dark:hover:bg-[rgba(158,198,204,0.1)] px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)] text-sm sm:text-base"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
@@ -208,7 +208,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
         </div>
         
         {error && (
-          <div className="mb-6 p-3 sm:p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 flex items-center">
+          <div className="mb-6 p-3 sm:p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -222,7 +222,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
             className={`px-4 sm:px-6 py-2.5 sm:py-3 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] shadow-sm text-sm sm:text-base ${
               hasAtLeastTwoValidNames 
                 ? 'bg-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]' 
-                : 'bg-gray-300'
+                : 'bg-gray-300 dark:bg-gray-600'
             }`}
           >
             Create Menu
@@ -315,14 +315,14 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
     return (
       <div className="mt-4 text-center p-8">
         <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[var(--main-bg-color)] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
-        <p className="mt-4 text-gray-600">Loading templates...</p>
+        <p className="mt-4 text-gray-600 dark:text-gray-300">Loading templates...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="mt-4 p-6 bg-red-50 text-red-700 rounded-lg border border-red-200">
+      <div className="mt-4 p-6 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800">
         <div className="flex items-center mb-2">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -350,18 +350,18 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
             <div 
               key={template.id}
               onClick={() => handleTemplateClick(template)}
-              className="relative bg-white rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.1)] border border-gray-200 shadow hover:shadow-md hover:border-[var(--main-bg-color)] group"
+              className="relative bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.1)] dark:hover:bg-[rgba(158,198,204,0.05)] border border-gray-200 dark:border-gray-700 shadow hover:shadow-md hover:border-[var(--main-bg-color)] group"
             >
               <div className="flex items-stretch space-x-3 sm:space-x-5">
                 <div className="hidden sm:block flex-shrink-0 pt-1">
-                  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] shadow-sm">
+                  <div className="w-16 h-16 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] dark:bg-[rgba(158,198,204,0.15)] shadow-sm">
                     <TemplateIcon icon={template.icon} />
                   </div>
                 </div>
                 
                 <div className="flex-grow flex flex-col">
                   <div className="flex items-center sm:hidden mb-2">
-                    <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] mr-3 shadow-sm">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.2)] dark:bg-[rgba(158,198,204,0.15)] mr-3 shadow-sm">
                       <TemplateIcon icon={template.icon} />
                     </div>
                     <h3 className="text-lg sm:text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors break-words">
@@ -373,29 +373,29 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
                     {template.title}
                   </h3>
                   
-                  <p className="text-gray-600 mt-1 sm:mt-2 mb-3 sm:mb-4 leading-relaxed break-words">
+                  <p className="text-gray-600 dark:text-gray-300 mt-1 sm:mt-2 mb-3 sm:mb-4 leading-relaxed break-words">
                     {template.description}
                   </p>
                   
                   {template.stats ? (
                     <div className="flex mt-auto items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm whitespace-nowrap">
+                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] dark:bg-[rgba(158,198,204,0.1)] px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm whitespace-nowrap">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                           </svg>
-                          <span className="text-gray-800">{template.stats.sections} Topics </span>
+                          <span className="text-gray-800 dark:text-gray-200">{template.stats.sections} Topics </span>
                         </div>
-                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm whitespace-nowrap">
+                        <div className="flex items-center bg-[rgba(158,198,204,0.15)] dark:bg-[rgba(158,198,204,0.1)] px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border border-[rgba(158,198,204,0.3)] shadow-sm whitespace-nowrap">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                           </svg>
-                          <span className="text-gray-800">{template.stats.items} Items</span>
+                          <span className="text-gray-800 dark:text-gray-200">{template.stats.items} Items</span>
                         </div>
                       </div>
                       
                       <div className="ml-2 flex sm:hidden items-center">
-                        <div className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
+                        <div className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
@@ -404,7 +404,7 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
                     </div>
                   ) : (
                     <div className="flex justify-end mt-auto">
-                      <div className="h-7 w-7 sm:h-8 sm:w-8 flex sm:hidden items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
+                      <div className="h-7 w-7 sm:h-8 sm:w-8 flex sm:hidden items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
@@ -414,7 +414,7 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
                 </div>
                 
                 <div className="hidden sm:flex flex-col justify-center items-center">
-                  <div className="h-10 w-10 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] text-[var(--main-text-color)] shadow-sm">
+                  <div className="h-10 w-10 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>

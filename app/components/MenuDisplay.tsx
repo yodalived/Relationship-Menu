@@ -40,12 +40,12 @@ interface MenuDisplayProps {
 
 // Available icon options for picker
 const ICON_OPTIONS = [
-  { value: 'must', label: 'Must have', icon: IconMust, bgColor: 'bg-[#DEF0FF]' },
-  { value: 'like', label: 'Would like', icon: IconLike, bgColor: 'bg-[#E6F7EC]' },
-  { value: 'maybe', label: 'Maybe', icon: IconMaybe, bgColor: 'bg-[#FFF2D9]' },
-  { value: 'off-limit', label: 'Off limits', icon: IconOffLimit, bgColor: 'bg-[#FFEBEB]' },
-  { value: 'talk', label: 'Conversation', icon: IconTalk, bgColor: 'bg-[#F0EDFF]' },
-  { value: null, label: 'Not set', icon: IconNotSet, bgColor: 'bg-[#F5F5F5]' }
+  { value: 'must', label: 'Must have', icon: IconMust, bgColor: 'bg-[#DEF0FF] dark:bg-[rgba(59,130,246,0.5)]' },
+  { value: 'like', label: 'Would like', icon: IconLike, bgColor: 'bg-[#E6F7EC] dark:bg-[rgba(34,197,94,0.5)]' },
+  { value: 'maybe', label: 'Maybe', icon: IconMaybe, bgColor: 'bg-[#FFF2D9] dark:bg-[rgba(245,158,11,0.5)]' },
+  { value: 'off-limit', label: 'Off limits', icon: IconOffLimit, bgColor: 'bg-[#FFEBEB] dark:bg-[rgba(239,68,68,0.5)]' },
+  { value: 'talk', label: 'Conversation', icon: IconTalk, bgColor: 'bg-[#F0EDFF] dark:bg-[rgba(139,92,246,0.5)]' },
+  { value: null, label: 'Not set', icon: IconNotSet, bgColor: 'bg-[#F5F5F5] dark:bg-[#374151]' }
 ];
 
 export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayProps) {
@@ -55,6 +55,8 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
   const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const { last_update, people, menu } = isEditing ? editedData : menuData;
   
   // Reference for share dropdown to handle clicks outside
@@ -261,6 +263,14 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     document.body.removeChild(a);
   };
 
+  const showNotification = (message: string) => {
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
+  };
+
   const handleCopyLink = () => {
     try {
       const currentData = isEditing ? editedData : menuData;
@@ -275,7 +285,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       
       // Copy to clipboard
       navigator.clipboard.writeText(url).then(() => {
-        alert('Link copied to clipboard!');
+        showNotification('Link copied to clipboard!');
       }).catch(err => {
         console.error('Failed to copy: ', err);
         
@@ -286,11 +296,11 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        alert('Link copied to clipboard!');
+        showNotification('Link copied to clipboard!');
       });
     } catch (error) {
       console.error('Error creating share link:', error);
-      alert('Failed to create share link');
+      showNotification('Failed to create share link');
     }
   };
 
@@ -456,13 +466,13 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 <button 
                   type="button"
                   onClick={() => toggleIconPicker(catIndex, itemIndex)}
-                  className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 sm:mr-3 ${
-                    item.icon ? ICON_OPTIONS.find(opt => opt.value === item.icon)?.bgColor : 'bg-white'
+                  className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 sm:mr-3 ${
+                    item.icon ? ICON_OPTIONS.find(opt => opt.value === item.icon)?.bgColor : 'bg-white dark:bg-gray-800'
                   }`}
                   aria-label="Select icon"
                 >
                   {renderIcon(item.icon)}
-                  <span className="text-sm text-gray-700 truncate max-w-[180px]">
+                  <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[180px]">
                     {ICON_OPTIONS.find(opt => opt.value === item.icon)?.label || 'Not set'}
                   </span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -474,7 +484,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                   type="text"
                   value={item.name}
                   onChange={(e) => handleItemNameChange(catIndex, itemIndex, e.target.value)}
-                  className="flex-grow p-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:border-transparent"
+                  className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
                   placeholder="Edit item title..."
                 />
               </div>
@@ -482,7 +492,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               {activeIconPicker && 
                activeIconPicker.catIndex === catIndex && 
                activeIconPicker.itemIndex === itemIndex && (
-                <div className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white rounded-lg shadow-xl p-3 border border-gray-100 w-full sm:w-[320px]">
+                <div className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]">
                   <div className="grid grid-cols-2 gap-3">
                     {ICON_OPTIONS.map((option) => {
                       return (
@@ -491,7 +501,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                           onClick={() => handleIconChange(catIndex, itemIndex, option.value)}
                           className={`p-2.5 rounded-lg transition-all hover:brightness-95 active:scale-[0.98] ${option.bgColor} flex justify-start items-center`}
                         >
-                          <span className="text-sm font-medium px-1.5 py-1">
+                          <span className="text-sm font-medium px-1.5 py-1 dark:text-gray-200">
                             {option.label}
                           </span>
                         </button>
@@ -517,15 +527,15 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 autoResizeTextarea(e.target as HTMLTextAreaElement);
               }}
               onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-              className="w-full p-2 text-sm rounded border border-gray-300"
+              className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
               placeholder="Add a note..."
               style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
             />
-            <div className="mt-4 p-2 sm:p-3 border border-gray-200 rounded-md bg-gray-50 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
+            <div className="mt-4 p-2 sm:p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
               <button 
                 type="button" 
                 onClick={() => handleDeleteItem(catIndex, itemIndex)}
-                className="flex items-center px-3 py-1.5 bg-white rounded-md border border-red-200 text-red-600 hover:bg-red-50 hover:text-red-800 transition-colors"
+                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/50 hover:text-red-800 dark:hover:text-red-300 transition-colors"
                 title="Delete this item"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -536,7 +546,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               <div 
                 {...attributes} 
                 {...listeners}
-                className="flex items-center px-3 py-1.5 bg-white rounded-md border border-gray-200 cursor-move text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors select-none"
+                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 cursor-move text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 transition-colors select-none"
                 title="Drag to reorder"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -581,6 +591,16 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
 
   return (
     <div>
+      {/* Toast notification */}
+      {showToast && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-900 text-gray-800 dark:text-white px-4 py-2 rounded-lg shadow-lg transition-opacity duration-300 flex items-center border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          {toastMessage}
+        </div>
+      )}
+      
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div className="w-full md:w-auto">
           <div className="menu-header w-full">
@@ -625,8 +645,8 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               </div>
             ) : (
               <>
-                <h2 className="truncate max-w-[calc(100vw-20px)] md:max-w-none mb-0">Menu for {formatPeople(people)}</h2>
-                <p className="text-sm text-gray-600 mb-1">Last updated: {formatDate(last_update)}</p>
+                <h2 className="truncate max-w-[calc(100vw-20px)] md:max-w-none mb-0 text-[var(--main-text-color)] dark:text-white text-2xl">Menu for {formatPeople(people)}</h2>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Last updated: {formatDate(last_update)}</p>
               </>
             )}
           </div>
@@ -660,31 +680,31 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               </button>
               
               {shareDropdownOpen && (
-                <div className="absolute right-0 z-10 mt-1 bg-white rounded-lg shadow-xl p-2 border border-gray-100 w-[280px]">
+                <div className="absolute right-0 z-10 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-2 border border-gray-100 dark:border-gray-700 w-[280px]">
                   <div className="flex flex-col gap-2">
                     <button
                       onClick={() => {
                         handleCopyLink();
                         setShareDropdownOpen(false);
                       }}
-                      className="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md transition-colors"
+                      className="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                       </svg>
-                      <span>Copy Link</span>
+                      <span className="dark:text-gray-200">Copy Link</span>
                     </button>
                     <button
                       onClick={() => {
                         handleDownload();
                         setShareDropdownOpen(false);
                       }}
-                      className="flex items-center px-3 py-2 hover:bg-gray-100 rounded-md transition-colors"
+                      className="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
-                      <span>Download JSON</span>
+                      <span className="dark:text-gray-200">Download JSON</span>
                     </button>
                   </div>
                 </div>
@@ -811,7 +831,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                   <button
                     type="button"
                     onClick={() => handleAddItem(catIndex)}
-                    className="w-full py-3 border border-dashed border-gray-300 rounded-md text-gray-500 hover:text-gray-700 hover:border-gray-400 transition-colors flex items-center justify-center bg-white/50 hover:bg-white"
+                    className="w-full py-3 border border-dashed border-gray-300 dark:border-gray-600 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-400 dark:hover:border-gray-500 transition-colors flex items-center justify-center bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-700"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -852,22 +872,22 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         <div className="fixed inset-0 z-50 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              <div className="absolute inset-0 bg-gray-500/80 dark:bg-gray-900/90 backdrop-blur-sm"></div>
             </div>
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 relative z-10">
+            <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 relative z-10">
               <div>
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-600 dark:text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     Create new menu?
                   </h3>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       Would you like to download your current menu?
                     </p>
                   </div>
@@ -884,15 +904,14 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 <button
                   type="button"
                   onClick={() => handleResetConfirmed(false)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
                 >
                   Discard and Create New
-
                 </button>
                 <button
                   type="button"
                   onClick={() => setConfirmModalOpen(false)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-3 sm:col-span-2 sm:text-sm"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-3 sm:col-span-2 sm:text-sm"
                 >
                   Cancel
                 </button>

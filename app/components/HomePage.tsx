@@ -98,10 +98,10 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Template Selector - Now First */}
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-16">
-        <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] px-8 py-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden mb-16">
+        <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
           <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Create a New Menu</h2>
-          <p className="text-gray-600 mt-1">Choose from our templates to get started quickly</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">Choose from our templates to get started quickly</p>
         </div>
         <div className="p-4 sm:p-8">
           <TemplateSelector onTemplateSelected={handleTemplateSelected} />
@@ -110,23 +110,23 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       
       {/* Divider */}
       <div className="my-12 flex items-center justify-center">
-        <div className="border-t border-gray-300 w-1/3"></div>
+        <div className="border-t border-gray-300 dark:border-gray-600 w-1/3"></div>
         <div className="px-4">
-          <span className="bg-white text-gray-500 text-lg font-medium rounded-full px-4 py-2 shadow-sm">or</span>
+          <span className="bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-lg font-medium rounded-full px-4 py-2 shadow-sm">or</span>
         </div>
-        <div className="border-t border-gray-300 w-1/3"></div>
+        <div className="border-t border-gray-300 dark:border-gray-600 w-1/3"></div>
       </div>
       
       {/* File Upload - Now Second */}
-      <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-16">
-        <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] px-8 py-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden mb-16">
+        <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
           <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Have an Existing Menu?</h2>
-          <p className="text-gray-600 mt-1">Upload your JSON file to continue working on it</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">Upload your JSON file to continue working on it</p>
         </div>
         <div className="p-8">
           <div 
-            className={`border-3 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.05)] ${
-              isDragging ? 'border-[var(--main-text-color)] bg-blue-50 scale-[1.02]' : 'border-[var(--main-bg-color)]'
+            className={`border-3 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.05)] dark:hover:bg-[rgba(158,198,204,0.03)] ${
+              isDragging ? 'border-[var(--main-text-color)] bg-blue-50 dark:bg-blue-900/20 scale-[1.02]' : 'border-[var(--main-bg-color)] dark:border-[rgba(158,198,204,0.4)]'
             }`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -155,7 +155,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
           </div>
           
           {error && (
-            <div className="mt-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200 flex items-start">
+            <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -168,8 +168,8 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       {/* Info Cards - Displayed in a grid layout */}
       <div className="grid md:grid-cols-2 gap-8 mt-8">
         {/* About this tool - Left column */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] px-6 py-4 flex items-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-6 py-4 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[var(--main-text-color)] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -177,7 +177,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
           </div>
           
           <div className="p-6">
-            <div className="prose prose-sm max-w-none text-gray-600">
+            <div className="prose prose-sm max-w-none text-gray-600 dark:text-gray-300">
               <p className="leading-relaxed">
                 This tool welcomes all forms of connection — whether platonic, familial, professional or romantic.
                 It's designed to bring clarity to how we define our unique relationships.
@@ -205,8 +205,8 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
                 </li>
               </ul>
               
-              <div className="mt-4 pt-4 border-t border-gray-100 text-sm text-center">
-                <p><strong>You like this tool?</strong> Send me an <a href="mailto:relationshipmenu@paviro.de" className="text-[var(--main-text-color)] hover:underline">e-mail</a> — as no tracking is used and your data is stored in your browser, I have no way of knowing if anyone is actually using it!</p>
+              <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-sm text-center">
+                <p><strong>You like this tool?</strong> Send me an <a href="mailto:paul-vincent@relationshipmenu.org" className="text-[var(--main-text-color)] hover:underline">e-mail</a> — as no tracking is used and your data is stored in your browser, I have no way of knowing if anyone is actually using it!</p>
               </div>
             </div>
           </div>
@@ -215,8 +215,8 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
         {/* Right column - stacked cards */}
         <div className="space-y-8">
           {/* Getting Started - Top right */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] px-6 py-4 flex items-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-6 py-4 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[var(--main-text-color)] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
@@ -224,7 +224,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
             </div>
             
             <div className="p-6">
-              <ol className="list-decimal pl-5 space-y-2 text-gray-600">
+              <ol className="list-decimal pl-5 space-y-2 text-gray-600 dark:text-gray-300">
                 <li>Create a new menu from a template or upload your existing one</li>
                 <li>Review the options and discuss with your relationship partner(s)</li>
                 <li>Customize to reflect your shared agreements</li>
@@ -234,8 +234,8 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
           </div>
           
           {/* Privacy Information - Bottom right */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] px-6 py-4 flex items-center">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+            <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-6 py-4 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[var(--main-text-color)] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
@@ -245,30 +245,30 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
             <div className="p-6">
               <div className="space-y-4">
                 <div className="flex items-start">
-                  <div className="bg-green-100 p-1.5 rounded-full mr-3 mt-0.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="bg-green-100 dark:bg-green-900/30 p-1.5 rounded-full mr-3 mt-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div>
                     <strong className="text-[var(--main-text-color)]">100% Private:</strong> 
-                    <span className="ml-2 text-gray-600">All your relationship menu data stays locally in your browser until you explicitly share it with someone via a link or as a json file.</span>
+                    <span className="ml-2 text-gray-600 dark:text-gray-300">All your relationship menu data stays locally in your browser until you explicitly share it with someone via a link or as a json file.</span>
                   </div>
                 </div>
                 
                 <div className="flex items-start">
-                  <div className="bg-green-100 p-1.5 rounded-full mr-3 mt-0.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="bg-green-100 dark:bg-green-900/30 p-1.5 rounded-full mr-3 mt-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div>
                     <strong className="text-[var(--main-text-color)]">Local Storage:</strong> 
-                    <span className="ml-2 text-gray-600">Your relationship menu is automatically saved in your browser's local storage, so you can safely reload the page or return later without losing any data.</span>
+                    <span className="ml-2 text-gray-600 dark:text-gray-300">Your relationship menu is automatically saved in your browser's local storage, so you can safely reload the page or return later without losing any data.</span>
                   </div>
                 </div>
                 
-                <div className="text-center mt-4 pt-4 border-t border-gray-100 text-gray-600">
+                <div className="text-center mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-400">
                   <Link href="/privacy-policy" className="text-[var(--main-text-color)] hover:underline font-medium">More details on how your data is handled.</Link>
                 </div>
               </div>
@@ -278,7 +278,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       </div>
       
       {/* Attribution */}
-      <div className="mt-8 text-center text-sm text-gray-500">
+      <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
         <p>
           This version of the Non-Escalator Relationship Menu was created by <a href="https://paulvincentroll.com/" className="text-[var(--main-text-color)] hover:underline mx-1" target="_blank" rel="noopener noreferrer">Paul-Vincent Roll</a>.
         </p>
