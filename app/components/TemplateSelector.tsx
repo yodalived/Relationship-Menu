@@ -60,7 +60,7 @@ const TemplateIcon = ({ icon }: { icon?: TemplateIcon }) => {
 };
 
 const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) => {
-  const [people, setPeople] = useState<string[]>(['', '']);
+  const [people, setPeople] = useState<string[]>(['']);
   const [error, setError] = useState<string | null>(null);
 
   const handleAddPerson = () => {
@@ -68,7 +68,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
   };
 
   const handleRemovePerson = (index: number) => {
-    if (people.length <= 2) return;
+    if (people.length <= 1) return;
     const newPeople = [...people];
     newPeople.splice(index, 1);
     setPeople(newPeople);
@@ -77,18 +77,16 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate people names
-    const filteredPeople = people.filter(person => person.trim() !== '');
-    if (filteredPeople.length < 2) {
-      setError('Please enter at least two names');
-      return;
+    // Process people names, using "Anonymous" for empty names
+    let processedPeople = people.map(person => person.trim() === '' ? 'Anonymous' : person.trim());
+    
+    // If no names were provided at all, use one "Anonymous" entry
+    if (processedPeople.length === 0) {
+      processedPeople = ['Anonymous'];
     }
     
-    onSubmit(selectedTemplate.path, filteredPeople);
+    onSubmit(selectedTemplate.path, processedPeople);
   };
-
-  // Check if we have at least two valid names
-  const hasAtLeastTwoValidNames = people.filter(person => person.trim() !== '').length >= 2;
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow p-6">
@@ -157,6 +155,9 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
         <div className="mb-8">
           <label className="block text-lg font-medium text-[var(--main-text-color)] mb-4">
             Who's in this relationship?
+            <span className="block text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">
+              Empty fields default to Anonymous
+            </span>
           </label>
           
           <div className="space-y-4">
@@ -176,10 +177,9 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
                     }}
                     placeholder={`Name of person ${index + 1}`}
                     className="w-full p-2 sm:p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-bg-color)] focus:bg-white dark:focus:bg-gray-700 transition-colors text-sm sm:text-base"
-                    required
                   />
                 </div>
-                {people.length > 2 && (
+                {people.length > 1 && (
                   <button
                     type="button"
                     onClick={() => handleRemovePerson(index)}
@@ -219,11 +219,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className={`px-4 sm:px-6 py-2.5 sm:py-3 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] shadow-sm text-sm sm:text-base ${
-              hasAtLeastTwoValidNames 
-                ? 'bg-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]' 
-                : 'bg-gray-300 dark:bg-gray-600'
-            }`}
+            className="px-4 sm:px-6 py-2.5 sm:py-3 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] shadow-sm text-sm sm:text-base bg-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]"
           >
             Create Menu
           </button>

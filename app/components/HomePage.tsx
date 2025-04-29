@@ -227,7 +227,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
               <ol className="list-decimal pl-5 space-y-2 text-gray-600 dark:text-gray-300">
                 <li>Create a new menu from a template or upload your existing one</li>
                 <li>Review the options and discuss with your relationship partner(s)</li>
-                <li>Customize to reflect your shared agreements</li>
+                <li>Customize and reflect your shared agreements</li>
                 <li>Download or share your personalized menu</li>
               </ol>
             </div>

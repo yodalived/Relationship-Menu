@@ -341,12 +341,17 @@
             "name": "Domestic",
             "items": [
                 {
-                    "name": "Sharing a dwelling/home",
+                    "name": "Sharing an apartment or a home",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Sharing a sleeping space",
+                    "name": "Sharing a permanent sleeping space",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Doing sleep overs",
                     "icon": null,
                     "note": null
                 },
@@ -357,6 +362,16 @@
                 },
                 {
                     "name": "Sharing meals",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Helping each other clean mess created together",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Cleaning up after each other",
                     "icon": null,
                     "note": null
                 },
@@ -670,6 +685,11 @@
         {
             "name": "Sexual",
             "items": [
+                {
+                    "name": "Sharing sexual experiences with each other",
+                    "icon": null,
+                    "note": null
+                },
                 {
                     "name": "Mutual masturbation",
                     "icon": null,

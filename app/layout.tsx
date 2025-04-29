@@ -14,8 +14,8 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Non-Escalator Relationship Menu",
-  description: "Non-Escalator Relationship Menu Viewer",
+  title: "Relationship Menu",
+  description: "Create and customize relationship menus for all forms of connection. Define unique relationships through conscious co-creation, whether platonic, familial, professional or romantic.",
 };
 
 export default function RootLayout({

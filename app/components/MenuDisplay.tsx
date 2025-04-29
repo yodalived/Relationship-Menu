@@ -1,14 +1,6 @@
 'use client';
 
-import { 
-  IconMust, 
-  IconLike, 
-  IconMaybe, 
-  IconOffLimit,
-  IconNotSet,
-  IconTalk
-} from './icons';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import LZString from 'lz-string';
 import {
   DndContext,
@@ -26,27 +18,21 @@ import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { MenuItem, MenuData } from '../types';
+import { MenuData } from '../types';
+import { renderIcon } from './ui/IconPicker';
+import { SortableMenuItem, getItemClassName } from './SortableMenuItem';
+import { CategoryHeader } from './CategoryHeader';
+import { Toast } from './ui/Toast';
+import { ShareDropdown } from './ui/ShareDropdown';
+import { ConfirmModal } from './ui/ConfirmModal';
 
 interface MenuDisplayProps {
   menuData: MenuData;
   onReset: () => void;
   onSave: (updatedData: MenuData) => void;
 }
-
-// Available icon options for picker
-const ICON_OPTIONS = [
-  { value: 'must', label: 'Must have', icon: IconMust, bgColor: 'bg-[#DEF0FF] dark:bg-[rgba(59,130,246,0.5)]' },
-  { value: 'like', label: 'Would like', icon: IconLike, bgColor: 'bg-[#E6F7EC] dark:bg-[rgba(34,197,94,0.5)]' },
-  { value: 'maybe', label: 'Maybe', icon: IconMaybe, bgColor: 'bg-[#FFF2D9] dark:bg-[rgba(245,158,11,0.5)]' },
-  { value: 'off-limit', label: 'Off limits', icon: IconOffLimit, bgColor: 'bg-[#FFEBEB] dark:bg-[rgba(239,68,68,0.5)]' },
-  { value: 'talk', label: 'Conversation', icon: IconTalk, bgColor: 'bg-[#F0EDFF] dark:bg-[rgba(139,92,246,0.5)]' },
-  { value: null, label: 'Not set', icon: IconNotSet, bgColor: 'bg-[#F5F5F5] dark:bg-[#374151]' }
-];
 
 export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayProps) {
   const [isEditing, setIsEditing] = useState(false);
@@ -59,9 +45,6 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
   const [toastMessage, setToastMessage] = useState('');
   const { last_update, people, menu } = isEditing ? editedData : menuData;
   
-  // Reference for share dropdown to handle clicks outside
-  const shareDropdownRef = useRef<HTMLDivElement>(null);
-
   // Setup sensors for drag and drop
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -73,19 +56,6 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
-
-  // Close share dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (shareDropdownRef.current && !shareDropdownRef.current.contains(event.target as Node)) {
-        setShareDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const formatPeople = (people: string[]) => {
     if (people.length === 0) return "";
@@ -107,30 +77,6 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     } catch {
       return dateString;
     }
-  };
-
-  const renderIcon = (iconType: string | null | undefined) => {
-    const className = "icon-container";
-    
-    switch(iconType) {
-      case 'must':
-        return <div className={className}><IconMust /></div>;
-      case 'like':
-        return <div className={className}><IconLike /></div>;
-      case 'maybe':
-        return <div className={className}><IconMaybe /></div>;
-      case 'off-limit':
-        return <div className={className}><IconOffLimit /></div>;
-      case 'talk':
-        return <div className={className}><IconTalk /></div>;
-      default:
-        return <div className={className}><IconNotSet /></div>;
-    }
-  };
-
-  const getItemClassName = (iconType: string | null | undefined) => {
-    if (!iconType) return 'item-not-set';
-    return `item-${iconType}`;
   };
 
   const handleToggleEdit = () => {
@@ -279,9 +225,12 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       const jsonString = JSON.stringify(currentData);
       const compressedData = LZString.compressToEncodedURIComponent(jsonString);
       
+      // Manually replace any + with %2B to ensure compatibility with messaging apps
+      const safeCompressedData = compressedData.replace(/\+/g, '%2B');
+      
       // Create the URL with the compressed data as a fragment (not a query parameter)
       const baseUrl = window.location.origin + window.location.pathname;
-      const url = `${baseUrl}#data=${compressedData}`;
+      const url = `${baseUrl}#data_v1=${safeCompressedData}`;
       
       // Copy to clipboard
       navigator.clipboard.writeText(url).then(() => {
@@ -422,147 +371,6 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     setActiveId(null);
   };
 
-  // Create a sortable item component
-  function SortableItem({ 
-    catIndex, 
-    itemIndex, 
-    item 
-  }: { 
-    catIndex: number; 
-    itemIndex: number; 
-    item: MenuItem 
-  }) {
-    const itemId = `item-${catIndex}-${itemIndex}`;
-    
-    const {
-      attributes,
-      listeners,
-      setNodeRef,
-      transform,
-      transition,
-      isDragging
-    } = useSortable({
-      id: itemId,
-    });
-    
-    const style = {
-      transform: CSS.Transform.toString(transform),
-      transition,
-      opacity: isDragging ? 0.4 : 1,
-      position: isDragging ? 'relative' : 'static',
-      zIndex: isDragging ? 1 : 'auto'
-    } as React.CSSProperties;
-
-    return (
-      <div 
-        ref={setNodeRef} 
-        style={style} 
-        className={`item ${getItemClassName(item.icon)}`}
-      >
-        <div className="item-name">
-          {isEditing ? (
-            <div className="relative flex items-start flex-col w-full">
-              <div className="flex flex-col sm:flex-row w-full mb-2 gap-2">
-                <button 
-                  type="button"
-                  onClick={() => toggleIconPicker(catIndex, itemIndex)}
-                  className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 sm:mr-3 ${
-                    item.icon ? ICON_OPTIONS.find(opt => opt.value === item.icon)?.bgColor : 'bg-white dark:bg-gray-800'
-                  }`}
-                  aria-label="Select icon"
-                >
-                  {renderIcon(item.icon)}
-                  <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[180px]">
-                    {ICON_OPTIONS.find(opt => opt.value === item.icon)?.label || 'Not set'}
-                  </span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
-                <input
-                  type="text"
-                  value={item.name}
-                  onChange={(e) => handleItemNameChange(catIndex, itemIndex, e.target.value)}
-                  className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                  placeholder="Edit item title..."
-                />
-              </div>
-              
-              {activeIconPicker && 
-               activeIconPicker.catIndex === catIndex && 
-               activeIconPicker.itemIndex === itemIndex && (
-                <div className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]">
-                  <div className="grid grid-cols-2 gap-3">
-                    {ICON_OPTIONS.map((option) => {
-                      return (
-                        <button
-                          key={option.value || 'null'}
-                          onClick={() => handleIconChange(catIndex, itemIndex, option.value)}
-                          className={`p-2.5 rounded-lg transition-all hover:brightness-95 active:scale-[0.98] ${option.bgColor} flex justify-start items-center`}
-                        >
-                          <span className="text-sm font-medium px-1.5 py-1 dark:text-gray-200">
-                            {option.label}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <>
-              {renderIcon(item.icon)}
-              <span>{item.name}</span>
-            </>
-          )}
-        </div>
-        {isEditing ? (
-          <div className="mt-2">
-            <textarea 
-              value={item.note || ''} 
-              onChange={(e) => {
-                handleNoteChange(catIndex, itemIndex, e.target.value);
-                autoResizeTextarea(e.target as HTMLTextAreaElement);
-              }}
-              onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-              className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-              placeholder="Add a note..."
-              style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
-            />
-            <div className="mt-4 p-2 sm:p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
-              <button 
-                type="button" 
-                onClick={() => handleDeleteItem(catIndex, itemIndex)}
-                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/50 hover:text-red-800 dark:hover:text-red-300 transition-colors"
-                title="Delete this item"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-                <span className="ml-1.5 text-sm font-medium">Delete Item</span>
-              </button>
-              <div 
-                {...attributes} 
-                {...listeners}
-                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 cursor-move text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 transition-colors select-none"
-                title="Drag to reorder"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                </svg>
-                <span className="ml-1.5 text-sm font-medium">Drag to reorder</span>
-              </div>
-            </div>
-          </div>
-        ) : (
-          item.note && <div className="item-note">{item.note}</div>
-        )}
-      </div>
-    );
-  }
-
   // Render function for the dragging item
   function getDraggingItem(id: UniqueIdentifier) {
     if (!id) return null;
@@ -592,14 +400,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
   return (
     <div>
       {/* Toast notification */}
-      {showToast && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-900 text-gray-800 dark:text-white px-4 py-2 rounded-lg shadow-lg transition-opacity duration-300 flex items-center border border-gray-200 dark:border-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-          {toastMessage}
-        </div>
-      )}
+      <Toast isVisible={showToast} message={toastMessage} />
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div className="w-full md:w-auto">
@@ -664,7 +465,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               {isEditing ? 'Done' : 'Edit Menu'}
             </button>
             
-            <div className="relative flex-grow md:flex-grow-0" ref={shareDropdownRef}>
+            <div className="relative flex-grow md:flex-grow-0">
               <button
                 onClick={toggleShareDropdown}
                 className="px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium w-full md:w-auto min-w-[100px] flex items-center justify-center"
@@ -679,36 +480,12 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 </svg>
               </button>
               
-              {shareDropdownOpen && (
-                <div className="absolute right-0 z-10 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-2 border border-gray-100 dark:border-gray-700 w-[280px]">
-                  <div className="flex flex-col gap-2">
-                    <button
-                      onClick={() => {
-                        handleCopyLink();
-                        setShareDropdownOpen(false);
-                      }}
-                      className="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                      <span className="dark:text-gray-200">Copy Link</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleDownload();
-                        setShareDropdownOpen(false);
-                      }}
-                      className="flex items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      <span className="dark:text-gray-200">Download JSON</span>
-                    </button>
-                  </div>
-                </div>
-              )}
+              <ShareDropdown 
+                isOpen={shareDropdownOpen}
+                onClose={() => setShareDropdownOpen(false)}
+                onCopyLink={handleCopyLink}
+                onDownload={handleDownload}
+              />
             </div>
             
             <button
@@ -729,65 +506,16 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         {menu.map((category, catIndex) => (
           <div key={catIndex} className="category">
             <div className="title">
-              {isEditing ? (
-                <div className="flex items-center w-full justify-between">
-                  <div className="flex-grow px-3">
-                    <input
-                      type="text"
-                      value={category.name}
-                      onChange={(e) => handleCategoryNameChange(catIndex, e.target.value)}
-                      className="w-full bg-transparent text-white text-center font-bold focus:outline-none border-b border-white border-dashed hover:border-solid focus:border-solid placeholder-white/70"
-                      placeholder="Edit section title..."
-                    />
-                  </div>
-                  <div className="flex items-center mr-2">
-                    <button
-                      type="button"
-                      onClick={() => handleMoveSectionUp(catIndex)}
-                      disabled={catIndex === 0}
-                      className={`p-1 mx-0.5 text-white ${catIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white/30 rounded'}`}
-                      title="Move section left"
-                      aria-label="Move section left (or up on small screens)"
-                    >
-                      {/* Left arrow for larger screens, Up arrow for mobile */}
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 hidden md:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                      </svg>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                      </svg>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleMoveSectionDown(catIndex)}
-                      disabled={catIndex === menu.length - 1}
-                      className={`p-1 mx-0.5 text-white ${catIndex === menu.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white/30 rounded'}`}
-                      title="Move section right"
-                      aria-label="Move section right (or down on small screens)"
-                    >
-                      {/* Right arrow for larger screens, Down arrow for mobile */}
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 hidden md:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteSection(catIndex)}
-                      className="p-1 mx-0.5 text-white border border-white/30 rounded hover:bg-red-400/70 hover:border-red-300"
-                      title="Delete this section"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                category.name
-              )}
+              <CategoryHeader 
+                name={category.name}
+                catIndex={catIndex}
+                isEditing={isEditing}
+                totalCategories={menu.length}
+                onNameChange={handleCategoryNameChange}
+                onMoveUp={handleMoveSectionUp}
+                onMoveDown={handleMoveSectionDown}
+                onDelete={handleDeleteSection}
+              />
             </div>
             <div>
               {isEditing ? (
@@ -802,11 +530,19 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                     strategy={verticalListSortingStrategy}
                   >
                     {category.items.map((item, itemIndex) => (
-                      <SortableItem 
+                      <SortableMenuItem 
                         key={`item-${catIndex}-${itemIndex}`}
                         catIndex={catIndex}
                         itemIndex={itemIndex}
                         item={item}
+                        isEditing={isEditing}
+                        activeIconPicker={activeIconPicker}
+                        onToggleIconPicker={toggleIconPicker}
+                        onIconChange={handleIconChange}
+                        onItemNameChange={handleItemNameChange}
+                        onNoteChange={handleNoteChange}
+                        onDeleteItem={handleDeleteItem}
+                        autoResizeTextarea={autoResizeTextarea}
                       />
                     ))}
                   </SortableContext>
@@ -868,58 +604,13 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       </div>
       
       {/* Confirmation Modal for New Menu */}
-      {confirmModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500/80 dark:bg-gray-900/90 backdrop-blur-sm"></div>
-            </div>
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 relative z-10">
-              <div>
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-600 dark:text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                </div>
-                <div className="mt-3 text-center sm:mt-5">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    Create new menu?
-                  </h3>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Would you like to download your current menu?
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-                <button
-                  type="button"
-                  onClick={() => handleResetConfirmed(true)}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--main-text-color)] text-base font-medium text-white hover:bg-[var(--main-text-color-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:col-start-2 sm:text-sm"
-                >
-                  Download and Create New
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleResetConfirmed(false)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
-                >
-                  Discard and Create New
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setConfirmModalOpen(false)}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-3 sm:col-span-2 sm:text-sm"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmModal 
+        isOpen={confirmModalOpen}
+        onClose={() => setConfirmModalOpen(false)}
+        onConfirm={handleResetConfirmed}
+        title="Create new menu?"
+        message="Would you like to download your current menu?"
+      />
     </div>
   );
 } 

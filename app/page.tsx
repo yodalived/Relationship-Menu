@@ -26,10 +26,20 @@ export default function Home() {
         if (window.location.hash) {
           const hashData = window.location.hash.substring(1); // Remove the # symbol
           const hashParams = new URLSearchParams(hashData);
-          const urlData = hashParams.get('data');
+          
+          // Check for data_v1 first (new format)
+          let urlData = hashParams.get('data_v1');
+          
+          // If data_v1 not found, check for legacy data format
+          if (!urlData) {
+            urlData = hashParams.get('data');
+          }
           
           if (urlData) {
             try {
+              // Replace manually encoded %2B back to + before decompression
+              urlData = urlData.replace(/%2B/g, '+');
+              
               // Decompress and parse the URL data
               const decompressed = LZString.decompressFromEncodedURIComponent(urlData);
               if (decompressed) {
