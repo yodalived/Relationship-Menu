@@ -81,6 +81,13 @@ export default function Home() {
     setIsLoading(false);
   }, []);
 
+  // Scroll to top when menuData changes from null to a value
+  useEffect(() => {
+    if (menuData && isBrowser) {
+      window.scrollTo(0, 0);
+    }
+  }, [menuData]);
+
   // Handler for when file is loaded
   const handleFileLoaded = (data: MenuData) => {
     setMenuData(data);
