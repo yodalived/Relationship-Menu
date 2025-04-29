@@ -5,6 +5,7 @@ import MenuDisplay from './components/MenuDisplay';
 import HomePage from './components/HomePage';
 import LZString from 'lz-string';
 import { MenuData } from './types';
+import { migrateMenuData } from './utils/migrations';
 
 // LocalStorage key
 const MENU_STORAGE_KEY = 'relationship_menu_data';
@@ -44,9 +45,13 @@ export default function Home() {
               const decompressed = LZString.decompressFromEncodedURIComponent(urlData);
               if (decompressed) {
                 const parsedData = JSON.parse(decompressed) as MenuData;
-                setMenuData(parsedData);
+                
+                // Migrate data to latest schema version
+                const migratedData = migrateMenuData(parsedData);
+                
+                setMenuData(migratedData);
                 // Also save to localStorage
-                localStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(parsedData));
+                localStorage.setItem(MENU_STORAGE_KEY, JSON.stringify(migratedData));
                 // Clear the URL fragment to avoid sharing issues
                 window.history.replaceState({}, document.title, window.location.pathname);
                 setIsLoading(false);
@@ -62,7 +67,11 @@ export default function Home() {
         const savedData = localStorage.getItem(MENU_STORAGE_KEY);
         if (savedData) {
           const parsedData = JSON.parse(savedData) as MenuData;
-          setMenuData(parsedData);
+          
+          // Migrate data to latest schema version
+          const migratedData = migrateMenuData(parsedData);
+          
+          setMenuData(migratedData);
         }
       } catch (error) {
         console.error('Error loading data:', error);

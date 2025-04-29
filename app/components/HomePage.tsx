@@ -4,6 +4,7 @@ import { useState } from 'react';
 import TemplateSelector from './TemplateSelector';
 import Link from 'next/link';
 import { MenuData } from '../types';
+import { migrateMenuData } from '../utils/migrations';
 
 interface FileUploadProps {
   onFileLoaded: (data: MenuData) => void;
@@ -60,7 +61,10 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
           throw new Error('Invalid JSON structure. The file must contain last_update, people, and menu fields.');
         }
         
-        onFileLoaded(data);
+        // Migrate data to latest schema version
+        const migratedData = migrateMenuData(data);
+        
+        onFileLoaded(migratedData);
       } catch (err) {
         setError((err as Error).message || 'Failed to parse JSON file');
       }

@@ -13,8 +13,9 @@ export type MenuCategory = {
 
 // Define main menu data type
 export type MenuData = {
-  schema_version: string | number;
+  schema_version: string;
   last_update: string;
   people: string[];
   menu: MenuCategory[];
+  uuid?: string; // Optional UUID field (version 1.1+)
 }; 
