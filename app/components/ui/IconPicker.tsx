@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { 
   IconMust, 
   IconLike, 
@@ -41,10 +41,29 @@ interface IconPickerProps {
   selectedIcon: string | null;
   onSelectIcon: (icon: string | null) => void;
   isOpen: boolean;
+  onClose: () => void;
   mode?: 'view' | 'fill' | 'edit';
 }
 
-export function IconPicker({ onSelectIcon, isOpen, mode = 'edit' }: IconPickerProps) {
+export function IconPicker({ onSelectIcon, isOpen, onClose, mode = 'edit' }: IconPickerProps) {
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (pickerRef.current && !pickerRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
   
   // In fill mode, filter out the talk icon
@@ -53,7 +72,10 @@ export function IconPicker({ onSelectIcon, isOpen, mode = 'edit' }: IconPickerPr
     : ICON_OPTIONS;
   
   return (
-    <div className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]">
+    <div 
+      ref={pickerRef}
+      className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]"
+    >
       <div className="grid grid-cols-2 gap-3">
         {displayOptions.map((option) => (
           <button
@@ -61,6 +83,9 @@ export function IconPicker({ onSelectIcon, isOpen, mode = 'edit' }: IconPickerPr
             onClick={() => onSelectIcon(option.value)}
             className={`p-2.5 rounded-lg transition-all hover:brightness-95 active:scale-[0.98] ${option.bgColor} flex justify-start items-center`}
           >
+            <div className="mr-2">
+              <option.icon />
+            </div>
             <span className="text-sm font-medium px-1.5 py-1 dark:text-gray-200">
               {option.label}
             </span>

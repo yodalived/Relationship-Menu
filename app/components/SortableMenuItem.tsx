@@ -194,6 +194,7 @@ export function SortableMenuItem({
                        activeIconPicker.catIndex === catIndex && 
                        activeIconPicker.itemIndex === itemIndex}
                 mode={editMode}
+                onClose={() => onToggleIconPicker(catIndex, itemIndex)}
               />
             )}
           </div>
