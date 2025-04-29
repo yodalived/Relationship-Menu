@@ -61,7 +61,7 @@ const TemplateIcon = ({ icon }: { icon?: TemplateIcon }) => {
 
 const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) => {
   const [people, setPeople] = useState<string[]>(['']);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
 
   const handleAddPerson = () => {
     setPeople([...people, '']);
