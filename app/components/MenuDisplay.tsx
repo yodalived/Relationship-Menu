@@ -456,7 +456,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         <div className="flex flex-col w-full md:w-auto md:flex-row items-end md:items-center gap-2 md:gap-4">
           <div className="flex gap-2 flex-wrap justify-end w-full md:w-auto">
             {/* Segmented control for View/Fill/Edit modes */}
-            <div className="flex rounded-md shadow-sm bg-[var(--main-text-color)] dark:bg-[var(--main-text-color)] p-1 min-w-[240px]">
+            <div className="flex rounded-md shadow-sm bg-[var(--main-text-color)] dark:bg-[var(--main-text-color)] p-1 min-w-[240px] w-full md:w-auto">
               <button
                 onClick={() => handleModeChange('view')}
                 className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${

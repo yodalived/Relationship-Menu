@@ -41,6 +41,9 @@ export function SortableMenuItem({
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
   const itemId = `item-${catIndex}-${itemIndex}`;
   
+  // Determine classes for order based on edit mode
+  const orderClasses = editMode === 'edit' ? 'order-first sm:order-last' : '';
+  
   const {
     attributes,
     listeners,
@@ -162,7 +165,7 @@ export function SortableMenuItem({
       return (
         <div 
           onClick={handleExpandNote}
-          className="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-text ml-21 mt-1 text-sm whitespace-pre-line"
+          className="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-text ml-20 mt-1 text-sm whitespace-pre-line"
           style={{ marginTop: '-0.8rem' }}
         >
           {formattedNote}
@@ -182,23 +185,29 @@ export function SortableMenuItem({
       <div className="item-name">
         {isEditing ? (
           <div className="relative flex items-start flex-col w-full">
-            <div className="flex flex-col sm:flex-row w-full mb-2 gap-2">
-              {showIconPicker && renderIconButton()}
-              
-              {showNameEditor ? (
-                <input
-                  type="text"
-                  value={item.name}
-                  onChange={(e) => onItemNameChange(catIndex, itemIndex, e.target.value)}
-                  className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
-                  placeholder="Edit item title..."
-                />
-              ) : (
-                <div className="flex items-center pl-3">
+            {editMode === 'fill' ? (
+              // Fill mode layout - icon stays before title
+              <div className="flex flex-row items-center w-full mb-2 gap-2">
+                {showIconPicker && renderIconButton()}
+                <div className="flex-grow flex items-center pl-3">
                   <span>{item.name}</span>
                 </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              // Edit mode layout - title appears above icon on mobile, after icon on larger screens
+              <div className="flex flex-col sm:flex-row w-full mb-2 gap-2">
+                {showNameEditor && (
+                  <input
+                    type="text"
+                    value={item.name}
+                    onChange={(e) => onItemNameChange(catIndex, itemIndex, e.target.value)}
+                    className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 order-first sm:order-last"
+                    placeholder="Edit item title..."
+                  />
+                )}
+                {showIconPicker && renderIconButton()}
+              </div>
+            )}
             
             {showIconPicker && (
               <IconPicker

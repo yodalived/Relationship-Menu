@@ -467,8 +467,15 @@ button.flex.items-center span {
     font-size: 16px; /* Prevents iOS zoom on focus */
   }
   
-  button {
-    min-height: 44px; /* Better touch targets */
+  /* Better touch targets for most buttons, but not icon pickers */
+  button:not(.flex.flex-row.items-center > button) {
+    min-height: 44px;
+  }
+  
+  /* Keep fill mode icon button compact */
+  .flex.flex-row.items-center > button {
+    min-height: unset;
+    height: auto;
   }
   
   /* Improve menu edit controls spacing */
@@ -476,14 +483,14 @@ button.flex.items-center span {
     flex-wrap: wrap;
   }
   
-  /* Adjust spacing for icon pickers */
-  .flex.w-full.mb-2 {
+  /* Adjust spacing for icon pickers in edit mode only */
+  .flex.w-full.mb-2:not(.flex-row) {
     flex-direction: column;
     gap: 8px;
   }
   
-  .flex.w-full.mb-2 > button,
-  .flex.w-full.mb-2 > input {
+  .flex.w-full.mb-2:not(.flex-row) > button,
+  .flex.w-full.mb-2:not(.flex-row) > input {
     width: 100%;
   }
   
