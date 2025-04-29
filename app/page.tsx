@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MenuDisplay from './components/MenuDisplay';
 import HomePage from './components/HomePage';
 import LZString from 'lz-string';
@@ -16,6 +16,7 @@ const isBrowser = typeof window !== 'undefined';
 export default function Home() {
   const [menuData, setMenuData] = useState<MenuData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const prevViewRef = useRef<'home' | 'menu'>('home');
 
   // Load data from localStorage or URL fragment on initial render
   useEffect(() => {
@@ -81,11 +82,16 @@ export default function Home() {
     setIsLoading(false);
   }, []);
 
-  // Scroll to top when menuData changes from null to a value
+  // Handle scroll reset on view transitions
   useEffect(() => {
-    if (menuData && isBrowser) {
+    const currentView = menuData ? 'menu' : 'home';
+    
+    // Only scroll to top when transitioning from home to menu view
+    if (prevViewRef.current === 'home' && currentView === 'menu' && isBrowser) {
       window.scrollTo(0, 0);
     }
+    
+    prevViewRef.current = currentView;
   }, [menuData]);
 
   // Handler for when file is loaded
