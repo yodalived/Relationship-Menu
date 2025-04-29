@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import { MenuItem, MenuMode } from '../types';
 import { IconButton, IconPicker, renderIcon, ICON_OPTIONS } from './ui/IconPicker';
 
@@ -15,8 +13,11 @@ interface SortableItemProps {
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
   onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
   onDeleteItem: (catIndex: number, itemIndex: number) => void;
+  onMoveItemUp?: (catIndex: number, itemIndex: number) => void;
+  onMoveItemDown?: (catIndex: number, itemIndex: number) => void;
   autoResizeTextarea: (element: HTMLTextAreaElement) => void;
   editMode?: MenuMode;
+  itemCount?: number; // Total count of items in the category for determining if up/down buttons should be disabled
 }
 
 export function getItemClassName(iconType: string | null | undefined) {
@@ -35,41 +36,21 @@ export function SortableMenuItem({
   onItemNameChange,
   onNoteChange,
   onDeleteItem,
+  onMoveItemUp,
+  onMoveItemDown,
   autoResizeTextarea,
-  editMode = 'edit'
+  editMode = 'edit',
+  itemCount = 0
 }: SortableItemProps) {
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
-  const itemId = `item-${catIndex}-${itemIndex}`;
   
-  // Determine classes for order based on edit mode
-  const orderClasses = editMode === 'edit' ? 'order-first sm:order-last' : '';
-  
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging
-  } = useSortable({
-    id: itemId,
-  });
-  
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.4 : 1,
-    position: isDragging ? 'relative' : 'static',
-    zIndex: isDragging ? 1 : 'auto'
-  } as React.CSSProperties;
-
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
 
   const showNameEditor = editMode === 'edit'; // Only allow editing names in full edit mode
   const showIconPicker = editMode === 'edit' || editMode === 'fill'; // Allow icon selection in both edit and fill modes
   const showNoteEditor = editMode === 'edit' || editMode === 'fill'; // Allow note editing in both edit and fill modes
-  const showItemControls = editMode === 'edit'; // Only show delete/drag controls in full edit mode
+  const showItemControls = editMode === 'edit'; // Only show delete/move controls in full edit mode
 
   // Custom icon button based on mode
   const renderIconButton = () => {
@@ -177,11 +158,7 @@ export function SortableMenuItem({
   };
 
   return (
-    <div 
-      ref={setNodeRef} 
-      style={style} 
-      className={`item ${getItemClassName(item.icon)}`}
-    >
+    <div className={`item ${getItemClassName(item.icon)}`}>
       <div className="item-name">
         {isEditing ? (
           <div className="relative flex items-start flex-col w-full">
@@ -232,28 +209,53 @@ export function SortableMenuItem({
           {showNoteEditor && renderNoteEditor()}
           
           {showItemControls && (
-            <div className="mt-4 p-2 sm:p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
-              <button 
-                type="button" 
-                onClick={() => onDeleteItem(catIndex, itemIndex)}
-                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/50 hover:text-red-800 dark:hover:text-red-300 transition-colors"
-                title="Delete this item"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-                <span className="ml-1.5 text-sm font-medium">Delete Item</span>
-              </button>
-              <div 
-                {...attributes} 
-                {...listeners}
-                className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 cursor-move text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-200 transition-colors select-none"
-                title="Drag to reorder"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                </svg>
-                <span className="ml-1.5 text-sm font-medium">Drag to reorder</span>
+            <div className="mt-4 p-2 sm:p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 flex flex-row justify-between items-center gap-2">
+              <div className="flex items-center">
+                <button 
+                  type="button" 
+                  onClick={() => onDeleteItem(catIndex, itemIndex)}
+                  className="flex items-center px-3 py-1.5 bg-white dark:bg-gray-900 rounded-md border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/50 hover:text-red-800 dark:hover:text-red-300 transition-colors"
+                  title="Delete this item"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  <span className="ml-1.5 text-sm font-medium">Delete Item</span>
+                </button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => onMoveItemUp && onMoveItemUp(catIndex, itemIndex)}
+                  disabled={itemIndex === 0}
+                  className={`flex items-center px-2 py-1.5 rounded-md border transition-colors ${
+                    itemIndex === 0
+                      ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 cursor-not-allowed'
+                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                  title="Move item up"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                  </svg>
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={() => onMoveItemDown && onMoveItemDown(catIndex, itemIndex)}
+                  disabled={itemCount === 0 || itemIndex === itemCount - 1}
+                  className={`flex items-center px-2 py-1.5 rounded-md border transition-colors ${
+                    itemCount === 0 || itemIndex === itemCount - 1
+                      ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-600 cursor-not-allowed'
+                      : 'bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                  title="Move item down"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
               </div>
             </div>
           )}

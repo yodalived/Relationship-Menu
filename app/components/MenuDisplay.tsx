@@ -2,24 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import LZString from 'lz-string';
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  DragEndEvent,
-  DragStartEvent,
-  DragOverlay,
-  UniqueIdentifier
-} from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
 import { MenuData, MenuMode } from '../types';
 import { renderIcon } from './ui/IconPicker';
 import { SortableMenuItem, getItemClassName } from './SortableMenuItem';
@@ -39,25 +21,12 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
   const [editedData, setEditedData] = useState<MenuData>({ ...menuData });
   const [activeIconPicker, setActiveIconPicker] = useState<{catIndex: number, itemIndex: number} | null>(null);
   const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
-  const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const isEditing = mode === 'edit' || mode === 'fill';
   const { last_update, people, menu } = isEditing ? editedData : menuData;
   
-  // Setup sensors for drag and drop
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
   const formatPeople = (people: string[]) => {
     if (people.length === 0) return "";
     if (people.length === 1) return people[0];
@@ -338,65 +307,30 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     onSave(updatedData);
   };
 
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id);
+  // Functions to handle item movement - add after handleMoveSectionDown
+  const handleMoveItemUp = (catIndex: number, itemIndex: number) => {
+    if (itemIndex === 0) return; // Already at the top
+    
+    const updatedData = { ...editedData };
+    const temp = updatedData.menu[catIndex].items[itemIndex];
+    updatedData.menu[catIndex].items[itemIndex] = updatedData.menu[catIndex].items[itemIndex - 1];
+    updatedData.menu[catIndex].items[itemIndex - 1] = temp;
+    updatedData.last_update = new Date().toISOString();
+    setEditedData(updatedData);
+    onSave(updatedData);
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  const handleMoveItemDown = (catIndex: number, itemIndex: number) => {
+    if (itemIndex === menu[catIndex].items.length - 1) return; // Already at the bottom
     
-    if (over && active.id !== over.id) {
-      const activeIdParts = String(active.id).split('-');
-      const overIdParts = String(over.id).split('-');
-      
-      if (activeIdParts.length === 3 && overIdParts.length === 3) {
-        const catIndex = parseInt(activeIdParts[1]);
-        const fromIndex = parseInt(activeIdParts[2]);
-        const toIndex = parseInt(overIdParts[2]);
-        
-        // Only proceed if the items are in the same category
-        if (activeIdParts[1] === overIdParts[1]) {
-          const updatedData = { ...editedData };
-          updatedData.menu[catIndex].items = arrayMove(
-            updatedData.menu[catIndex].items,
-            fromIndex,
-            toIndex
-          );
-          updatedData.last_update = new Date().toISOString();
-          setEditedData(updatedData);
-          onSave(updatedData);
-        }
-      }
-    }
-    
-    setActiveId(null);
+    const updatedData = { ...editedData };
+    const temp = updatedData.menu[catIndex].items[itemIndex];
+    updatedData.menu[catIndex].items[itemIndex] = updatedData.menu[catIndex].items[itemIndex + 1];
+    updatedData.menu[catIndex].items[itemIndex + 1] = temp;
+    updatedData.last_update = new Date().toISOString();
+    setEditedData(updatedData);
+    onSave(updatedData);
   };
-
-  // Render function for the dragging item
-  function getDraggingItem(id: UniqueIdentifier) {
-    if (!id) return null;
-    
-    const idParts = String(id).split('-');
-    if (idParts.length === 3) {
-      const catIndex = parseInt(idParts[1]);
-      const itemIndex = parseInt(idParts[2]);
-      
-      if (menu[catIndex] && menu[catIndex].items[itemIndex]) {
-        const item = menu[catIndex].items[itemIndex];
-        return (
-          <div className={`item ${getItemClassName(item.icon)} w-[80%] opacity-60 shadow-lg`}>
-            <div className="item-name">
-              {renderIcon(item.icon)}
-              <span>{item.name}</span>
-            </div>
-            {item.note && <div className="item-note">{item.note}</div>}
-          </div>
-        );
-      }
-    }
-    
-    return null;
-  }
 
   return (
     <div>
@@ -543,38 +477,26 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
             </div>
             <div>
               {mode === 'edit' ? (
-                <DndContext 
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragStart={handleDragStart}
-                  onDragEnd={handleDragEnd}
-                >
-                  <SortableContext 
-                    items={category.items.map((_, idx) => `item-${catIndex}-${idx}`)}
-                    strategy={verticalListSortingStrategy}
-                  >
-                    {category.items.map((item, itemIndex) => (
-                      <SortableMenuItem 
-                        key={`item-${catIndex}-${itemIndex}`}
-                        catIndex={catIndex}
-                        itemIndex={itemIndex}
-                        item={item}
-                        isEditing={true}
-                        activeIconPicker={activeIconPicker}
-                        onToggleIconPicker={toggleIconPicker}
-                        onIconChange={handleIconChange}
-                        onItemNameChange={handleItemNameChange}
-                        onNoteChange={handleNoteChange}
-                        onDeleteItem={handleDeleteItem}
-                        autoResizeTextarea={autoResizeTextarea}
-                        editMode={mode}
-                      />
-                    ))}
-                  </SortableContext>
-                  <DragOverlay>
-                    {activeId ? getDraggingItem(activeId) : null}
-                  </DragOverlay>
-                </DndContext>
+                category.items.map((item, itemIndex) => (
+                  <SortableMenuItem 
+                    key={`item-${catIndex}-${itemIndex}`}
+                    catIndex={catIndex}
+                    itemIndex={itemIndex}
+                    item={item}
+                    isEditing={true}
+                    activeIconPicker={activeIconPicker}
+                    onToggleIconPicker={toggleIconPicker}
+                    onIconChange={handleIconChange}
+                    onItemNameChange={handleItemNameChange}
+                    onNoteChange={handleNoteChange}
+                    onDeleteItem={handleDeleteItem}
+                    onMoveItemUp={handleMoveItemUp}
+                    onMoveItemDown={handleMoveItemDown}
+                    autoResizeTextarea={autoResizeTextarea}
+                    editMode={mode}
+                    itemCount={category.items.length}
+                  />
+                ))
               ) : mode === 'fill' ? (
                 category.items.map((item, itemIndex) => (
                   <SortableMenuItem 
@@ -589,6 +511,8 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                     onItemNameChange={handleItemNameChange}
                     onNoteChange={handleNoteChange}
                     onDeleteItem={handleDeleteItem}
+                    onMoveItemUp={handleMoveItemUp}
+                    onMoveItemDown={handleMoveItemDown}
                     autoResizeTextarea={autoResizeTextarea}
                     editMode={mode}
                   />
