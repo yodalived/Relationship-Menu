@@ -18,4 +18,7 @@ export type MenuData = {
   people: string[];
   menu: MenuCategory[];
   uuid?: string; // Optional UUID field (version 1.1+)
-}; 
+};
+
+// Define available menu modes
+export type MenuMode = 'view' | 'fill' | 'edit'; 

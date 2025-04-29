@@ -41,15 +41,21 @@ interface IconPickerProps {
   selectedIcon: string | null;
   onSelectIcon: (icon: string | null) => void;
   isOpen: boolean;
+  mode?: 'view' | 'fill' | 'edit';
 }
 
-export function IconPicker({ onSelectIcon, isOpen }: IconPickerProps) {
+export function IconPicker({ onSelectIcon, isOpen, mode = 'edit' }: IconPickerProps) {
   if (!isOpen) return null;
+  
+  // In fill mode, filter out the talk icon
+  const displayOptions = mode === 'fill' 
+    ? ICON_OPTIONS.filter(option => option.value !== 'talk') 
+    : ICON_OPTIONS;
   
   return (
     <div className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]">
       <div className="grid grid-cols-2 gap-3">
-        {ICON_OPTIONS.map((option) => (
+        {displayOptions.map((option) => (
           <button
             key={option.value || 'null'}
             onClick={() => onSelectIcon(option.value)}

@@ -20,7 +20,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { MenuData } from '../types';
+import { MenuData, MenuMode } from '../types';
 import { renderIcon } from './ui/IconPicker';
 import { SortableMenuItem, getItemClassName } from './SortableMenuItem';
 import { CategoryHeader } from './CategoryHeader';
@@ -35,7 +35,7 @@ interface MenuDisplayProps {
 }
 
 export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayProps) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [mode, setMode] = useState<MenuMode>('view');
   const [editedData, setEditedData] = useState<MenuData>({ ...menuData });
   const [activeIconPicker, setActiveIconPicker] = useState<{catIndex: number, itemIndex: number} | null>(null);
   const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
@@ -43,6 +43,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const isEditing = mode === 'edit' || mode === 'fill';
   const { last_update, people, menu } = isEditing ? editedData : menuData;
   
   // Setup sensors for drag and drop
@@ -79,14 +80,14 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     }
   };
 
-  const handleToggleEdit = () => {
-    if (isEditing) {
-      // When exiting edit mode, no need to explicitly save as changes were saved incrementally
-      setIsEditing(false);
+  const handleModeChange = (newMode: MenuMode) => {
+    if (newMode === 'view') {
+      // When exiting edit/fill mode, no need to explicitly save as changes were saved incrementally
+      setMode('view');
     } else {
-      // Enter edit mode with a copy of the current data
+      // Enter edit/fill mode with a copy of the current data
       setEditedData({ ...menuData });
-      setIsEditing(true);
+      setMode(newMode);
     }
   };
 
@@ -405,7 +406,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
         <div className="w-full md:w-auto">
           <div className="menu-header w-full">
-            {isEditing ? (
+            {mode === 'edit' ? (
               <div className="flex flex-col">
                 <h2 className="text-xl font-bold mb-2">Menu for:</h2>
                 <div className="space-y-2">
@@ -454,21 +455,44 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         </div>
         <div className="flex flex-col w-full md:w-auto md:flex-row items-end md:items-center gap-2 md:gap-4">
           <div className="flex gap-2 flex-wrap justify-end w-full md:w-auto">
-            <button
-              onClick={handleToggleEdit}
-              className="px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium flex-grow md:flex-grow-0 min-w-[100px] flex items-center justify-center"
-              title={isEditing ? "Exit edit mode" : "Edit this menu"}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-              </svg>
-              {isEditing ? 'Done' : 'Edit Menu'}
-            </button>
+            {/* Segmented control for View/Fill/Edit modes */}
+            <div className="flex rounded-md shadow-sm bg-[var(--main-text-color)] dark:bg-[var(--main-text-color)] p-1 min-w-[240px]">
+              <button
+                onClick={() => handleModeChange('view')}
+                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  mode === 'view' 
+                    ? 'bg-white dark:bg-white text-[var(--main-text-color)] shadow-sm' 
+                    : 'text-white hover:bg-[var(--main-text-color-hover)]'
+                }`}
+              >
+                View
+              </button>
+              <button
+                onClick={() => handleModeChange('fill')}
+                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  mode === 'fill' 
+                    ? 'bg-white dark:bg-white text-[var(--main-text-color)] shadow-sm' 
+                    : 'text-white hover:bg-[var(--main-text-color-hover)]'
+                }`}
+              >
+                Fill
+              </button>
+              <button
+                onClick={() => handleModeChange('edit')}
+                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                  mode === 'edit' 
+                    ? 'bg-white dark:bg-white text-[var(--main-text-color)] shadow-sm' 
+                    : 'text-white hover:bg-[var(--main-text-color-hover)]'
+                }`}
+              >
+                Edit
+              </button>
+            </div>
             
             <div className="relative flex-grow md:flex-grow-0">
               <button
                 onClick={toggleShareDropdown}
-                className="px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium w-full md:w-auto min-w-[100px] flex items-center justify-center"
+                className="h-full px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium w-full md:w-auto min-w-[100px] flex items-center justify-center"
                 title="Share this menu"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -509,7 +533,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               <CategoryHeader 
                 name={category.name}
                 catIndex={catIndex}
-                isEditing={isEditing}
+                isEditing={mode === 'edit'}
                 totalCategories={menu.length}
                 onNameChange={handleCategoryNameChange}
                 onMoveUp={handleMoveSectionUp}
@@ -518,7 +542,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
               />
             </div>
             <div>
-              {isEditing ? (
+              {mode === 'edit' ? (
                 <DndContext 
                   sensors={sensors}
                   collisionDetection={closestCenter}
@@ -535,7 +559,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                         catIndex={catIndex}
                         itemIndex={itemIndex}
                         item={item}
-                        isEditing={isEditing}
+                        isEditing={true}
                         activeIconPicker={activeIconPicker}
                         onToggleIconPicker={toggleIconPicker}
                         onIconChange={handleIconChange}
@@ -543,6 +567,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                         onNoteChange={handleNoteChange}
                         onDeleteItem={handleDeleteItem}
                         autoResizeTextarea={autoResizeTextarea}
+                        editMode={mode}
                       />
                     ))}
                   </SortableContext>
@@ -550,6 +575,24 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                     {activeId ? getDraggingItem(activeId) : null}
                   </DragOverlay>
                 </DndContext>
+              ) : mode === 'fill' ? (
+                category.items.map((item, itemIndex) => (
+                  <SortableMenuItem 
+                    key={`item-${catIndex}-${itemIndex}`}
+                    catIndex={catIndex}
+                    itemIndex={itemIndex}
+                    item={item}
+                    isEditing={true}
+                    activeIconPicker={activeIconPicker}
+                    onToggleIconPicker={toggleIconPicker}
+                    onIconChange={handleIconChange}
+                    onItemNameChange={handleItemNameChange}
+                    onNoteChange={handleNoteChange}
+                    onDeleteItem={handleDeleteItem}
+                    autoResizeTextarea={autoResizeTextarea}
+                    editMode={mode}
+                  />
+                ))
               ) : (
                 category.items.map((item, itemIndex) => (
                   <div key={itemIndex} className={`item ${getItemClassName(item.icon)}`}>
@@ -562,7 +605,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 ))
               )}
               
-              {isEditing && (
+              {mode === 'edit' && (
                 <div className="px-4 mt-6 mb-2">
                   <button
                     type="button"
@@ -581,7 +624,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
         ))}
       </div>
       
-      {isEditing && (
+      {mode === 'edit' && (
         <div className="my-8 flex justify-center">
           <button
             type="button"
