@@ -200,7 +200,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       people.join('_').replace(/\s+/g, '_') : 
       'relationship_menu';
     
-    a.download = `${peopleNames}_menu_${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `${peopleNames}_menu_${new Date().toISOString().split('T')[0]}.relationshipmenu`;
     document.body.appendChild(a);
     a.click();
     

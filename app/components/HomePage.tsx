@@ -43,8 +43,8 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       return;
     }
 
-    if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
-      setError('Please upload a JSON file');
+    if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu')) {
+      setError('Please upload a .json or .relationshipmenu file');
       return;
     }
 
@@ -101,7 +101,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden mb-16">
         <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
           <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Create a New Menu</h2>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">Choose from our templates to get started quickly</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">Choose a template to get started quickly</p>
         </div>
         <div className="p-4 sm:p-8">
           <TemplateSelector onTemplateSelected={handleTemplateSelected} />
@@ -121,7 +121,7 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden mb-16">
         <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
           <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Have an Existing Menu?</h2>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">Upload your JSON file to continue working on it</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-1">Upload your menu file to continue working on it</p>
         </div>
         <div className="p-8">
           <div 
@@ -142,13 +142,13 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
               Upload Your Relationship Menu
             </p>
             <p className="text-[var(--main-text-color-hover)] mb-2">
-              Drag and drop a JSON file or click to browse
+              Drag and drop a menu file or click to browse
             </p>
             
             <input 
               id="file-input"
               type="file" 
-              accept=".json,application/json" 
+              accept=".json,.relationshipmenu,application/json" 
               className="hidden" 
               onChange={handleFileChange} 
             />
