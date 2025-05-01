@@ -156,7 +156,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     }
   };
 
-  const handleDownload = () => {
+  const handleJSONDownload = () => {
     // Create a blob with the JSON data
     const jsonString = JSON.stringify(isEditing ? editedData : menuData, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
@@ -171,7 +171,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
       people.join('_').replace(/\s+/g, '_') : 
       'relationship_menu';
     
-    a.download = `${peopleNames}_menu_${new Date().toISOString().split('T')[0]}.relationshipmenu`;
+    a.download = `${peopleNames}_menu_${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     
@@ -476,7 +476,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 isOpen={shareDropdownOpen}
                 onClose={() => setShareDropdownOpen(false)}
                 onCopyLink={handleCopyLink}
-                onDownload={handleDownload}
+                onJSONDownload={handleJSONDownload}
                 onExportPDF={handleExportPDF}
               />
             </div>

@@ -4,11 +4,11 @@ interface ShareDropdownProps {
   isOpen: boolean;
   onClose: () => void;
   onCopyLink: () => void;
-  onDownload: () => void;
+  onJSONDownload: () => void;
   onExportPDF: () => void;
 }
 
-export function ShareDropdown({ isOpen, onClose, onCopyLink, onDownload, onExportPDF }: ShareDropdownProps) {
+export function ShareDropdown({ isOpen, onClose, onCopyLink, onJSONDownload, onExportPDF }: ShareDropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [advancedOpen, setAdvancedOpen] = useState(false);
 
@@ -86,7 +86,7 @@ export function ShareDropdown({ isOpen, onClose, onCopyLink, onDownload, onExpor
               
               <button
                 onClick={() => {
-                  onDownload();
+                  onJSONDownload();
                   onClose();
                 }}
                 className="flex flex-col px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors w-full"
