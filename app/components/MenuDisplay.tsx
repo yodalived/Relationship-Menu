@@ -9,6 +9,7 @@ import { CategoryHeader } from './CategoryHeader';
 import { Toast } from './ui/Toast';
 import { ShareDropdown } from './ui/ShareDropdown';
 import { ConfirmModal } from './ui/ConfirmModal';
+import { generateMenuPDF } from '../utils/pdf';
 
 interface MenuDisplayProps {
   menuData: MenuData;
@@ -177,6 +178,39 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     // Clean up
     URL.revokeObjectURL(url);
     document.body.removeChild(a);
+  };
+
+  const handleExportPDF = () => {
+    try {
+      // Get the current menu data
+      const currentData = isEditing ? editedData : menuData;
+      
+      // Generate the PDF file
+      const pdfBlob = generateMenuPDF(currentData);
+      
+      // Create a download link and trigger the download
+      const url = URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      
+      // Create filename from people's names
+      const peopleNames = people.length > 0 ? 
+        people.join('_').replace(/\s+/g, '_') : 
+        'relationship_menu';
+      
+      a.download = `${peopleNames}_menu_${new Date().toISOString().split('T')[0]}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Clean up
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      showNotification('PDF exported successfully!');
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+      showNotification('Failed to export PDF');
+    }
   };
 
   const showNotification = (message: string) => {
@@ -443,6 +477,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
                 onClose={() => setShareDropdownOpen(false)}
                 onCopyLink={handleCopyLink}
                 onDownload={handleDownload}
+                onExportPDF={handleExportPDF}
               />
             </div>
             

@@ -81,24 +81,19 @@ export default function PrivacyPolicy() {
                       Download your menu as a JSON file and share it through any channel you prefer. 
                       This method is ideal for permanent storage or when you want to keep a backup of your menu.
                     </p>
-                    <div className="bg-gray-50 dark:bg-gray-600 p-2 rounded-lg ml-3 sm:ml-6 space-y-2">
-                      <div className="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
-                        </svg>
-                        <p className="text-gray-700 dark:text-gray-300 text-sm">
-                          <span className="font-medium">For recipients:</span> Anyone can view the menu by simply dragging and dropping the JSON file onto the website.
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                        </svg>
-                        <p className="text-gray-700 dark:text-gray-300 text-sm">
-                          <span className="font-medium">For the nerds among us:</span> The JSON files can of course also be nicely stored in a git repository for version control, allowing you to track changes to your relationship menu over time.
-                        </p>
-                      </div>
-                    </div>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
+                    <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                      Exporting as PDF
+                    </h4>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
+                      Export your menu as a beautifully formatted PDF document that's ready for printing or sharing.
+                      This creates a professional-looking representation of your relationship menu.
+                    </p>
                   </div>
                   
                   <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
@@ -115,14 +110,14 @@ export default function PrivacyPolicy() {
                   </div>
                 </div>
                 
-                <h4 className="font-medium text-gray-800 dark:text-gray-200 mt-4 mb-2">Privacy Benefits of Both Sharing Methods</h4>
+                <h4 className="font-medium text-gray-800 dark:text-gray-200 mt-4 mb-2">Privacy Benefits of All Sharing Methods</h4>
                 <ul className="list-disc ml-3 sm:ml-5 space-y-1 text-gray-700 dark:text-gray-300">
                   <li>Your personal data remains on your device until you explicitly choose to share it</li>
                   <li>No menu information is ever stored in external databases or transmitted to servers</li>
                   <li>You maintain absolute control over who can access your relationship preferences</li>
                 </ul>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
                   <div className="bg-blue-50/50 dark:bg-blue-900/20 p-2 rounded-lg border border-blue-100 dark:border-blue-800">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">URL Sharing Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
@@ -137,6 +132,14 @@ export default function PrivacyPolicy() {
                       <li>Permanent offline storage</li>
                       <li>Easy backup and archiving</li>
                       <li>Version control possibilities</li>
+                    </ul>
+                  </div>
+                  <div className="bg-purple-50/50 dark:bg-purple-900/20 p-2 rounded-lg border border-purple-100 dark:border-purple-800">
+                    <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">PDF Advantages</h5>
+                    <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
+                      <li>Professional presentation</li>
+                      <li>Ready for printing</li>
+                      <li>Widely compatible format</li>
                     </ul>
                   </div>
                 </div>

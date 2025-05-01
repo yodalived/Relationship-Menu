@@ -1,0 +1,207 @@
+import jsPDF from 'jspdf';
+import { MenuData } from '../../types';
+import { PDF_CONFIG } from './constants';
+import { addHeader, addCompactHeader, addLegend, addFooter, drawSectionHeader, drawMenuItem } from './components';
+import { DocumentContext } from './types';
+
+/**
+ * Generates a PDF for the given relationship menu data
+ * @param menuData The relationship menu data to convert to PDF
+ * @returns The generated PDF as a Blob
+ */
+export function generateMenuPDF(menuData: MenuData): Blob {
+  // Create PDF instance
+  const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  pdf.setFont('helvetica');
+  
+  // Create a deep copy of menu data to avoid modifying the original
+  const workingMenuData = JSON.parse(JSON.stringify(menuData));
+  
+  // Initialize rendering context
+  const context: DocumentContext = {
+    currentPage: 1,
+    yPos: 0,
+    contentMaxY: 297 - PDF_CONFIG.footerHeight - PDF_CONFIG.minFooterMargin,
+    renderedSectionsOnPage: new Set<string>()
+  };
+  
+  // Calculate header and legend heights (but don't use them now, just for documentation)
+  addHeader(pdf, menuData, 0, true);
+  addCompactHeader(pdf, menuData, 1, true);
+  
+  // Add header to first page
+  context.yPos = addHeader(pdf, menuData, 0);
+  
+  // Add legend to first page
+  context.yPos = addLegend(pdf, context.yPos, false);
+  
+  // Process each category
+  let categoryIndex = 0;
+  
+  while (categoryIndex < workingMenuData.menu.length) {
+    const category = workingMenuData.menu[categoryIndex];
+    
+    // Check if we need to render section header
+    if (!context.renderedSectionsOnPage.has(category.name)) {
+      // Calculate section header height
+      const sectionHeaderHeight = drawSectionHeader(pdf, category, 0, false, true);
+      
+      // Check if section header fits on current page
+      if (context.yPos + sectionHeaderHeight > context.contentMaxY) {
+        // Start a new page
+        startNewPage(pdf, menuData, context);
+      }
+      
+      // Render section header
+      context.yPos = drawSectionHeader(pdf, category, context.yPos, false);
+      context.renderedSectionsOnPage.add(category.name);
+    }
+    
+    // Process items within the category
+    let allItemsProcessed = false;
+    
+    while (!allItemsProcessed) {
+      const initialItemCount = category.items.length;
+      let itemProcessed = false;
+      
+      // Try to fit any item from this category
+      for (let i = 0; i < category.items.length; i++) {
+        const item = category.items[i];
+        const isLastItem = i === category.items.length - 1 && categoryIndex === workingMenuData.menu.length - 1;
+        const isLastInSection = i === category.items.length - 1;
+        
+        // Calculate full item height
+        const itemHeight = drawMenuItem(pdf, item, 0, isLastItem, true, isLastInSection);
+        
+        // Check if item fits entirely on current page
+        if (context.yPos + itemHeight <= context.contentMaxY) {
+          // Item fits, render it
+          context.yPos = drawMenuItem(pdf, item, context.yPos, isLastItem, false, isLastInSection);
+          
+          // Remove the item from the category
+          category.items.splice(i, 1);
+          
+          itemProcessed = true;
+          break;
+        } 
+        // Check if we should split the note across pages
+        else if (item.note && item.note.trim().length > 0) {
+          const remainingSpace = context.contentMaxY - context.yPos;
+          
+          // If we have significant empty space (>10mm) and it's due to the note that it doesn't fit
+          if (remainingSpace > 10) {
+            // Calculate item height without note
+            const headerOnlyHeight = PDF_CONFIG.lineHeight;
+            
+            // If the header part fits
+            if (context.yPos + headerOnlyHeight <= context.contentMaxY) {
+              // Calculate how much of the note can fit on this page
+              const availableSpaceForNote = remainingSpace - headerOnlyHeight - PDF_CONFIG.noteItemSpacing;
+              const approximateLinesFitting = Math.floor(availableSpaceForNote / PDF_CONFIG.noteLineHeight);
+              
+              if (approximateLinesFitting > 0) {
+                // Split the note text
+                pdf.setFont('helvetica', 'normal');
+                pdf.setFontSize(PDF_CONFIG.noteFontSize);
+                const textWidth = 190 - PDF_CONFIG.margin - PDF_CONFIG.iconOffset;
+                const allNoteLines = pdf.splitTextToSize(item.note, textWidth);
+                
+                // Check if all lines fit on the first page
+                if (approximateLinesFitting >= allNoteLines.length) {
+                  // All lines fit, render the whole item on this page
+                  context.yPos = drawMenuItem(pdf, item, context.yPos, isLastItem, false, isLastInSection);
+                  
+                  // Remove the original item from the category
+                  category.items.splice(i, 1);
+                  
+                  itemProcessed = true;
+                  break;
+                }
+                
+                // Create a copy of the item for first page with partial note
+                const firstPageItem = { ...item };
+                firstPageItem.note = allNoteLines.slice(0, approximateLinesFitting).join('\n');
+                // Add continuation indicator to the first page note
+                firstPageItem.continuesOnNextPage = true;
+                
+                // Create a copy of the item for second page with remaining note
+                const secondPageItem = { ...item };
+                secondPageItem.note = allNoteLines.slice(approximateLinesFitting).join('\n');
+                secondPageItem.continuedNote = true;
+                
+                // Render first part of the item
+                context.yPos = drawMenuItem(pdf, firstPageItem, context.yPos, true, false, false);
+                
+                // Start a new page
+                startNewPage(pdf, menuData, context);
+                
+                // Check if we need to render section header on the new page
+                if (!context.renderedSectionsOnPage.has(category.name)) {
+                  context.yPos = drawSectionHeader(pdf, category, context.yPos, false);
+                  context.renderedSectionsOnPage.add(category.name);
+                }
+                
+                // Render second part of the item
+                context.yPos = drawMenuItem(pdf, secondPageItem, context.yPos, isLastItem, false, isLastInSection);
+                
+                // Remove the original item from the category
+                category.items.splice(i, 1);
+                
+                itemProcessed = true;
+                break;
+              }
+            }
+          }
+        }
+      }
+      
+      // If no item could fit on this page, move to a new page
+      if (!itemProcessed) {
+        // If we couldn't process any item, start a new page
+        startNewPage(pdf, menuData, context);
+        
+        // Reset rendered sections for the new page
+        context.renderedSectionsOnPage = new Set<string>();
+        
+        // Don't advance category index yet
+        break;
+      }
+      
+      // If all items in this category have been processed, move to next category
+      if (category.items.length === 0) {
+        categoryIndex++;
+        allItemsProcessed = true;
+      }
+      
+      // Safety check: if we didn't process any items but didn't start a new page,
+      // this would lead to an infinite loop. Break out in this case.
+      if (!itemProcessed && initialItemCount === category.items.length) {
+        console.error("Warning: Could not process any items but didn't start a new page.");
+        allItemsProcessed = true;
+        categoryIndex++;
+      }
+    }
+  }
+  
+  // Add footer to each page
+  addFooter(pdf, menuData);
+  
+  return pdf.output('blob');
+}
+
+/**
+ * Starts a new page in the PDF document
+ */
+function startNewPage(pdf: jsPDF, menuData: MenuData, context: DocumentContext): void {
+  pdf.addPage();
+  context.currentPage++;
+  
+  // Add compact header to new page
+  context.yPos = addCompactHeader(pdf, menuData, context.currentPage);
+  
+  // Add legend to new page
+  context.yPos = addLegend(pdf, context.yPos, true);
+  
+  // Clear the rendered sections set for the new page
+  context.renderedSectionsOnPage = new Set<string>();
+}
