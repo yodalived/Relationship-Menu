@@ -73,26 +73,27 @@ export default function PrivacyPolicy() {
                   <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
                     <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                      </svg>
-                      Downloading as JSON File
-                    </h4>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
-                      Download your menu as a JSON file and share it through any channel you prefer. 
-                      This method is ideal for permanent storage or when you want to keep a backup of your menu.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
-                    <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                       </svg>
                       Exporting as PDF
                     </h4>
                     <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
                       Export your menu as a beautifully formatted PDF document that's ready for printing or sharing.
-                      This creates a professional-looking representation of your relationship menu.
+                      The exported PDF file can be opened on any device with a PDF viewer and be edited on this website.
+                      <b>This is the recommended method for sharing your menu.</b>
+                    </p>
+                  </div>
+
+                  <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
+                    <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      Downloading as JSON File
+                    </h4>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
+                      Download your menu as a JSON file. If you don't know what that means this likely isn't for you.
+                      Can be used to put the menu into a git repository or other version control system.
                     </p>
                   </div>
                   
@@ -118,7 +119,17 @@ export default function PrivacyPolicy() {
                 </ul>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
-                  <div className="bg-blue-50/50 dark:bg-blue-900/20 p-2 rounded-lg border border-blue-100 dark:border-blue-800">
+                  <div className="bg-green-50/50 dark:bg-green-900/20 p-2 rounded-lg border border-green-100 dark:border-green-800">
+                    <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">PDF Advantages</h5>
+                    <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
+                      <li>Professional presentation</li>
+                      <li>Ready for printing</li>
+                      <li>Widely compatible format</li>
+                      <li>Contains json menu data</li>
+                      <li>Editable on this website</li>
+                    </ul>
+                  </div>
+                  <div className="bg-purple-50/50 dark:bg-purple-900/20 p-2 rounded-lg border border-purple-100 dark:border-purple-800  ">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">URL Sharing Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
                       <li>One-click access for recipients</li>
@@ -126,20 +137,12 @@ export default function PrivacyPolicy() {
                       <li>Works on any device with a browser</li>
                     </ul>
                   </div>
-                  <div className="bg-green-50/50 dark:bg-green-900/20 p-2 rounded-lg border border-green-100 dark:border-green-800">
+                  <div className="bg-blue-50/50 dark:bg-blue-900/20 p-2 rounded-lg border border-blue-100 dark:border-blue-800 ">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">JSON File Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
                       <li>Permanent offline storage</li>
                       <li>Easy backup and archiving</li>
                       <li>Version control possibilities</li>
-                    </ul>
-                  </div>
-                  <div className="bg-purple-50/50 dark:bg-purple-900/20 p-2 rounded-lg border border-purple-100 dark:border-purple-800">
-                    <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">PDF Advantages</h5>
-                    <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
-                      <li>Professional presentation</li>
-                      <li>Ready for printing</li>
-                      <li>Widely compatible format</li>
                     </ul>
                   </div>
                 </div>
@@ -154,7 +157,8 @@ export default function PrivacyPolicy() {
                   <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6">
                     While URL-encoded menus result in very long links, this approach was deliberately chosen to prioritize your privacy. 
                     By embedding data in the URL rather than storing it in a database, your personal relationship preferences remain 
-                    private and under your control at all times.
+                    private and under your control at all times. However, PDF files are currently recommended for sharing as long
+                    links can break easily in some apps.
                   </p>
                 </div>
                 

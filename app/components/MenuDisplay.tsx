@@ -180,13 +180,13 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
     document.body.removeChild(a);
   };
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
     try {
       // Get the current menu data
       const currentData = isEditing ? editedData : menuData;
       
       // Generate the PDF file
-      const pdfBlob = generateMenuPDF(currentData);
+      const pdfBlob = await generateMenuPDF(currentData);
       
       // Create a download link and trigger the download
       const url = URL.createObjectURL(pdfBlob);
@@ -263,7 +263,7 @@ export default function MenuDisplay({ menuData, onReset, onSave }: MenuDisplayPr
 
   const handleResetConfirmed = (shouldDownload: boolean) => {
     if (shouldDownload) {
-      handleDownload();
+      handleExportPDF();
     }
     onReset();
     setConfirmModalOpen(false);

@@ -5,6 +5,7 @@ import TemplateSelector from './TemplateSelector';
 import Link from 'next/link';
 import { MenuData } from '../types';
 import { migrateMenuData } from '../utils/migrations';
+import { extractMenuDataFromPDF } from '../utils/pdf/extract';
 
 interface FileUploadProps {
   onFileLoaded: (data: MenuData) => void;
@@ -13,6 +14,7 @@ interface FileUploadProps {
 export default function FileUpload({ onFileLoaded }: FileUploadProps) {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -36,45 +38,82 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
     setIsDragging(false);
   };
 
-  const processFile = (file?: File) => {
+  const processFile = async (file?: File) => {
     setError(null);
+    setIsProcessing(true);
     
     if (!file) {
       setError('No file selected');
+      setIsProcessing(false);
       return;
     }
 
-    if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu')) {
-      setError('Please upload a .json or .relationshipmenu file');
-      return;
-    }
-
-    const reader = new FileReader();
-    
-    reader.onload = (e) => {
-      try {
-        const content = e.target?.result as string;
-        const data = JSON.parse(content) as MenuData;
-        
-        // Validate the data structure
-        if (!data.last_update || !Array.isArray(data.people) || !Array.isArray(data.menu)) {
-          throw new Error('Invalid JSON structure. The file must contain last_update, people, and menu fields.');
+    try {
+      // Check if it's a PDF file
+      if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+        try {
+          // Convert the file to an ArrayBuffer
+          const arrayBuffer = await file.arrayBuffer();
+          
+          // Use the utility function to extract menu data
+          const menuData = await extractMenuDataFromPDF(arrayBuffer);
+          
+          if (menuData) {
+            onFileLoaded(menuData);
+            setIsProcessing(false);
+            return;
+          }
+          
+          setError('No relationship menu data found in this PDF');
+          setIsProcessing(false);
+        } catch (err) {
+          console.error('Error processing PDF:', err);
+          setError('Failed to extract data from PDF. Please upload a JSON file instead.');
+          setIsProcessing(false);
         }
-        
-        // Migrate data to latest schema version
-        const migratedData = migrateMenuData(data);
-        
-        onFileLoaded(migratedData);
-      } catch (err) {
-        setError((err as Error).message || 'Failed to parse JSON file');
+        return;
       }
-    };
-    
-    reader.onerror = () => {
-      setError('Error reading file');
-    };
-    
-    reader.readAsText(file);
+      
+      // Process JSON files
+      if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu')) {
+        setError('Please upload a .json, .relationshipmenu, or .pdf file');
+        setIsProcessing(false);
+        return;
+      }
+
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        try {
+          const content = e.target?.result as string;
+          const data = JSON.parse(content) as MenuData;
+          
+          // Validate the data structure
+          if (!data.last_update || !Array.isArray(data.people) || !Array.isArray(data.menu)) {
+            throw new Error('Invalid JSON structure. The file must contain last_update, people, and menu fields.');
+          }
+          
+          // Migrate data to latest schema version
+          const migratedData = migrateMenuData(data);
+          
+          onFileLoaded(migratedData);
+          setIsProcessing(false);
+        } catch (err) {
+          setError((err as Error).message || 'Failed to parse JSON file');
+          setIsProcessing(false);
+        }
+      };
+      
+      reader.onerror = () => {
+        setError('Error reading file');
+        setIsProcessing(false);
+      };
+      
+      reader.readAsText(file);
+    } catch (err) {
+      setError((err as Error).message || 'Failed to process file');
+      setIsProcessing(false);
+    }
   };
 
   const handleTemplateSelected = async (templatePath: string, people: string[]) => {
@@ -131,28 +170,43 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
           <div 
             className={`border-3 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.05)] dark:hover:bg-[rgba(158,198,204,0.03)] ${
               isDragging ? 'border-[var(--main-text-color)] bg-blue-50 dark:bg-blue-900/20 scale-[1.02]' : 'border-[var(--main-bg-color)] dark:border-[rgba(158,198,204,0.4)]'
-            }`}
+            } ${isProcessing ? 'opacity-70 pointer-events-none' : ''}`}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
-            onClick={() => document.getElementById('file-input')?.click()}
+            onClick={() => !isProcessing && document.getElementById('file-input')?.click()}
           >
-            <div className="mb-6 transform transition-transform duration-300 hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-            </div>
+            {isProcessing ? (
+              <div className="mb-6 animate-spin">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </div>
+            ) : (
+              <div className="mb-6 transform transition-transform duration-300 hover:scale-110">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+              </div>
+            )}
             <p className="mb-3 text-xl text-[var(--main-text-color)] font-semibold">
-              Upload Your Relationship Menu
+              {isProcessing ? 'Processing File...' : 'Upload Your Relationship Menu'}
             </p>
-            <p className="text-[var(--main-text-color-hover)] mb-2">
-              Drag and drop a menu file or click to browse
-            </p>
+            {!isProcessing && (
+              <>
+                <p className="text-[var(--main-text-color-hover)] mb-2">
+                  Drag and drop a menu file or click to browse
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                  (supports pdf files created by this website, .json and .relationshipmenu files)
+                </p>
+              </>
+            )}
             
             <input 
               id="file-input"
               type="file" 
-              accept=".json,.relationshipmenu,application/json" 
+              accept=".json,.relationshipmenu,.pdf,application/json,application/pdf" 
               className="hidden" 
               onChange={handleFileChange} 
             />

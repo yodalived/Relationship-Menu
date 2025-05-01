@@ -163,41 +163,66 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
   for (let i = 1; i <= pageCount; i++) {
     pdf.setPage(i);
     
-    // Simple dark background
-    pdf.setFillColor(35, 35, 35); // Slightly darker than the default
-    pdf.rect(0, 297 - PDF_CONFIG.footerHeight, 210, PDF_CONFIG.footerHeight, 'F');
+    // Gradient background (darker at bottom, slightly lighter at top)
+    const footerHeight = PDF_CONFIG.footerHeight;
+    const footerTop = 297 - footerHeight;
     
-    // Calculate the vertical center of the footer
-    const footerY = 297 - (PDF_CONFIG.footerHeight / 2);
+    // Draw background
+    pdf.setFillColor(40, 40, 40); // Slightly darker than before
+    pdf.rect(0, footerTop, 210, footerHeight, 'F');
     
-    // Add text with white color
+    // Add a subtle divider line at the top of the footer
+    pdf.setDrawColor(80, 80, 80);
+    pdf.setLineWidth(0.2);
+    pdf.line(0, footerTop + 0.5, 210, footerTop + 0.5);
+    
+    // Calculate positions
+    const footerMidY = footerTop + (footerHeight / 2);
+    
+    // Left section: site attribution and edit info
     pdf.setTextColor(255, 255, 255);
-    
-    // Left: site attribution
-    pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(9.5);
+    pdf.setFont('helvetica', 'bold');
     const siteText = "relationshipmenu.org";
-    const textWidth = pdf.getTextWidth(siteText);
+    pdf.text(siteText, PDF_CONFIG.margin, footerMidY - 2, { baseline: 'middle' });
+
+    // Add clearer editable note below website name
+    pdf.setFontSize(7.5);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(210, 210, 210); // Slightly lighter color for secondary text
+    const editableText = "You can import and edit this PDF file on the website.";
+    pdf.text(editableText, PDF_CONFIG.margin, footerMidY + 2, { baseline: 'middle' });
     
-    // Draw the text
-    pdf.text(siteText, PDF_CONFIG.margin, footerY, { baseline: 'middle' });
+    // Calculate maximum width for the clickable area
+    const siteTextWidth = pdf.getTextWidth(siteText);
+    const editableTextWidth = pdf.getTextWidth(editableText);
+    const maxWidth = Math.max(siteTextWidth, editableTextWidth);
     
-    // Add clickable link to the website
+    // Add clickable link covering both lines of text
     pdf.link(
       PDF_CONFIG.margin, 
-      footerY - 5, 
-      textWidth, 
-      10, 
+      footerMidY - 8, 
+      maxWidth, 
+      16, 
       { url: 'https://relationshipmenu.org' }
     );
     
-    // Center: last updated date
-    pdf.text(`Last updated: ${updateDate}`, 105, footerY, { align: 'center', baseline: 'middle' });
+    // Right side: page number and last updated
+    const rightX = 210 - PDF_CONFIG.margin;
     
-    // Right: page number if multiple pages
+    // Page number if multiple pages
     if (pageCount > 1) {
-      pdf.text(`Page ${i} of ${pageCount}`, 210 - PDF_CONFIG.margin, footerY, { align: 'right', baseline: 'middle' });
+      pdf.setFontSize(8.5);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(210, 210, 210);
+      pdf.text(`Page ${i} of ${pageCount}`, rightX, footerMidY - 2, { align: 'right', baseline: 'middle' });
     }
+    
+    // Last updated info (moved to right side, below page counter)
+    pdf.setFontSize(7);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(180, 180, 180);
+    pdf.text(`Last updated: ${updateDate}`, rightX, footerMidY + 2, { align: 'right', baseline: 'middle' });
   }
 }
 

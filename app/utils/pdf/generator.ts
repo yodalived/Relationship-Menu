@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import { PDFDocument } from 'pdf-lib';
 import { MenuData } from '../../types';
 import { PDF_CONFIG } from './constants';
 import { addHeader, addCompactHeader, addLegend, addFooter, drawSectionHeader, drawMenuItem } from './components';
@@ -9,7 +10,7 @@ import { DocumentContext } from './types';
  * @param menuData The relationship menu data to convert to PDF
  * @returns The generated PDF as a Blob
  */
-export function generateMenuPDF(menuData: MenuData): Blob {
+export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
   // Create PDF instance
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   pdf.setFont('helvetica');
@@ -186,7 +187,36 @@ export function generateMenuPDF(menuData: MenuData): Blob {
   // Add footer to each page
   addFooter(pdf, menuData);
   
-  return pdf.output('blob');
+  // Get the PDF as ArrayBuffer from jsPDF
+  const pdfBuffer = pdf.output('arraybuffer');
+  
+  // Now use pdf-lib to add the attachment
+  try {
+    // Load the PDF with pdf-lib
+    const pdfDoc = await PDFDocument.load(pdfBuffer);
+    
+    // Convert menu data to JSON string
+    const menuJsonData = JSON.stringify(menuData);
+    
+    // Add file attachment to the PDF
+    const menuJsonBytes = new TextEncoder().encode(menuJsonData);
+    
+    // Add file attachment
+    pdfDoc.attach(menuJsonBytes, 'relationshipmenu.json', {
+      mimeType: 'application/json',
+      description: 'Relationship Menu Data'
+    });
+    
+    // Save the modified PDF
+    const modifiedPdfBytes = await pdfDoc.save();
+    
+    // Return as Blob
+    return new Blob([modifiedPdfBytes], { type: 'application/pdf' });
+  } catch (error) {
+    console.error("Failed to attach menu data to PDF:", error);
+    // Fall back to returning the original PDF if attachment fails
+    return new Blob([pdfBuffer], { type: 'application/pdf' });
+  }
 }
 
 /**
