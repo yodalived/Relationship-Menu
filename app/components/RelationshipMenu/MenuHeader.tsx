@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuMode } from '../../types';
-import { IconPlus, IconTrash } from '../icons';
+import { IconPlus, IconInfo } from '../icons';
+import { PersonNameInput } from '../ui/PersonNameInput';
 
 interface MenuHeaderProps {
   mode: MenuMode;
@@ -42,50 +43,42 @@ export function MenuHeader({
   };
 
   return (
-    <div className="w-full md:w-auto">
-      <div className="menu-header w-full">
-        {mode === 'edit' ? (
-          <div className="flex flex-col">
-            <h2 className="text-xl font-bold mb-2">Menu for:</h2>
-            <div className="space-y-2">
-              {people.map((personName, index) => (
-                <div key={index} className="flex items-center">
-                  <input
-                    type="text"
-                    value={personName}
-                    onChange={(e) => onPersonNameChange(index, e.target.value)}
-                    className="p-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--main-text-color)] focus:border-transparent"
-                    placeholder="Person name"
-                  />
-                  {people.length > 2 && (
-                    <button
-                      type="button"
-                      onClick={() => onDeletePerson(index)}
-                      className="ml-2 p-1 text-gray-500 hover:text-red-500 transition-colors"
-                      title="Remove person"
-                    >
-                      <IconTrash />
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={onAddPerson}
-                className="mt-2 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors"
-              >
-                <IconPlus className="h-5 w-5 mr-1" />
-                Add Person
-              </button>
-            </div>
+    <div className="w-full md:w-auto transition-all duration-150">
+      {mode === 'edit' ? (
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-200 dark:border-gray-700 transition-all">
+          <h2 className="text-xl font-bold mb-5 text-[var(--main-text-color)] dark:text-[var(--main-text-color)] transition-colors">Menu for:</h2>
+          <div className="space-y-4 w-full max-w-xl">
+            {people.map((personName, index) => (
+              <PersonNameInput
+                key={index}
+                name={personName}
+                index={index}
+                onChange={(value) => onPersonNameChange(index, value)}
+                onDelete={people.length > 2 ? () => onDeletePerson(index) : undefined}
+                showDelete={people.length > 2}
+              />
+            ))}
+            <button
+              type="button"
+              onClick={onAddPerson}
+              className="mt-4 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-all duration-150 bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] hover:bg-[rgba(158,198,204,0.2)] dark:hover:bg-[rgba(158,198,204,0.1)] px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)] text-base"
+            >
+              <IconPlus className="h-5 w-5 mr-2 transition-transform group-hover:scale-110" />
+              Add Person
+            </button>
           </div>
-        ) : (
-          <>
-            <h2 className="truncate max-w-[calc(100vw-20px)] md:max-w-none mb-0 text-[var(--main-text-color)] dark:text-white text-2xl">Menu for {formatPeople(people)}</h2>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">Last updated: {formatDate(lastUpdate)}</p>
-          </>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="transition-all duration-150">
+          <div className="flex items-center">
+            <IconInfo className="h-6 w-6 text-[var(--main-text-color)] mr-2 transition-transform hover:scale-110" />
+            <h2 className="text-[var(--main-text-color)] dark:text-[var(--main-text-color)] font-bold text-2xl transition-colors">
+              Menu for {formatPeople(people)}
+            </h2>
+          </div>
+          <p className="text-sm text-gray-700 dark:text-gray-300 pl-8 transition-colors">Last updated: {formatDate(lastUpdate)}</p>
+        </div>
+      )}
     </div>
   );
 } 

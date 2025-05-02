@@ -125,28 +125,32 @@ export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'vie
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        {/* Menu Header Component */}
-        <MenuHeader 
-          mode={mode}
-          people={people}
-          lastUpdate={last_update}
-          onPersonNameChange={handlePersonNameChange}
-          onAddPerson={handleAddPerson}
-          onDeletePerson={handleDeletePerson}
-        />
-        
-        {/* Menu Toolbar Component */}
-        <MenuToolbar 
-          mode={mode}
-          onModeChange={handleModeChange}
-          shareDropdownOpen={shareDropdownOpen}
-          toggleShareDropdown={toggleShareDropdown}
-          onCopyLink={handleCopyLink}
-          onJSONDownload={handleJSONDownload}
-          onExportPDF={handleExportPDF}
-          onReset={handleResetWithConfirm}
-        />
+      <div className="bg-[rgba(148,188,194,0.07)] dark:bg-[rgba(79,139,149,0.07)] rounded-xl shadow-sm border border-[rgba(148,188,194,0.2)] dark:border-[rgba(79,139,149,0.2)] p-4 md:p-5 mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+          {/* Menu Header Component */}
+          <MenuHeader 
+            mode={mode}
+            people={people}
+            lastUpdate={last_update}
+            onPersonNameChange={handlePersonNameChange}
+            onAddPerson={handleAddPerson}
+            onDeletePerson={handleDeletePerson}
+          />
+          
+          {/* Menu Toolbar Component */}
+          <div className="w-full md:w-auto mt-4 md:mt-0">
+            <MenuToolbar 
+              mode={mode}
+              onModeChange={handleModeChange}
+              shareDropdownOpen={shareDropdownOpen}
+              toggleShareDropdown={toggleShareDropdown}
+              onCopyLink={handleCopyLink}
+              onJSONDownload={handleJSONDownload}
+              onExportPDF={handleExportPDF}
+              onReset={handleResetWithConfirm}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Menu Content Component */}

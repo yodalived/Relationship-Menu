@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MenuItem } from '../../../types';
 import { IconPicker, renderIcon, ICON_OPTIONS } from '../../ui/IconPicker';
 import { getItemClassName } from './utils';
@@ -26,7 +26,15 @@ export function FillMenuItem({
   autoResizeTextarea
 }: FillMenuItemProps) {
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   
+  // Effect to resize textarea when entering edit mode with existing content
+  useEffect(() => {
+    if (isNoteExpanded && textareaRef.current) {
+      autoResizeTextarea(textareaRef.current);
+    }
+  }, [isNoteExpanded, autoResizeTextarea]);
+
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
 
@@ -81,6 +89,7 @@ export function FillMenuItem({
       // Full textarea editor when expanded
       return (
         <textarea 
+          ref={textareaRef}
           value={item.note || ''} 
           onChange={(e) => {
             onNoteChange(catIndex, itemIndex, e.target.value);
@@ -88,7 +97,7 @@ export function FillMenuItem({
           }}
           onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
           onBlur={() => setIsNoteExpanded(false)}
-          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
           placeholder="Add a note..."
           style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
           autoFocus
@@ -109,8 +118,8 @@ export function FillMenuItem({
       return (
         <div 
           onClick={handleExpandNote}
-          className="text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 cursor-text ml-20 mt-1 text-sm whitespace-pre-line"
-          style={{ marginTop: '-0.8rem' }}
+          className={`text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-50 cursor-text text-sm whitespace-pre-line ${!item.note ? 'text-gray-500 dark:text-gray-400' : ''}`}
+          style={{ marginTop: '-0.8rem', marginLeft: '5.6rem' }}
         >
           {formattedNote}
         </div>

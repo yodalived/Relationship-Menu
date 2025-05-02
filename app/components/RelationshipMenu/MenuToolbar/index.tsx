@@ -26,8 +26,8 @@ export function MenuToolbar({
   onReset
 }: MenuToolbarProps) {
   return (
-    <div className="flex flex-col w-full md:w-auto md:flex-row items-end md:items-center gap-2 md:gap-4">
-      <div className="flex gap-2 flex-wrap justify-end w-full md:w-auto">
+    <div className="flex flex-col w-full md:w-auto md:flex-row items-end md:items-center gap-2 md:gap-6">
+      <div className="flex gap-2 md:gap-4 flex-wrap justify-end w-full md:w-auto">
         {/* Mode Selector Component */}
         <ModeSelector 
           currentMode={mode} 

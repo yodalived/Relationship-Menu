@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MenuItem } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
 import { getItemClassName } from './utils';
@@ -37,6 +37,14 @@ export function EditMenuItem({
 }: EditMenuItemProps) {
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  
+  // Effect to resize textarea when the component mounts with existing content
+  useEffect(() => {
+    if (textareaRef.current && item.note) {
+      autoResizeTextarea(textareaRef.current);
+    }
+  }, [autoResizeTextarea, item.note]);
 
   return (
     <div className={`item ${getItemClassName(item.icon)}`}>
@@ -71,13 +79,14 @@ export function EditMenuItem({
       
       <div className="mt-2">
         <textarea 
+          ref={textareaRef}
           value={item.note || ''} 
           onChange={(e) => {
             onNoteChange(catIndex, itemIndex, e.target.value);
             autoResizeTextarea(e.target as HTMLTextAreaElement);
           }}
           onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200"
+          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
           placeholder="Add a note..."
           style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
         />

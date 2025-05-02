@@ -21,7 +21,7 @@ export function ShareButton({
     <div className="relative flex-grow md:flex-grow-0">
       <button
         onClick={onToggle}
-        className="h-full px-3 md:px-4 py-2 bg-[var(--main-text-color)] text-white rounded-md hover:bg-[var(--main-text-color-hover)] transition-colors text-sm font-medium w-full md:w-auto min-w-[100px] flex items-center justify-center"
+        className="h-full px-3 md:px-4 py-3 bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] rounded-md hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)] transition-colors shadow-md text-sm font-medium w-full md:w-auto min-w-[100px] flex items-center justify-center border border-[var(--main-text-color)]"
         title="Share this menu"
       >
         <IconShare className="h-4 w-4 mr-1" />

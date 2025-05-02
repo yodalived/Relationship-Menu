@@ -48,18 +48,18 @@ export function MenuContent({
   return (
     <>
       <div 
-        className="content"
+        className="content gap-4 sm:gap-5 md:gap-5 lg:gap-6 xl:gap-8"
         role="region" 
         aria-label="Relationship Menu Content"
       >
         {menu.map((category, catIndex) => (
           <div 
             key={catIndex} 
-            className="category"
+            className="category bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700"
             role="region"
             aria-labelledby={`category-header-${catIndex}`}
           >
-            <div className="title">
+            <div className="title bg-[var(--main-bg-color)] dark:bg-[var(--main-bg-color)]">
               <CategoryHeader 
                 name={category.name}
                 catIndex={catIndex}
@@ -95,11 +95,11 @@ export function MenuContent({
               
               {/* Add Item button (only in edit mode) */}
               {isEditing && (
-                <div className="px-4 mt-6 mb-2">
+                <div className="px-4 mt-6 mb-6">
                   <button
                     type="button"
                     onClick={() => onAddItem(catIndex)}
-                    className="w-full py-3 border border-dashed border-gray-300 dark:border-gray-600 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-400 dark:hover:border-gray-500 transition-colors flex items-center justify-center bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-700"
+                    className="w-full py-3 border border-dashed border-gray-400 dark:border-gray-500 rounded-md text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-50 hover:border-gray-500 dark:hover:border-gray-400 transition-colors flex items-center justify-center bg-gray-50/70 dark:bg-gray-800/70 hover:bg-white dark:hover:bg-gray-700"
                     aria-label={`Add new item to ${category.name}`}
                   >
                     <IconPlus className="h-5 w-5 mr-2" />
@@ -118,7 +118,7 @@ export function MenuContent({
           <button
             type="button"
             onClick={onAddSection}
-            className="w-[80%] max-w-md py-4 px-3 border-2 border-dashed border-[var(--main-bg-color)] rounded-lg bg-[var(--main-bg-color)]/10 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] hover:border-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]/20 transition-colors flex items-center justify-center"
+            className="w-[80%] max-w-md py-4 px-3 border border-dashed border-[var(--main-text-color)] rounded-lg bg-[var(--main-bg-color)]/15 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] hover:border-[var(--main-text-color-hover)] hover:bg-[var(--main-bg-color)]/25 transition-colors flex items-center justify-center"
             aria-label="Add new section to menu"
           >
             <IconPlusCircle className="h-6 w-6 mr-2" />
@@ -128,7 +128,7 @@ export function MenuContent({
       )}
       
       <div className="mt-6 text-center" role="contentinfo" aria-label="Menu information">
-        <p className="text-sm text-gray-500 mb-2">
+        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
           This menu is saved in your browser and will be restored when you visit again.
           {(mode === 'edit' || mode === 'fill') && ' Changes are automatically saved as you type.'}
         </p>

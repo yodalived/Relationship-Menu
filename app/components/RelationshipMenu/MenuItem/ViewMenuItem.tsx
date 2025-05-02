@@ -18,11 +18,11 @@ export function ViewMenuItem({ item }: ViewMenuItemProps) {
     >
       <div className="item-name">
         {renderIcon(item.icon)}
-        <span>{item.name}</span>
+        <span className="text-gray-900 dark:text-gray-50">{item.name}</span>
         <span className="sr-only">, {iconLabel}</span>
       </div>
       {item.note && (
-        <div className="item-note" aria-label={`Note: ${item.note}`}>
+        <div className="item-note text-gray-800 dark:text-gray-200" aria-label={`Note: ${item.note}`}>
           {item.note}
         </div>
       )}

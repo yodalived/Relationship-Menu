@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --main-bg-color: rgba(158, 198, 204, 0.8);
-  --main-text-color: rgba(99, 159, 169, 1);
-  --main-text-color-hover: rgba(83, 135, 143, 1);
+  --main-bg-color: rgba(148, 188, 194, 0.9);
+  --main-text-color: rgba(79, 139, 149, 1);
+  --main-text-color-hover: rgba(63, 115, 123, 1);
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
   --font-nunito: 'Nunito', sans-serif;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 @theme inline {
@@ -18,10 +23,10 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0f172a;
-    --foreground: #e2e8f0;
-    --main-bg-color: rgba(45, 85, 95, 0.8);
-    --main-text-color: rgba(59, 109, 119, 1);
-    --main-text-color-hover: rgba(48, 89, 97, 1);
+    --foreground: #f1f5f9;
+    --main-bg-color: rgba(45, 85, 95, 0.9);
+    --main-text-color: rgba(79, 139, 149, 1);
+    --main-text-color-hover: rgba(63, 115, 123, 1);
   }
 }
 
@@ -46,6 +51,7 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
+  justify-content: center;
 }
 
 header {
@@ -56,7 +62,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 10px 0;
+  padding: 10px 0 20px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
@@ -66,6 +72,12 @@ header {
   header {
     background: rgba(45, 85, 95, 0.85);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  header {
+    padding-bottom: 0;
   }
 }
 
@@ -81,7 +93,6 @@ header {
 
 .title-bar h1 {
   margin: 0;
-  font-size: 2.2rem;
   padding: 5px 0;
   line-height: 1.2;
 }
@@ -96,17 +107,32 @@ header {
   line-height: 1.5;
 }
 
+.legend-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0;
+  max-width: 100%;
+  overflow: visible;
+}
+
+@media only screen and (max-width: 640px) {
+  .legend-container {
+    padding: 0;
+  }
+}
+
 .legend {
   display: flex;
   background: white;
   color: var(--main-text-color);
-  padding: 10px;
+  padding: 8px;
   font-size: 18px;
   text-transform: uppercase;
   font-weight: 600;
   justify-content: space-around;
   box-shadow: 0 0 0 2px white, 0.3em 0.3em 1em rgba(0, 0, 0, 0.2);
-  margin: 0 10px 10px 10px;
+  margin: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -116,64 +142,144 @@ header {
   }
 }
 
+@media screen and (min-width: 640px) {
+  .legend {
+    padding: 8px 16px;
+  }
+}
+
 .legend div {
   display: flex;
   align-items: center;
   white-space: nowrap;
+  padding: 4px 8px;
 }
 
 .category {
-  border: 5px solid var(--main-bg-color);
-  margin: 10px;
-  flex: 1 0 400px;
+  margin: 3px;
+  flex: 1 0 380px;
   background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+@media screen and (min-width: 640px) {
+  .category {
+    margin: 5px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .category {
+    flex: 1 0 420px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .category {
+    flex: 1 0 480px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   .category {
     background: #1e293b;
-    border-color: rgba(45, 85, 95, 0.8);
+    box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
   
   .category .title {
-    background-color: rgba(45, 85, 95, 0.8)!important;
+    background-color: var(--main-bg-color) !important;
   }
   
   .category .item .item-note {
     color: var(--foreground) !important;
   }
+  
+  .category .item {
+    border-bottom: 1px solid rgba(100, 116, 139, 0.15)!important;
+  }
 }
 
 .category .title {
   font-size: 1.5em;
-  padding: 10px 0;
+  padding: 14px 0;
   margin-bottom: 0;
-  background-color: var(--main-bg-color);
   text-align: center;
   color: white;
   font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .category .item {
   font-size: 1em;
-  padding: 5px 25px 15px 25px;
+  padding: 11px 25px 15px 25px;
   position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@media screen and (min-width: 768px) {
+  .category .item {
+    padding: 13px 30px 17px 30px;
+  }
+}
+
+.category .item:last-child {
+  border-bottom: none;
 }
 
 .category .item .item-name {
   font-weight: bold;
   display: flex;
   align-items: center;
+  color: var(--foreground);
+}
+
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  flex-shrink: 0;
+  width: 24px;
 }
 
 .category .item .item-note {
-  color: rgb(105, 105, 105);
-  margin: 5px 0 0 0;
-  padding: 0 30px;
+  color: rgb(60, 60, 60);
+  margin: 5px 0 0 34px; /* Aligns with the start of the text after the icon */
+  padding: 0;
   overflow-wrap: break-word;
   hyphens: manual;
   font-size: 0.9em;
   white-space: pre-line;
+}
+
+@media screen and (min-width: 768px) {
+  .icon-container {
+    margin-right: 12px;
+  }
+  
+  .category .item .item-note {
+    margin-left: 36px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .icon-container {
+    margin-right: 16px;
+  }
+  
+  .category .item .item-note {
+    margin-left: 40px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .category .item .item-note {
+    color: rgb(200, 200, 200);
+  }
 }
 
 /* Item highlighting based on icon type */
@@ -306,10 +412,13 @@ footer:before {
   .legend {
     font-size: 12px;
     padding: 8px 5px;
-    margin: 0 5px 10px 5px;
+    margin: 0;
     flex-wrap: wrap;
     gap: 5px;
     justify-content: center;
+    border-radius: 0;
+    width: 100%;
+    box-shadow: none;
   }
   
   .legend div {
@@ -369,6 +478,9 @@ footer:before {
   
   .legend {
     font-size: 10px;
+    padding: 6px 2px;
+    justify-content: space-between;
+    box-shadow: none;
   }
   
   .category .item {
@@ -412,8 +524,20 @@ footer:before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
+  margin-right: 10px;
   flex-shrink: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .icon-container {
+    margin-right: 12px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .icon-container {
+    margin-right: 16px;
+  }
 }
 
 .icon-must {
