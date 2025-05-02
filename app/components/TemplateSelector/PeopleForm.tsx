@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { PeopleFormProps } from './types';
 import TemplateIcon from './TemplateIcon';
 import MenuStats from '../ui/MenuStats';
-import { IconArrowLeft } from '../icons';
+import { IconArrowLeft, IconTrash, IconWarning, IconPlusSolid } from '../icons';
 
 const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) => {
   const [people, setPeople] = useState<string[]>(['']);
@@ -115,9 +115,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
                     className="ml-1 sm:ml-2 p-1 sm:p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 flex-shrink-0"
                     aria-label="Remove person"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
+                    <IconTrash className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
                 )}
               </div>
@@ -129,18 +127,14 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
             onClick={handleAddPerson}
             className="mt-5 flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] transition-colors bg-[rgba(158,198,204,0.1)] dark:bg-[rgba(158,198,204,0.05)] hover:bg-[rgba(158,198,204,0.2)] dark:hover:bg-[rgba(158,198,204,0.1)] px-3 sm:px-4 py-2 rounded-lg shadow-sm border border-[rgba(158,198,204,0.2)] text-sm sm:text-base"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd" />
-            </svg>
+            <IconPlusSolid className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" />
             Add Another Person
           </button>
         </div>
         
         {error && (
           <div className="mb-6 p-3 sm:p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <IconWarning className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 flex-shrink-0" />
             <span className="font-medium text-sm sm:text-base">{error}</span>
           </div>
         )}

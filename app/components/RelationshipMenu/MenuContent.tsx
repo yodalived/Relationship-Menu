@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuCategory, MenuItem as MenuItemType, MenuMode } from '../../types';
 import { MenuItem } from './MenuItem';
 import { CategoryHeader } from './CategoryHeader';
+import { IconPlus, IconPlusCircle } from '../icons';
 
 interface MenuContentProps {
   menu: MenuCategory[];
@@ -101,9 +102,7 @@ export function MenuContent({
                     className="w-full py-3 border border-dashed border-gray-300 dark:border-gray-600 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-400 dark:hover:border-gray-500 transition-colors flex items-center justify-center bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-700"
                     aria-label={`Add new item to ${category.name}`}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
+                    <IconPlus className="h-5 w-5 mr-2" />
                     Add New Item
                   </button>
                 </div>
@@ -122,9 +121,7 @@ export function MenuContent({
             className="w-[80%] max-w-md py-4 px-3 border-2 border-dashed border-[var(--main-bg-color)] rounded-lg bg-[var(--main-bg-color)]/10 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] hover:border-[var(--main-text-color)] hover:bg-[var(--main-bg-color)]/20 transition-colors flex items-center justify-center"
             aria-label="Add new section to menu"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <IconPlusCircle className="h-6 w-6 mr-2" />
             Add New Section
           </button>
         </div>

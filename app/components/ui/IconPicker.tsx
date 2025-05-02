@@ -114,8 +114,8 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
             ref={index === 0 ? firstOptionRef : null}
             onClick={() => onSelectIcon(option.value)}
             className={`p-2.5 rounded-lg transition-all hover:brightness-95 active:scale-[0.98] ${option.bgColor} flex justify-start items-center`}
-            role="menuitem"
-            aria-pressed={selectedIcon === option.value}
+            role="menuitemradio"
+            aria-checked={selectedIcon === option.value}
             aria-label={`Select ${option.label} icon`}
           >
             <div className="mr-2" aria-hidden="true">
