@@ -6,11 +6,11 @@ import { migrateMenuData } from '../../utils/migrations';
 import { extractMenuDataFromPDF } from '../../utils/pdf/extract';
 import { IconCloud, IconSpinner, IconWarning } from '../icons';
 
-interface FileUploadProps {
+interface FileSelectorProps {
   onFileLoaded: (data: MenuData) => void;
 }
 
-export function FileUpload({ onFileLoaded }: FileUploadProps) {
+export function FileSelector({ onFileLoaded }: FileSelectorProps) {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -67,7 +67,7 @@ export function FileUpload({ onFileLoaded }: FileUploadProps) {
           setIsProcessing(false);
         } catch (err) {
           console.error('Error processing PDF:', err);
-          setError('Failed to extract data from PDF. Please upload a JSON file instead.');
+          setError('Failed to extract data from PDF. Please select a JSON file instead.');
           setIsProcessing(false);
         }
         return;
@@ -75,7 +75,7 @@ export function FileUpload({ onFileLoaded }: FileUploadProps) {
       
       // Process JSON files
       if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu')) {
-        setError('Please upload a .json, .relationshipmenu, or .pdf file');
+        setError('Please select a .json, .relationshipmenu, or .pdf file');
         setIsProcessing(false);
         return;
       }
@@ -119,7 +119,7 @@ export function FileUpload({ onFileLoaded }: FileUploadProps) {
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden mb-16">
       <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
         <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Have an Existing Menu?</h2>
-        <p className="text-gray-600 dark:text-gray-300 mt-1">Upload your menu file to continue working on it</p>
+        <p className="text-gray-600 dark:text-gray-300 mt-1">Open your menu file to continue working on it</p>
       </div>
       <div className="p-8">
         <div 
@@ -141,7 +141,7 @@ export function FileUpload({ onFileLoaded }: FileUploadProps) {
             </div>
           )}
           <p className="mb-3 text-xl text-[var(--main-text-color)] font-semibold">
-            {isProcessing ? 'Processing File...' : 'Upload Your Relationship Menu'}
+            {isProcessing ? 'Processing File...' : 'Open Your Relationship Menu'}
           </p>
           {!isProcessing && (
             <>

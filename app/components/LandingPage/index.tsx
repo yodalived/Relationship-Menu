@@ -3,7 +3,7 @@
 import React from 'react';
 import { MenuData } from '../../types';
 import { TemplateSelector } from '../TemplateSelector';
-import { FileUpload } from './FileUpload';
+import { FileSelector } from './FileSelector';
 import { AboutSection } from './AboutSection';
 import { GettingStartedSection } from './GettingStartedSection';
 import { PrivacySection } from './PrivacySection';
@@ -32,7 +32,7 @@ export default function LandingPage({ onFileLoaded }: LandingPageProps) {
       </div>
       
       {/* File Upload Section */}
-      <FileUpload onFileLoaded={onFileLoaded} />
+      <FileSelector onFileLoaded={onFileLoaded} />
 
       {/* Info Cards - Displayed in a grid layout */}
       <div className="grid md:grid-cols-2 gap-8 mt-8">
