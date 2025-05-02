@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { MenuData } from '../types';
 import { migrateMenuData } from '../utils/migrations';
 import { extractMenuDataFromPDF } from '../utils/pdf/extract';
+import { v4 as uuidv4 } from 'uuid';
 
 interface FileUploadProps {
   onFileLoaded: (data: MenuData) => void;
@@ -132,7 +133,13 @@ export default function FileUpload({ onFileLoaded }: FileUploadProps) {
       // Update last_update timestamp
       templateData.last_update = new Date().toISOString();
       
-      onFileLoaded(templateData);
+      // Migrate the template data to ensure it's on the latest schema
+      let migratedData = migrateMenuData(templateData);
+      
+      // For templates, always generate a new UUID on load
+      migratedData.uuid = uuidv4();
+      
+      onFileLoaded(migratedData);
     } catch (error) {
       setError(`Failed to load template: ${(error as Error).message}`);
     }
