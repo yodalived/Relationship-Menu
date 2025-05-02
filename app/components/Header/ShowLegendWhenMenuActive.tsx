@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import { IconMust, IconLike, IconMaybe, IconOffLimit } from "./icons";
+import { IconMust, IconLike, IconMaybe, IconOffLimit } from "../icons";
 
 export default function ShowLegendWhenMenuActive() {
   const [showLegend, setShowLegend] = useState(false);

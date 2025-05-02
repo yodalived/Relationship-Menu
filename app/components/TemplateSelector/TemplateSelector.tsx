@@ -1,11 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { TemplateItem as TemplateItemType, TemplateData, TemplateSelectorProps } from './types';
+import { TemplateItem as TemplateItemType, TemplateSelectorProps } from './types';
+import { MenuData } from '../../types';
 import PeopleForm from './PeopleForm';
 import TemplateItem from './TemplateItem';
+import { migrateMenuData } from '../../utils/migrations';
+import { v4 as uuidv4 } from 'uuid';
 
-export default function TemplateSelector({ onTemplateSelected }: TemplateSelectorProps) {
+export default function TemplateSelector({
+  onTemplateSelected,
+  title = "Create a New Menu",
+  subtitle = "Choose a template to get started quickly",
+  className = ""
+}: TemplateSelectorProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateItemType | null>(null);
   const [templates, setTemplates] = useState<TemplateItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +44,7 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
                 return template;
               }
               
-              const templateData: TemplateData = await templateResponse.json();
+              const templateData = await templateResponse.json() as MenuData;
               
               if (templateData.menu && Array.isArray(templateData.menu)) {
                 // Calculate stats
@@ -75,54 +83,84 @@ export default function TemplateSelector({ onTemplateSelected }: TemplateSelecto
     setSelectedTemplate(template);
   };
 
-  const handlePeopleSubmit = (templatePath: string, people: string[]) => {
-    onTemplateSelected(templatePath, people);
+  const handlePeopleSubmit = async (templatePath: string, people: string[]) => {
+    try {
+      // Fetch the template data
+      const response = await fetch(templatePath);
+      
+      if (!response.ok) {
+        throw new Error(`Error loading template: ${response.statusText}`);
+      }
+      
+      // Parse the template data
+      const templateData = await response.json() as MenuData;
+      
+      // Replace default people with custom names
+      templateData.people = people;
+      
+      // Update last_update timestamp
+      templateData.last_update = new Date().toISOString();
+      
+      // Migrate the template data to ensure it's on the latest schema
+      const migratedData = migrateMenuData(templateData);
+      
+      // For templates, always generate a new UUID on load
+      migratedData.uuid = uuidv4();
+      
+      // Pass the prepared menu data to the parent component
+      onTemplateSelected(migratedData);
+    } catch (error) {
+      console.error('Error processing template:', error);
+      setError(`Failed to create menu: ${(error as Error).message}`);
+    }
   };
 
-  if (isLoading) {
-    return (
-      <div className="mt-4 text-center p-8">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[var(--main-bg-color)] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
-        <p className="mt-4 text-gray-600 dark:text-gray-300">Loading templates...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="mt-4 p-6 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800">
-        <div className="flex items-center mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span className="font-medium">Error Loading Templates</span>
-        </div>
-        <p>{error}</p>
-      </div>
-    );
-  }
-
   return (
-    <div>
-      {selectedTemplate ? (
-        <div>
-          <PeopleForm 
-            selectedTemplate={selectedTemplate} 
-            onSubmit={handlePeopleSubmit}
-            onCancel={() => setSelectedTemplate(null)}
-          />
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {templates.map(template => (
-            <TemplateItem 
-              key={template.id}
-              template={template}
-              onClick={handleTemplateClick}
-            />
-          ))}
-        </div>
-      )}
+    <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden ${className}`}>
+      <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
+        <h2 className="text-2xl font-bold text-[var(--main-text-color)]">{title}</h2>
+        <p className="text-gray-600 dark:text-gray-300 mt-1">{subtitle}</p>
+      </div>
+      <div className="p-4 sm:p-8">
+        {isLoading ? (
+          <div className="mt-4 text-center p-8">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[var(--main-bg-color)] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">Loading templates...</p>
+          </div>
+        ) : error ? (
+          <div className="mt-4 p-6 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800">
+            <div className="flex items-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="font-medium">Error Loading Templates</span>
+            </div>
+            <p>{error}</p>
+          </div>
+        ) : (
+          <div>
+            {selectedTemplate ? (
+              <div>
+                <PeopleForm 
+                  selectedTemplate={selectedTemplate} 
+                  onSubmit={handlePeopleSubmit}
+                  onCancel={() => setSelectedTemplate(null)}
+                />
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {templates.map(template => (
+                  <TemplateItem 
+                    key={template.id}
+                    template={template}
+                    onClick={handleTemplateClick}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 } 

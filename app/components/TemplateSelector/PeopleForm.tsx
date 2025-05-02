@@ -42,7 +42,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
           <div className="flex-1">
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-semibold text-[var(--main-text-color)] mb-1">
-                {selectedTemplate.title}
+                {selectedTemplate.name}
               </h3>
               <button 
                 onClick={onCancel}

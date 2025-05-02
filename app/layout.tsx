@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import Link from "next/link";
 import "./globals.css";
-import ShowLegendWhenMenuActive from "./components/ShowLegendWhenMenuActive";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { ToastProvider } from "./components/ui/Toast";
 // Import temporarily removed due to TypeScript error - fix by ensuring proper module resolution
 // import ConditionalSubtitle from "./components/ConditionalSubtitle";
 
@@ -68,28 +69,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${nunito.variable} antialiased`}
-      >
-        <div className="min-h-screen flex flex-col">
-          <header>
-            <div className="title-bar">
-              <h1>Relationship Menu</h1>
-            </div>
-            <ShowLegendWhenMenuActive />
-          </header>
-          <main className="flex-grow">
-            <div className="wrapper">
-              {children}
-            </div>
-          </main>
-          <footer>
-            <div className="flex gap-4 justify-center">
-              <p><Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link></p>
-              <p><Link href="/legal-disclosure" className="hover:underline">Legal Disclosure</Link></p>
-            </div>
-          </footer>
-        </div>
+      <body className={`${nunito.variable} antialiased`}>
+        <ToastProvider>
+          <div className="min-h-screen flex flex-col">
+            <Header />
+            <main className="flex-grow">
+              <div className="wrapper">
+                {children}
+              </div>
+            </main>
+            <Footer />
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { Container } from '../components/ui/Container';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-4xl mx-auto p-3 sm:p-6">
+    <Container className="max-w-7xl">
       <div className="text-center mb-8 sm:mb-12">
         <h1 className="text-3xl sm:text-4xl font-bold text-[var(--main-text-color)] mb-4">Privacy Policy</h1>
         <div className="w-24 h-1 bg-[var(--main-bg-color)] mx-auto rounded-full"></div>
@@ -362,6 +363,6 @@ export default function PrivacyPolicy() {
           Back to Home
         </Link>
       </div>
-    </div>
+    </Container>
   );
 } 

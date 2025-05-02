@@ -1,3 +1,5 @@
+import { MenuData } from '../../types';
+
 export type TemplateIcon = {
   type: string;
   path: string;
@@ -5,7 +7,7 @@ export type TemplateIcon = {
 
 export type TemplateItem = {
   id: string;
-  title: string;
+  name: string;
   description: string;
   path: string;
   icon?: TemplateIcon;
@@ -15,17 +17,6 @@ export type TemplateItem = {
   };
 };
 
-export type TemplateData = {
-  menu: Array<{
-    name: string;
-    items: Array<{
-      name: string;
-      note?: string | null;
-      icon?: string | null;
-    }>;
-  }>;
-};
-
 export type PeopleFormProps = {
   selectedTemplate: TemplateItem;
   onSubmit: (templatePath: string, people: string[]) => void;
@@ -33,5 +24,8 @@ export type PeopleFormProps = {
 };
 
 export interface TemplateSelectorProps {
-  onTemplateSelected: (templatePath: string, people: string[]) => void;
+  onTemplateSelected: (menuData: MenuData) => void;
+  title?: string;
+  subtitle?: string;
+  className?: string;
 } 

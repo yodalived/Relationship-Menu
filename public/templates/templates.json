@@ -2,7 +2,7 @@
   "templates": [
     {
       "id": "romantic-and-or-sexual",
-      "title": "Romantic / Sexual",
+      "name": "Romantic / Sexual",
       "description": "A comprehensive template for romantic and/or sexual relationships, with categories covering communication, physical intimacy, emotional attachment, practical matters and levels of commitment.",
       "path": "/templates/romantic-sexual.json",
       "icon": {
@@ -12,7 +12,7 @@
     },
     {
       "id": "empty",
-      "title": "Empty",
+      "name": "Empty",
       "description": "Start with a completely empty menu you can customise to your liking.",
       "path": "/templates/empty.json",
       "icon": {
