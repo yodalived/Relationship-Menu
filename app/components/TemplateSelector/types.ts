@@ -24,7 +24,7 @@ export type PeopleFormProps = {
 };
 
 export interface TemplateSelectorProps {
-  onTemplateSelected: (menuData: MenuData) => void;
+  onTemplateSelected: (menuData: MenuData, initialMode: 'view' | 'fill' | 'edit') => void;
   title?: string;
   subtitle?: string;
   className?: string;

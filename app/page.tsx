@@ -1,11 +1,12 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { RelationshipMenu } from './components/RelationshipMenu/RelationshipMenu';
 import LandingPage from './components/LandingPage';
 import { useMenuStorage } from './utils/hooks/useMenuStorage';
 import { LoadingIndicator } from './components/ui/LoadingIndicator';
 import { Container } from './components/ui/Container';
+import { MenuMode, MenuData } from './types';
 
 // Check if we're running in the browser
 const isBrowser = typeof window !== 'undefined';
@@ -13,6 +14,7 @@ const isBrowser = typeof window !== 'undefined';
 export default function Home() {
   const { menuData, isLoading, saveMenuData, clearMenuData } = useMenuStorage();
   const prevViewRef = useRef<'home' | 'menu'>('home');
+  const [initialMode, setInitialMode] = useState<MenuMode>('view');
 
   // Handle scroll reset on view transitions
   useEffect(() => {
@@ -34,15 +36,21 @@ export default function Home() {
     );
   }
 
+  const handleFileLoaded = (data: MenuData, mode: MenuMode = 'view') => {
+    setInitialMode(mode);
+    saveMenuData(data);
+  };
+
   return (
     <Container>
       {!menuData ? (
-        <LandingPage onFileLoaded={saveMenuData} />
+        <LandingPage onFileLoaded={handleFileLoaded} />
       ) : (
         <RelationshipMenu 
           menuData={menuData} 
           onReset={clearMenuData} 
           onSave={saveMenuData}
+          initialMode={initialMode}
         />
       )}
     </Container>

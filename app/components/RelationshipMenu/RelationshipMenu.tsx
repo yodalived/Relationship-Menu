@@ -16,11 +16,12 @@ interface RelationshipMenuProps {
   menuData: MenuData;
   onReset: () => void;
   onSave: (updatedData: MenuData) => void;
+  initialMode?: MenuMode;
 }
 
-export function RelationshipMenu({ menuData, onReset, onSave }: RelationshipMenuProps) {
+export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'view' }: RelationshipMenuProps) {
   // State for menu operation
-  const [mode, setMode] = useState<MenuMode>('view');
+  const [mode, setMode] = useState<MenuMode>(initialMode);
   const [editedData, setEditedData] = useState<MenuData>({ ...menuData });
   const [activeIconPicker, setActiveIconPicker] = useState<{catIndex: number, itemIndex: number} | null>(null);
   

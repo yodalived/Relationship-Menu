@@ -108,8 +108,16 @@ export default function TemplateSelector({
       // For templates, always generate a new UUID on load
       migratedData.uuid = uuidv4();
       
+      // Count total items to determine initial mode
+      const totalItems = migratedData.menu.reduce((total, section) => {
+        return total + (section.items ? section.items.length : 0);
+      }, 0);
+      
+      // If the template has items, open in 'fill' mode, otherwise 'edit' mode
+      const initialMode = totalItems > 0 ? 'fill' : 'edit';
+      
       // Pass the prepared menu data to the parent component
-      onTemplateSelected(migratedData);
+      onTemplateSelected(migratedData, initialMode);
     } catch (error) {
       console.error('Error processing template:', error);
       setError(`Failed to create menu: ${(error as Error).message}`);

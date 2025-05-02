@@ -9,16 +9,16 @@ import { GettingStartedSection } from './GettingStartedSection';
 import { PrivacySection } from './PrivacySection';
 import { AttributionSection } from './AttributionSection';
 
-interface HomePageProps {
-  onFileLoaded: (data: MenuData) => void;
+interface LandingPageProps {
+  onFileLoaded: (data: MenuData, initialMode?: 'view' | 'fill' | 'edit') => void;
 }
 
-export default function HomePage({ onFileLoaded }: HomePageProps) {
+export default function LandingPage({ onFileLoaded }: LandingPageProps) {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Template Section */}
       <TemplateSelector 
-        onTemplateSelected={onFileLoaded}
+        onTemplateSelected={(data, initialMode) => onFileLoaded(data, initialMode)}
         className="mb-16"
       />
       
