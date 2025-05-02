@@ -19,22 +19,28 @@ export const ICON_OPTIONS = [
   { value: null, label: 'Not set', icon: IconNotSet, bgColor: 'bg-[#F5F5F5] dark:bg-[#374151]' }
 ];
 
+// Utility function to get the icon label from icon type
+export function getIconLabel(iconType: string | null | undefined): string {
+  const option = ICON_OPTIONS.find(opt => opt.value === iconType);
+  return option ? option.label : 'Not set';
+}
+
 export function renderIcon(iconType: string | null | undefined) {
   const className = "icon-container";
   
   switch(iconType) {
     case 'must':
-      return <div className={className}><IconMust /></div>;
+      return <div className={className} aria-hidden="true"><IconMust /></div>;
     case 'like':
-      return <div className={className}><IconLike /></div>;
+      return <div className={className} aria-hidden="true"><IconLike /></div>;
     case 'maybe':
-      return <div className={className}><IconMaybe /></div>;
+      return <div className={className} aria-hidden="true"><IconMaybe /></div>;
     case 'off-limit':
-      return <div className={className}><IconOffLimit /></div>;
+      return <div className={className} aria-hidden="true"><IconOffLimit /></div>;
     case 'talk':
-      return <div className={className}><IconTalk /></div>;
+      return <div className={className} aria-hidden="true"><IconTalk /></div>;
     default:
-      return <div className={className}><IconNotSet /></div>;
+      return <div className={className} aria-hidden="true"><IconNotSet /></div>;
   }
 }
 
@@ -46,8 +52,9 @@ interface IconPickerProps {
   mode?: 'view' | 'fill' | 'edit';
 }
 
-export function IconPicker({ onSelectIcon, isOpen, onClose, mode = 'edit' }: IconPickerProps) {
+export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode = 'edit' }: IconPickerProps) {
   const pickerRef = useRef<HTMLDivElement>(null);
+  const firstOptionRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -58,11 +65,29 @@ export function IconPicker({ onSelectIcon, isOpen, onClose, mode = 'edit' }: Ico
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
+      // Focus the first option when the picker opens
+      if (firstOptionRef.current) {
+        firstOptionRef.current.focus();
+      }
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    // Handle keyboard navigation for the picker
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+      
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -76,15 +101,24 @@ export function IconPicker({ onSelectIcon, isOpen, onClose, mode = 'edit' }: Ico
     <div 
       ref={pickerRef}
       className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]"
+      role="dialog"
+      aria-label="Select icon"
     >
-      <div className="grid grid-cols-2 gap-3">
-        {displayOptions.map((option) => (
+      <div 
+        className="grid grid-cols-2 gap-3"
+        role="menu"
+      >
+        {displayOptions.map((option, index) => (
           <button
             key={option.value || 'null'}
+            ref={index === 0 ? firstOptionRef : null}
             onClick={() => onSelectIcon(option.value)}
             className={`p-2.5 rounded-lg transition-all hover:brightness-95 active:scale-[0.98] ${option.bgColor} flex justify-start items-center`}
+            role="menuitem"
+            aria-pressed={selectedIcon === option.value}
+            aria-label={`Select ${option.label} icon`}
           >
-            <div className="mr-2">
+            <div className="mr-2" aria-hidden="true">
               <option.icon />
             </div>
             <span className="text-sm font-medium px-1.5 py-1 dark:text-gray-200">
@@ -104,6 +138,7 @@ interface IconButtonProps {
 
 export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
   const selectedOption = ICON_OPTIONS.find(opt => opt.value === selectedIcon) || ICON_OPTIONS[ICON_OPTIONS.length - 1];
+  const label = `Select icon: currently ${selectedOption.label}`;
   
   return (
     <button 
@@ -112,13 +147,15 @@ export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
       className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 sm:mr-3 ${
         selectedIcon ? selectedOption.bgColor : 'bg-white dark:bg-gray-800'
       }`}
-      aria-label="Select icon"
+      aria-label={label}
+      aria-haspopup="true"
+      aria-expanded={false}
     >
       {renderIcon(selectedIcon)}
       <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[180px]">
         {selectedOption.label}
       </span>
-      <IconChevron direction="down" className="h-4 w-4 ml-1.5" />
+      <IconChevron direction="down" className="h-4 w-4 ml-1.5" aria-hidden="true" />
     </button>
   );
 } 

@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { IconMust, IconLike, IconMaybe, IconOffLimit } from "../icons";
+import { getIconLabel } from "../ui/IconPicker";
 
 export default function ShowLegendWhenMenuActive() {
   const [showLegend, setShowLegend] = useState(false);
@@ -40,19 +41,19 @@ export default function ShowLegendWhenMenuActive() {
     <div className="legend">
       <div className="must flex items-center">
         <IconMust />
-        <span className="ml-1 dark:text-[rgba(59,130,246,1)]">Must have</span>
+        <span className="ml-1 dark:text-[rgba(59,130,246,1)]">{getIconLabel('must')}</span>
       </div>
       <div className="like flex items-center">
         <IconLike />
-        <span className="ml-1 dark:text-[rgba(34,197,94,1)]">Would like</span>
+        <span className="ml-1 dark:text-[rgba(34,197,94,1)]">{getIconLabel('like')}</span>
       </div>
       <div className="maybe flex items-center">
         <IconMaybe />
-        <span className="ml-1 dark:text-[rgba(245,158,11,1)]">Maybe</span>
+        <span className="ml-1 dark:text-[rgba(245,158,11,1)]">{getIconLabel('maybe')}</span>
       </div>
       <div className="off-limit flex items-center">
         <IconOffLimit />
-        <span className="ml-1 dark:text-[rgba(239,68,68,1)]">Off limits</span>
+        <span className="ml-1 dark:text-[rgba(239,68,68,1)]">{getIconLabel('off-limit')}</span>
       </div>
     </div>
   );

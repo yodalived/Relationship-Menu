@@ -72,8 +72,16 @@ export default function RootLayout({
       <body className={`${nunito.variable} antialiased`}>
         <ToastProvider>
           <div className="min-h-screen flex flex-col">
+            {/* Skip to content link for keyboard users */}
+            <a 
+              href="#main-content" 
+              className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black focus:outline focus:outline-2 focus:outline-[var(--main-text-color)]"
+            >
+              Skip to content
+            </a>
+            
             <Header />
-            <main className="flex-grow">
+            <main id="main-content" className="flex-grow" tabIndex={-1}>
               <div className="wrapper">
                 {children}
               </div>
