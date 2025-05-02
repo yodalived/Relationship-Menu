@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconWarning } from '../icons';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -21,9 +22,7 @@ export function ConfirmModal({ isOpen, onClose, onConfirm, title, message }: Con
         <div className="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 relative z-10">
           <div>
             <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-600 dark:text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
+              <IconWarning className="h-6 w-6 text-yellow-600 dark:text-yellow-500" />
             </div>
             <div className="mt-3 text-center sm:mt-5">
               <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">

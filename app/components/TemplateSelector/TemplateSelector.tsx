@@ -7,6 +7,7 @@ import PeopleForm from './PeopleForm';
 import TemplateItem from './TemplateItem';
 import { migrateMenuData } from '../../utils/migrations';
 import { v4 as uuidv4 } from 'uuid';
+import { IconWarning } from '../icons';
 
 export default function TemplateSelector({
   onTemplateSelected,
@@ -130,9 +131,7 @@ export default function TemplateSelector({
         ) : error ? (
           <div className="mt-4 p-6 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800">
             <div className="flex items-center mb-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <IconWarning className="h-5 w-5 mr-2" />
               <span className="font-medium">Error Loading Templates</span>
             </div>
             <p>{error}</p>

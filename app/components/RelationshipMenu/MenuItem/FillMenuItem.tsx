@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MenuItem } from '../../../types';
 import { IconPicker, renderIcon, ICON_OPTIONS } from '../../ui/IconPicker';
 import { getItemClassName } from './utils';
+import { IconChevron } from '../../icons';
 
 interface FillMenuItemProps {
   catIndex: number;
@@ -61,9 +62,10 @@ export function FillMenuItem({
         aria-label="Select icon"
       >
         {renderIcon(iconType)}
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <IconChevron 
+          direction="down" 
+          className="h-3.5 w-3.5 ml-0.5" 
+        />
       </button>
     );
   };

@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuItem } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
 import { getItemClassName } from './utils';
+import { IconChevron } from '../../icons';
 
 interface EditMenuItemProps {
   catIndex: number;
@@ -108,9 +109,7 @@ export function EditMenuItem({
               }`}
               title="Move item up"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-              </svg>
+              <IconChevron direction="up" className="h-4 w-4" />
             </button>
             
             <button
@@ -124,9 +123,7 @@ export function EditMenuItem({
               }`}
               title="Move item down"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
+              <IconChevron direction="down" className="h-4 w-4" />
             </button>
           </div>
         </div>

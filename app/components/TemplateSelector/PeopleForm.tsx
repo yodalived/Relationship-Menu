@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PeopleFormProps } from './types';
 import TemplateIcon from './TemplateIcon';
 import MenuStats from '../ui/MenuStats';
+import { IconArrowLeft } from '../icons';
 
 const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) => {
   const [people, setPeople] = useState<string[]>(['']);
@@ -48,9 +49,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
                 onClick={onCancel}
                 className="flex items-center text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] px-3 py-1.5 rounded-lg border border-[rgba(158,198,204,0.2)] bg-[rgba(158,198,204,0.1)] hover:bg-[rgba(158,198,204,0.2)] transition-colors text-sm whitespace-nowrap ml-3 flex-shrink-0"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
+                <IconArrowLeft className="h-4 w-4 mr-1.5" />
                 Back to templates
               </button>
             </div>

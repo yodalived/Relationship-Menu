@@ -5,7 +5,8 @@ import {
   IconMaybe, 
   IconOffLimit,
   IconNotSet,
-  IconTalk
+  IconTalk,
+  IconChevron
 } from '../icons';
 
 // Available icon options for picker
@@ -117,9 +118,7 @@ export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
       <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[180px]">
         {selectedOption.label}
       </span>
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-      </svg>
+      <IconChevron direction="down" className="h-4 w-4 ml-1.5" />
     </button>
   );
 } 

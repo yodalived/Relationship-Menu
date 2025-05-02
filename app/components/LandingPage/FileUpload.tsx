@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { MenuData } from '../../types';
 import { migrateMenuData } from '../../utils/migrations';
 import { extractMenuDataFromPDF } from '../../utils/pdf/extract';
+import { IconCloud, IconSpinner, IconWarning } from '../icons';
 
 interface FileUploadProps {
   onFileLoaded: (data: MenuData) => void;
@@ -132,15 +133,11 @@ export function FileUpload({ onFileLoaded }: FileUploadProps) {
         >
           {isProcessing ? (
             <div className="mb-6 animate-spin">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
+              <IconSpinner className="h-16 w-16 mx-auto text-[var(--main-text-color)]" />
             </div>
           ) : (
             <div className="mb-6 transform transition-transform duration-300 hover:scale-110">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[var(--main-text-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
+              <IconCloud className="h-16 w-16 mx-auto text-[var(--main-text-color)]" />
             </div>
           )}
           <p className="mb-3 text-xl text-[var(--main-text-color)] font-semibold">
@@ -168,9 +165,7 @@ export function FileUpload({ onFileLoaded }: FileUploadProps) {
         
         {error && (
           <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-800 flex items-start">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <IconWarning className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}

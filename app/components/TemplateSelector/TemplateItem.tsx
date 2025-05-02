@@ -1,6 +1,7 @@
 import { TemplateItem as TemplateItemType } from './types';
 import TemplateIcon from './TemplateIcon';
 import MenuStats from '../ui/MenuStats';
+import { IconChevron } from '../icons';
 
 interface TemplateItemProps {
   template: TemplateItemType;
@@ -47,18 +48,14 @@ const TemplateItem = ({ template, onClick }: TemplateItemProps) => {
               
               <div className="ml-2 flex sm:hidden items-center">
                 <div className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <IconChevron direction="left" className="h-4 w-4" />
                 </div>
               </div>
             </div>
           ) : (
             <div className="flex justify-end mt-auto">
               <div className="h-7 w-7 sm:h-8 sm:w-8 flex sm:hidden items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                <IconChevron direction="left" className="h-4 w-4" />
               </div>
             </div>
           )}
@@ -66,9 +63,7 @@ const TemplateItem = ({ template, onClick }: TemplateItemProps) => {
         
         <div className="hidden sm:flex flex-col justify-center items-center">
           <div className="h-10 w-10 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <IconChevron direction="right" className="h-5 w-5" />
           </div>
         </div>
       </div>
