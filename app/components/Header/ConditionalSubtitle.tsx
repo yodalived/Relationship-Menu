@@ -34,7 +34,7 @@ export default function ConditionalSubtitle() {
   
   return (
     <p className="subtitle">
-      Create and visualize your unique relationship connections, free from traditional expectations.
+      Create unique relationship agreements, free from traditional expectations.
     </p>
   );
 } 
