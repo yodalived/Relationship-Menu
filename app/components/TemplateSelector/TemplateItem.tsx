@@ -48,14 +48,14 @@ const TemplateItem = ({ template, onClick }: TemplateItemProps) => {
               
               <div className="ml-2 flex sm:hidden items-center">
                 <div className="h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
-                  <IconChevron direction="left" className="h-4 w-4" />
+                  <IconChevron direction="right" className="h-4 w-4" />
                 </div>
               </div>
             </div>
           ) : (
             <div className="flex justify-end mt-auto">
               <div className="h-7 w-7 sm:h-8 sm:w-8 flex sm:hidden items-center justify-center rounded-full bg-[rgba(158,198,204,0.4)] dark:bg-[rgba(158,198,204,0.3)] text-[var(--main-text-color)] shadow-sm">
-                <IconChevron direction="left" className="h-4 w-4" />
+                <IconChevron direction="right" className="h-4 w-4" />
               </div>
             </div>
           )}
