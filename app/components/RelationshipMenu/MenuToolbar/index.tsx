@@ -26,14 +26,17 @@ export function MenuToolbar({
   onReset
 }: MenuToolbarProps) {
   return (
-    <div className="flex flex-col w-full md:w-auto md:flex-row items-end md:items-center gap-2 md:gap-6">
-      <div className="flex gap-2 md:gap-4 flex-wrap justify-end w-full md:w-auto">
-        {/* Mode Selector Component */}
+    <div className="flex flex-col w-full md:w-auto gap-3">
+      {/* Mode Selector Component - Full width on all screens */}
+      <div className="w-full">
         <ModeSelector 
           currentMode={mode} 
           onModeChange={onModeChange} 
         />
-        
+      </div>
+      
+      {/* Action Buttons Row */}
+      <div className="flex gap-2 justify-end">
         {/* Share Button Component */}
         <ShareButton 
           isOpen={shareDropdownOpen}

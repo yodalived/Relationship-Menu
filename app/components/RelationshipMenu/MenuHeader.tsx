@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuMode } from '../../types';
-import { IconPlus, IconInfo } from '../icons';
+import { IconPlus } from '../icons';
 import { PersonNameInput } from '../ui/PersonNameInput';
 
 interface MenuHeaderProps {
@@ -71,12 +71,11 @@ export function MenuHeader({
       ) : (
         <div className="transition-all duration-150">
           <div className="flex items-center">
-            <IconInfo className="h-6 w-6 text-[var(--main-text-color)] mr-2 transition-transform hover:scale-110" />
             <h2 className="text-[var(--main-text-color)] dark:text-[var(--main-text-color)] font-bold text-2xl transition-colors">
               Menu for {formatPeople(people)}
             </h2>
           </div>
-          <p className="text-sm text-gray-700 dark:text-gray-300 pl-8 transition-colors">Last updated: {formatDate(lastUpdate)}</p>
+          <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors">Last updated: {formatDate(lastUpdate)}</p>
         </div>
       )}
     </div>

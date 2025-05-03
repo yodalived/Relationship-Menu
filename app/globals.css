@@ -46,12 +46,38 @@ body {
 }
 
 .content {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px; /* 4rem = 16px */
   padding: 0;
   margin: 0;
   justify-content: center;
+}
+
+/* Breakpoints to maintain consistent column counts and match original gap sizes */
+@media screen and (min-width: 640px) {
+  .content {
+    gap: 20px; /* sm:gap-5 = 20px */
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px; /* lg:gap-6 = 24px */
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .content {
+    gap: 32px; /* xl:gap-8 = 32px */
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .content {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 header {
@@ -62,7 +88,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 10px 0 20px 0;
+  padding: 10px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
@@ -72,12 +98,6 @@ header {
   header {
     background: rgba(45, 85, 95, 0.85);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
-}
-
-@media only screen and (max-width: 640px) {
-  header {
-    padding-bottom: 0;
   }
 }
 
@@ -93,6 +113,7 @@ header {
 
 .title-bar h1 {
   margin: 0;
+  font-size: 2.2rem;
   padding: 5px 0;
   line-height: 1.2;
 }
@@ -107,32 +128,17 @@ header {
   line-height: 1.5;
 }
 
-.legend-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0;
-  max-width: 100%;
-  overflow: visible;
-}
-
-@media only screen and (max-width: 640px) {
-  .legend-container {
-    padding: 0;
-  }
-}
-
 .legend {
   display: flex;
   background: white;
   color: var(--main-text-color);
-  padding: 8px;
+  padding: 10px;
   font-size: 18px;
   text-transform: uppercase;
   font-weight: 600;
   justify-content: space-around;
   box-shadow: 0 0 0 2px white, 0.3em 0.3em 1em rgba(0, 0, 0, 0.2);
-  margin: 0;
+  margin: 0 20px 10px 20px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -142,22 +148,15 @@ header {
   }
 }
 
-@media screen and (min-width: 640px) {
-  .legend {
-    padding: 8px 16px;
-  }
-}
-
 .legend div {
   display: flex;
   align-items: center;
   white-space: nowrap;
-  padding: 4px 8px;
 }
 
 .category {
-  margin: 3px;
-  flex: 1 0 380px;
+  margin: 0;
+  width: 100%;
   background: white;
   border-radius: 1rem;
   overflow: hidden;
@@ -167,19 +166,7 @@ header {
 
 @media screen and (min-width: 640px) {
   .category {
-    margin: 5px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .category {
-    flex: 1 0 420px;
-  }
-}
-
-@media screen and (min-width: 1800px) {
-  .category {
-    flex: 1 0 480px;
+    margin: 0;
   }
 }
 
@@ -188,6 +175,7 @@ header {
     background: #1e293b;
     box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%; /* Ensure full width */
   }
   
   .category .title {
