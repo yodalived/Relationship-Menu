@@ -100,7 +100,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
   return (
     <div 
       ref={pickerRef}
-      className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full sm:w-[320px]"
+      className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-[360px]"
       role="dialog"
       aria-label="Select icon"
     >
@@ -121,7 +121,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
             <div className="mr-2" aria-hidden="true">
               <option.icon />
             </div>
-            <span className="text-sm font-medium px-1.5 py-1 dark:text-gray-200">
+            <span className="text-sm font-medium px-1.5 py-1 dark:text-white">
               {option.label}
             </span>
           </button>
@@ -152,7 +152,7 @@ export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
       aria-expanded={false}
     >
       {renderIcon(selectedIcon)}
-      <span className="text-sm text-gray-700 dark:text-gray-300 truncate max-w-[180px]">
+      <span className="text-sm font-bold text-white dark:text-white truncate max-w-[180px]">
         {selectedOption.label}
       </span>
       <IconChevron direction="down" className="h-4 w-4 ml-1.5" aria-hidden="true" />

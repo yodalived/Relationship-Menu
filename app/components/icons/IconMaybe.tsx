@@ -1,4 +1,10 @@
-export default function IconMaybe() {
+import { SVGProps } from 'react';
+
+interface IconProps extends SVGProps<SVGSVGElement> {
+  className?: string;
+}
+
+export default function IconMaybe({ className = '', ...props }: IconProps) {
   return (
     <svg 
       width="20" 
@@ -6,15 +12,17 @@ export default function IconMaybe() {
       viewBox="0 0 20 20" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
-      className="icon-maybe"
+      className={`text-amber-500 ${className}`}
+      {...props}
     >
-      <circle cx="10" cy="10" r="9" stroke="#E9B467" strokeWidth="2" fill="#FFF6E6" />
+      <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="2" fill="#FFF6E6" className="dark:fill-amber-600 dark:stroke-amber-600" />
       <path 
-        d="M10 16V16.01M7 8C7 6.34315 8.34315 5 10 5C11.6569 5 13 6.34315 13 8C13 9.65685 11.6569 11 10 11V13" 
-        stroke="#E9B467" 
+        d="M10 15.5V15.51M7 7.5C7 5.84315 8.34315 4.5 10 4.5C11.6569 4.5 13 5.84315 13 7.5C13 9.15685 11.6569 10.5 10 10.5V12.5" 
+        stroke="currentColor" 
         strokeWidth="2" 
         strokeLinecap="round" 
         strokeLinejoin="round" 
+        className="dark:stroke-white"
       />
     </svg>
   );

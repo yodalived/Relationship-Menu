@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { MenuItem } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
-import { getItemClassName } from './utils';
 import { IconChevron } from '../../icons';
 
 interface EditMenuItemProps {
@@ -47,7 +46,7 @@ export function EditMenuItem({
   }, [autoResizeTextarea, item.note]);
 
   return (
-    <div className={`item ${getItemClassName(item.icon)}`}>
+    <>
       <div className="item-name">
         <div className="relative flex items-start flex-col w-full">
           {/* Edit mode layout - title appears above icon on mobile, after icon on larger screens */}
@@ -56,7 +55,7 @@ export function EditMenuItem({
               type="text"
               value={item.name}
               onChange={(e) => onItemNameChange(catIndex, itemIndex, e.target.value)}
-              className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 order-first sm:order-last"
+              className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 order-first sm:order-last font-bold"
               placeholder="Edit item title..."
             />
             <IconButton 
@@ -86,7 +85,7 @@ export function EditMenuItem({
             autoResizeTextarea(e.target as HTMLTextAreaElement);
           }}
           onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
+          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
           placeholder="Add a note..."
           style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
         />
@@ -137,6 +136,6 @@ export function EditMenuItem({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 } 

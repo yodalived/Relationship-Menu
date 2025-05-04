@@ -1,4 +1,8 @@
-export default function IconNotSet() {
+interface IconNotSetProps {
+  className?: string;
+}
+
+export default function IconNotSet({ className = "" }: IconNotSetProps) {
   return (
     <svg 
       width="20" 
@@ -6,6 +10,7 @@ export default function IconNotSet() {
       viewBox="0 0 20 20" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <circle 
         cx="10" 
