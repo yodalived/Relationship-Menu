@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { IconPlus, IconFile, IconChevron, IconArrowLeft } from '../../icons';
+import { IconPlus, IconFile, IconChevron, IconX } from '../../icons';
 import { TemplateSelector } from '../../TemplateSelector';
 import { FileSelector } from '../../FileSelector';
 
@@ -62,7 +62,7 @@ export function MenuButton() {
   };
 
   const handleCloseMenu = () => {
-    window.location.href = '/';
+    window.location.href = '/editor/';
   };
 
   // Close the dropdown when clicking outside
@@ -112,10 +112,10 @@ export function MenuButton() {
         ref={buttonRef}
         onClick={toggleDropdown}
         className="w-full px-3 md:px-4 py-3 bg-[rgba(148,188,194,0.15)] dark:bg-[rgba(79,139,149,0.15)] text-[var(--main-text-color)] rounded-md hover:bg-[rgba(148,188,194,0.3)] dark:hover:bg-[rgba(79,139,149,0.3)] transition-colors shadow-md text-sm font-medium flex items-center justify-center border border-[var(--main-text-color)] whitespace-nowrap"
-        title="File menu options"
+        title="File options"
       >
         <IconFile className="h-4 w-4 mr-1" />
-        Menu
+        File
         <IconChevron 
           direction={isDropdownOpen ? 'up' : 'down'} 
           className="h-4 w-4 ml-1" 
@@ -148,8 +148,8 @@ export function MenuButton() {
               className="flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"
               onClick={handleCloseMenu}
             >
-              <IconArrowLeft className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-              Close Menu
+              <IconX className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
+              Close
             </button>
           </div>
         </div>
