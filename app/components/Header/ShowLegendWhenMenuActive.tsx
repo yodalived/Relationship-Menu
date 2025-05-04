@@ -12,7 +12,16 @@ export default function ShowLegendWhenMenuActive() {
   // List of paths where we should hide the legend
   const nonMenuPaths = useMemo(() => ['/privacy-policy', '/legal-disclosure'], []);
   
+  // List of paths where we should explicitly show the legend
+  const menuPaths = useMemo(() => ['/menu/'], []);
+  
   useEffect(() => {
+    // Show legend if we're on an explicit menu page
+    if (menuPaths.includes(pathname)) {
+      setShowLegend(true);
+      return;
+    }
+    
     // Only show legend if we have menu data AND we're not on a non-menu page
     const hasMenu = localStorage.getItem('relationship_menu_data') !== null;
     const isMenuPage = !nonMenuPaths.includes(pathname);
@@ -33,7 +42,7 @@ export default function ShowLegendWhenMenuActive() {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('menuDataChanged', handleStorageChange);
     };
-  }, [pathname, nonMenuPaths]);
+  }, [pathname, nonMenuPaths, menuPaths]);
   
   if (!showLegend) return null;
   

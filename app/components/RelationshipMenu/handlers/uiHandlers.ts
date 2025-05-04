@@ -6,9 +6,6 @@ export type UIHandlerProps = {
   setMode: (mode: MenuMode) => void;
   setActiveIconPicker: (picker: { catIndex: number; itemIndex: number } | null) => void;
   activeIconPicker: { catIndex: number; itemIndex: number } | null;
-  setConfirmModalOpen: (open: boolean) => void;
-  handleExportPDF: () => Promise<void>;
-  onReset: () => void;
 };
 
 /**
@@ -20,9 +17,6 @@ export function createUIHandlers({
   setMode,
   setActiveIconPicker,
   activeIconPicker,
-  setConfirmModalOpen,
-  handleExportPDF,
-  onReset
 }: UIHandlerProps) {
   /**
    * Change the editing mode
@@ -52,24 +46,6 @@ export function createUIHandlers({
   };
 
   /**
-   * Show the confirmation modal for resetting the menu
-   */
-  const handleResetWithConfirm = () => {
-    setConfirmModalOpen(true);
-  };
-
-  /**
-   * Handle the confirmation of resetting the menu
-   */
-  const handleResetConfirmed = (shouldDownload: boolean) => {
-    if (shouldDownload) {
-      handleExportPDF();
-    }
-    onReset();
-    setConfirmModalOpen(false);
-  };
-
-  /**
    * Auto-resize a textarea to fit its content
    */
   const autoResizeTextarea = (element: HTMLTextAreaElement) => {
@@ -84,8 +60,6 @@ export function createUIHandlers({
   return {
     handleModeChange,
     toggleIconPicker,
-    handleResetWithConfirm,
-    handleResetConfirmed,
     autoResizeTextarea
   };
 } 

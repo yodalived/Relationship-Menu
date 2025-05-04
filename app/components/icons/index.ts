@@ -26,4 +26,5 @@ export { default as IconPencilPage } from './IconPencilPage';
 export { default as IconGear } from './IconGear';
 export { default as IconTrash } from './IconTrash';
 export { default as IconPlusCircle } from './IconPlusCircle';
-export { default as IconPlusSolid } from './IconPlusSolid'; 
+export { default as IconPlusSolid } from './IconPlusSolid';
+export { default as IconError } from './IconError'; 

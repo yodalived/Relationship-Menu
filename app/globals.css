@@ -412,8 +412,8 @@ button.flex.items-center span {
     font-size: 16px; /* Prevents iOS zoom on focus */
   }
   
-  /* Better touch targets for most buttons, but not icon pickers */
-  button:not(.flex.flex-row.items-center > button) {
+  /* Better touch targets for most buttons, but not icon pickers or close buttons */
+  button:not(.flex.flex-row.items-center > button):not(.rounded-full) {
     min-height: 44px;
   }
   

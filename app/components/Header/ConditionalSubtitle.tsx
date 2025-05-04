@@ -1,13 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function ConditionalSubtitle() {
   const [showSubtitle, setShowSubtitle] = useState(true);
+  const pathname = usePathname();
+  
+  // Define paths where we should hide the subtitle
+  const menuPaths = useMemo(() => ['/menu/'], []);
   
   useEffect(() => {
     // Only run in the browser
     if (typeof window === 'undefined') return;
+    
+    // Don't show subtitle on specific menu paths
+    if (menuPaths.includes(pathname)) {
+      setShowSubtitle(false);
+      return;
+    }
     
     // Check if we have menu data in localStorage
     const hasMenu = localStorage.getItem('relationship_menu_data') !== null;
@@ -15,6 +26,9 @@ export default function ConditionalSubtitle() {
     
     // Set up storage event listener to update when localStorage changes
     const handleStorageChange = () => {
+      // Don't change state if we're on a menu path
+      if (menuPaths.includes(pathname)) return;
+      
       const hasMenu = localStorage.getItem('relationship_menu_data') !== null;
       setShowSubtitle(!hasMenu);
     };
@@ -28,7 +42,7 @@ export default function ConditionalSubtitle() {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('menuDataChanged', handleStorageChange);
     };
-  }, []);
+  }, [pathname, menuPaths]);
   
   if (!showSubtitle) return null;
   

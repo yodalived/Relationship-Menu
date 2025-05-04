@@ -4,7 +4,6 @@ import { MenuHeader } from './MenuHeader';
 import { MenuToolbar } from './MenuToolbar';
 import { MenuContent } from './MenuContent';
 import { useToast } from '../ui/Toast';
-import { ConfirmModal } from '../ui/ConfirmModal';
 import {
   createDataHandlers,
   createItemHandlers,
@@ -14,12 +13,11 @@ import {
 
 interface RelationshipMenuProps {
   menuData: MenuData;
-  onReset: () => void;
   onSave: (updatedData: MenuData) => void;
   initialMode?: MenuMode;
 }
 
-export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'view' }: RelationshipMenuProps) {
+export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: RelationshipMenuProps) {
   // State for menu operation
   const [mode, setMode] = useState<MenuMode>(initialMode);
   const [editedData, setEditedData] = useState<MenuData>({ ...menuData });
@@ -27,7 +25,6 @@ export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'vie
   
   // UI state
   const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   
   // Get the toast utility from context
   const { showToast } = useToast();
@@ -60,18 +57,13 @@ export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'vie
   const {
     handleModeChange,
     toggleIconPicker,
-    handleResetWithConfirm,
-    handleResetConfirmed
   } = useMemo(() => createUIHandlers({
     menuData,
     setEditedData,
     setMode,
     setActiveIconPicker,
     activeIconPicker,
-    setConfirmModalOpen,
-    handleExportPDF,
-    onReset
-  }), [menuData, activeIconPicker, onReset, handleExportPDF]);
+  }), [menuData, activeIconPicker]);
 
   // Create data handlers
   const {
@@ -147,7 +139,6 @@ export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'vie
               onCopyLink={handleCopyLink}
               onJSONDownload={handleJSONDownload}
               onExportPDF={handleExportPDF}
-              onReset={handleResetWithConfirm}
             />
           </div>
         </div>
@@ -172,15 +163,6 @@ export function RelationshipMenu({ menuData, onReset, onSave, initialMode = 'vie
         onMoveItemUp={handleMoveItemUp}
         onMoveItemDown={handleMoveItemDown}
         autoResizeTextarea={autoResizeTextarea}
-      />
-      
-      {/* Confirmation Modal for New Menu */}
-      <ConfirmModal 
-        isOpen={confirmModalOpen}
-        onClose={() => setConfirmModalOpen(false)}
-        onConfirm={handleResetConfirmed}
-        title="Create new menu?"
-        message="Would you like to download your current menu?"
       />
     </div>
   );

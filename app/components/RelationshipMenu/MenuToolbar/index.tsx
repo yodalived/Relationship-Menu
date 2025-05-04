@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuMode } from '../../../types';
 import { ModeSelector } from './ModeSelector';
 import { ShareButton } from './ShareButton';
-import { NewButton } from './NewButton';
+import { MenuButton } from './MenuButton';
 
 interface MenuToolbarProps {
   mode: MenuMode;
@@ -12,7 +12,6 @@ interface MenuToolbarProps {
   onCopyLink: () => void;
   onJSONDownload: () => void;
   onExportPDF: () => void;
-  onReset: () => void;
 }
 
 export function MenuToolbar({
@@ -23,7 +22,6 @@ export function MenuToolbar({
   onCopyLink,
   onJSONDownload,
   onExportPDF,
-  onReset
 }: MenuToolbarProps) {
   return (
     <div className="flex flex-col w-full md:w-auto gap-3">
@@ -47,7 +45,7 @@ export function MenuToolbar({
         />
         
         {/* New Menu Button Component */}
-        <NewButton onClick={onReset} />
+        <MenuButton />
       </div>
     </div>
   );
@@ -56,4 +54,4 @@ export function MenuToolbar({
 // Export individual components for direct use if needed
 export { ModeSelector } from './ModeSelector';
 export { ShareButton } from './ShareButton';
-export { NewButton } from './NewButton'; 
+export { MenuButton } from './MenuButton'; 

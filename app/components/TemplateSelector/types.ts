@@ -1,5 +1,3 @@
-import { MenuData } from '../../types';
-
 export type TemplateIcon = {
   type: string;
   path: string;
@@ -24,8 +22,9 @@ export type PeopleFormProps = {
 };
 
 export interface TemplateSelectorProps {
-  onTemplateSelected: (menuData: MenuData, initialMode: 'view' | 'fill' | 'edit') => void;
   title?: string;
   subtitle?: string;
   className?: string;
+  isModal?: boolean;
+  onClose?: () => void;
 } 
