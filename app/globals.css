@@ -159,7 +159,7 @@ header {
   width: 100%;
   background: white;
   border-radius: 1rem;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow-md);
   border: 1px solid rgba(0, 0, 0, 0.07);
 }
