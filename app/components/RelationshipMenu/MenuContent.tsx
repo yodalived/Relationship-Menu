@@ -126,13 +126,6 @@ export function MenuContent({
           </button>
         </div>
       )}
-      
-      <div className="mt-6 text-center" role="contentinfo" aria-label="Menu information">
-        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-          This menu is saved in your browser and will be restored when you visit again.
-          {(mode === 'edit' || mode === 'fill') && ' Changes are automatically saved as you type.'}
-        </p>
-      </div>
     </>
   );
 } 

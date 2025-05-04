@@ -1,6 +1,27 @@
+'use client';
+
 import Link from "next/link";
+import { useEffect, useState, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const [showFooter, setShowFooter] = useState(true);
+  const pathname = usePathname();
+  
+  // Define paths where we should hide the footer
+  const menuPaths = useMemo(() => ['/menu/'], []);
+  
+  useEffect(() => {
+    // Don't show footer on specific menu paths
+    if (menuPaths.some(path => pathname?.startsWith(path))) {
+      setShowFooter(false);
+    } else {
+      setShowFooter(true);
+    }
+  }, [pathname, menuPaths]);
+  
+  if (!showFooter) return null;
+
   return (
     <footer className="text-center py-6 text-gray-500 dark:text-gray-400">
       <div className="border-t border-gray-300 dark:border-gray-700 w-4/5 mx-auto mt-5 mb-2.5 pt-5">
