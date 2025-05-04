@@ -8,7 +8,7 @@ export default function ConditionalSubtitle() {
   const pathname = usePathname();
   
   // Define paths where we should hide the subtitle
-  const menuPaths = useMemo(() => ['/menu/'], []);
+  const menuPaths = useMemo(() => ['/editor/'], []);
   
   useEffect(() => {
     // Only run in the browser

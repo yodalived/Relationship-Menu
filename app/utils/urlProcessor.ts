@@ -55,7 +55,7 @@ export async function processSharedLink(
           
           // If timestamps are identical, just open the existing menu
           if (existingDate === importedDate) {
-            window.location.href = `/menu#id=${menuId}&mode=view`;
+            window.location.href = `/editor#id=${menuId}&mode=view`;
             return true;
           }
           
@@ -77,7 +77,7 @@ export async function processSharedLink(
           saveMenu(migratedData);
           
           // Navigate to the menu view
-          window.location.href = `/menu#id=${menuId}&mode=view`;
+          window.location.href = `/editor#id=${menuId}&mode=view`;
           return true;
         }
       }
@@ -95,7 +95,7 @@ export async function processSharedLink(
 export function handleConfirmImport(importConflict: ImportConflict | null): void {
   if (importConflict) {
     saveMenu(importConflict.data);
-    window.location.href = `/menu#id=${importConflict.id}&mode=view`;
+    window.location.href = `/editor#id=${importConflict.id}&mode=view`;
   }
 }
 
@@ -104,7 +104,7 @@ export function handleConfirmImport(importConflict: ImportConflict | null): void
  */
 export function handleCancelImport(importConflict: ImportConflict | null): void {
   if (importConflict) {
-    window.location.href = `/menu#id=${importConflict.id}&mode=view`;
+    window.location.href = `/editor#id=${importConflict.id}&mode=view`;
   }
 }
 

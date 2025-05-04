@@ -418,7 +418,7 @@ button.flex.items-center span {
   }
   
   /* Better touch targets for most buttons, but not icon pickers or close buttons */
-  button:not(.flex.flex-row.items-center > button):not(.rounded-full) {
+  button:not(.flex.flex-row.items-center > button):not(.rounded-full):not(.modal-action-button) {
     min-height: 44px;
   }
   

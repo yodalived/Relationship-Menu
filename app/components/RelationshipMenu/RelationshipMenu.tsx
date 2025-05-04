@@ -24,9 +24,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   const [editedData, setEditedData] = useState<MenuData>({ ...menuData });
   const [activeIconPicker, setActiveIconPicker] = useState<{catIndex: number, itemIndex: number} | null>(null);
   
-  // UI state
-  const [shareDropdownOpen, setShareDropdownOpen] = useState(false);
-  
   // Get the toast utility from context
   const { showToast } = useToast();
   
@@ -99,10 +96,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     menu
   }), [editedData, onSave, menu]);
 
-  const toggleShareDropdown = () => {
-    setShareDropdownOpen(!shareDropdownOpen);
-  };
-
   // Effect to resize all textareas when entering edit mode
   useEffect(() => {
     if (isEditing) {
@@ -133,8 +126,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
           {/* Menu Toolbar Component */}
           <div className="w-full md:w-auto mt-4 md:mt-0">
             <MenuToolbar 
-              shareDropdownOpen={shareDropdownOpen}
-              toggleShareDropdown={toggleShareDropdown}
               onCopyLink={handleCopyLink}
               onJSONDownload={handleJSONDownload}
               onExportPDF={handleExportPDF}

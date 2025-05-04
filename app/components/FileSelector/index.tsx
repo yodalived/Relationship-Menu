@@ -15,9 +15,11 @@ import { ErrorDisplay } from './ErrorDisplay';
 interface FileSelectorProps {
   isModal?: boolean;
   onClose?: () => void;
+  onMenuPageWithNoMenu?: boolean;
+  onCreateNewMenu?: () => void;
 }
 
-export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
+export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = false, onCreateNewMenu }: FileSelectorProps) {
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -195,7 +197,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
         }
         
         // Open the existing menu
-        window.location.href = `/menu#id=${menuId}&mode=view`;
+        window.location.href = `/editor/#id=${menuId}&mode=view`;
         return;
       }
       
@@ -218,7 +220,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
       }
       
       // Always open existing menus in view mode
-      window.location.href = `/menu#id=${menuId}&mode=view`;
+      window.location.href = `/editor/#id=${menuId}&mode=view`;
     }
   };
 
@@ -233,7 +235,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
         onClose();
       }
       
-      window.location.href = `/menu#id=${importConflict.id}&mode=view`;
+      window.location.href = `/editor/#id=${importConflict.id}&mode=view`;
       setImportConflict(null);
     }
   };
@@ -246,7 +248,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
         onClose();
       }
       
-      window.location.href = `/menu#id=${importConflict.id}&mode=view`;
+      window.location.href = `/editor/#id=${importConflict.id}&mode=view`;
       setImportConflict(null);
     }
   };
@@ -257,7 +259,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
     }
     
     // Always open existing menus in view mode
-    window.location.href = `/menu#id=${menuId}&mode=view`;
+    window.location.href = `/editor/#id=${menuId}&mode=view`;
   };
 
   const handleMenuDelete = (menuId: string, event: React.MouseEvent) => {
@@ -313,15 +315,25 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
   if (isModal) {
     return (
       <div className="fixed inset-0 z-[1000] overflow-y-auto flex items-center justify-center p-4" style={{ backdropFilter: 'blur(5px)' }}>
-        <div className="absolute inset-0 bg-black/50 -z-10" onClick={onClose}></div>
+        <div className="absolute inset-0 bg-black/50 -z-10" onClick={onMenuPageWithNoMenu ? undefined : onClose}></div>
         <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          <button 
-            onClick={onClose}
-            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10 bg-white dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center shadow-md border border-gray-200 dark:border-gray-700"
-            aria-label="Close"
-          >
-            <span className="text-xl">&times;</span>
-          </button>
+          {onMenuPageWithNoMenu ? (
+            <button 
+              onClick={onCreateNewMenu}
+              className="absolute right-4 top-4 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] z-10 bg-white dark:bg-gray-800 rounded-md px-3 py-1 flex items-center justify-center shadow-md border border-[var(--main-bg-color)] dark:border-gray-700 modal-action-button"
+              aria-label="Create new menu"
+            >
+              <span className="text-sm font-medium">Create New Menu</span>
+            </button>
+          ) : (
+            <button 
+              onClick={onClose}
+              className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10 bg-white dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center shadow-md border border-gray-200 dark:border-gray-700"
+              aria-label="Close"
+            >
+              <span className="text-xl">&times;</span>
+            </button>
+          )}
           <div className="p-4">
             <h2 className="text-xl font-bold text-[var(--main-text-color)] mb-4">Open Menu</h2>
             <div className="border-b border-gray-200 dark:border-gray-700 -mx-4 mb-4"></div>

@@ -79,6 +79,7 @@ export default function TemplateSelector({
   subtitle = "Choose a template to get started quickly",
   className = "",
   isModal = false,
+  onMenuPageWithNoMenu = false,
 }: TemplateSelectorProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateItemType | null>(null);
   const [templates, setTemplates] = useState<TemplateItemType[]>([]);
@@ -201,7 +202,7 @@ export default function TemplateSelector({
       }
       
       // Navigate to the menu page with the uuid and the initial mode
-      window.location.href = `/menu#id=${migratedData.uuid}&mode=${initialMode}`;
+      window.location.href = `/editor#id=${migratedData.uuid}&mode=${initialMode}`;
       
     } catch (error) {
       console.error('Error processing template:', error);
@@ -215,13 +216,23 @@ export default function TemplateSelector({
       <div className="fixed inset-0 z-[1000] overflow-y-auto flex items-center justify-center p-4" style={{ backdropFilter: 'blur(5px)' }}>
         <div className="absolute inset-0 bg-black/50 -z-10" onClick={onClose}></div>
         <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          <button 
-            onClick={onClose}
-            className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10 bg-white dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center shadow-md border border-gray-200 dark:border-gray-700"
-            aria-label="Close"
-          >
-            <span className="text-xl">&times;</span>
-          </button>
+          {onMenuPageWithNoMenu ? (
+            <button 
+              onClick={onClose}
+              className="absolute right-4 top-4 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] z-10 bg-white dark:bg-gray-800 rounded-md px-3 py-1 flex items-center justify-center shadow-md border border-[var(--main-bg-color)] dark:border-gray-700 modal-action-button"
+              aria-label="Back to menu list"
+            >
+              <span className="text-sm font-medium">Open Existing Menu</span>
+            </button>
+          ) : (
+            <button 
+              onClick={onClose}
+              className="absolute right-4 top-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 z-10 bg-white dark:bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center shadow-md border border-gray-200 dark:border-gray-700"
+              aria-label="Close"
+            >
+              <span className="text-xl">&times;</span>
+            </button>
+          )}
           <div className="p-4">
             <h2 className="text-xl font-bold text-[var(--main-text-color)] mb-4">Choose a Template</h2>
             <div className="border-b border-gray-200 dark:border-gray-700 -mx-4 mb-4"></div>

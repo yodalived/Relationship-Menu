@@ -6,25 +6,62 @@ import { RelationshipMenu } from '../components/RelationshipMenu/RelationshipMen
 import { LoadingIndicator } from '../components/ui/LoadingIndicator';
 import { Container } from '../components/ui/Container';
 import { MenuMode, MenuData } from '../types';
-import { getMenuById, saveMenu } from '../utils/menuStorage';
+import { getMenuById, saveMenu, getAllMenus } from '../utils/menuStorage';
 import { ErrorModal } from '../components/ui/ErrorModal';
+import { FileSelector } from '../components/FileSelector';
+import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
 
-export default function MenuPage() {
+export default function EditorPage() {
   const router = useRouter();
   const [menuData, setMenuData] = useState<MenuData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [initialMode, setInitialMode] = useState<MenuMode>('view');
+  const [showFileSelector, setShowFileSelector] = useState(false);
+  const [showTemplateSelector, setShowTemplateSelector] = useState(false);
   const [error, setError] = useState<{
     show: boolean;
     title: string;
     message: string;
   }>({ show: false, title: '', message: '' });
 
+  // Update document title when menu data changes
+  useEffect(() => {
+    // Only run in browser environment
+    if (typeof window === 'undefined') return;
+
+    // Function to update the title
+    const updateTitle = () => {
+      if (menuData?.people && menuData.people.length > 0) {
+        // Filter out empty names and join the remaining ones
+        const validNames = menuData.people.filter(name => name && name.trim() !== '');
+        
+        if (validNames.length > 0) {
+          const nameString = validNames.join(' & ');
+          document.title = `Relationship Menu - ${nameString}`;
+        } else {
+          document.title = 'Relationship Menu - Editor';
+        }
+      } else {
+        document.title = 'Relationship Menu - Editor';
+      }
+    };
+
+    // Update immediately
+    updateTitle();
+    
+    // And also after a short delay to ensure it happens after any other rendering
+    const timeoutId = setTimeout(updateTitle, 500);
+    
+    return () => clearTimeout(timeoutId);
+  }, [menuData]);
+
   // Load the menu based on the hash ID
   useEffect(() => {
     const loadMenuFromHash = () => {
       setIsLoading(true);
       setError({ show: false, title: '', message: '' });
+      setShowFileSelector(false);
+      setShowTemplateSelector(false);
       
       try {
         // Extract ID from hash
@@ -52,11 +89,16 @@ export default function MenuPage() {
         if (!menuId) {
           console.warn('No menu ID found in URL hash');
           setIsLoading(false);
-          setError({
-            show: true,
-            title: 'Menu ID Missing',
-            message: 'Could not find a menu ID in the URL. Please select a menu.'
-          });
+          
+          // Check if there are any saved menus
+          const menus = getAllMenus();
+          
+          // Show the appropriate selector
+          if (menus.length > 0) {
+            setShowFileSelector(true);
+          } else {
+            setShowTemplateSelector(true);
+          }
           return;
         }
         
@@ -127,12 +169,47 @@ export default function MenuPage() {
     }
   };
 
+  // Handle switching to template selector
+  const handleCreateNewMenu = () => {
+    setShowFileSelector(false);
+    setShowTemplateSelector(true);
+  };
+
+  // Handle switching to file selector
+  const handleOpenExistingMenu = () => {
+    setShowTemplateSelector(false);
+    setShowFileSelector(true);
+  };
+
   // Show loading state
   if (isLoading) {
     return (
       <Container>
         <LoadingIndicator message="Loading menu..." />
       </Container>
+    );
+  }
+  
+  // Show template selector modal if the user wants to create a new menu
+  if (showTemplateSelector) {
+    return (
+      <TemplateSelector 
+        isModal={true}
+        onMenuPageWithNoMenu={true}
+        onClose={handleOpenExistingMenu}
+      />
+    );
+  }
+  
+  // Show file selector modal if no menu ID provided
+  if (showFileSelector) {
+    return (
+      <FileSelector 
+        isModal={true}
+        onMenuPageWithNoMenu={true}
+        onCreateNewMenu={handleCreateNewMenu}
+        onClose={() => router.replace('/')}
+      />
     );
   }
   

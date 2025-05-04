@@ -10,8 +10,7 @@ import { migrateMenuData } from './utils/migrations';
 import {
   LEGACY_MENU_KEY,
   getAllMenus,
-  saveMenu,
-  getMenuById
+  saveMenu
 } from './utils/menuStorage';
 import { ImportConflictModal } from './components/FileSelector/ImportConflictModal';
 import { 

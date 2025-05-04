@@ -9,7 +9,7 @@ export default function Footer() {
   const pathname = usePathname();
   
   // Define paths where we should hide the footer
-  const menuPaths = useMemo(() => ['/menu/'], []);
+  const menuPaths = useMemo(() => ['/editor/'], []);
   
   useEffect(() => {
     // Don't show footer on specific menu paths

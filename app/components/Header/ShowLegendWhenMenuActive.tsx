@@ -13,7 +13,7 @@ export default function ShowLegendWhenMenuActive() {
   const nonMenuPaths = useMemo(() => ['/privacy-policy', '/legal-disclosure'], []);
   
   // List of paths where we should explicitly show the legend
-  const menuPaths = useMemo(() => ['/menu/'], []);
+  const menuPaths = useMemo(() => ['/editor/'], []);
   
   useEffect(() => {
     // Show legend if we're on an explicit menu page
@@ -51,32 +51,32 @@ export default function ShowLegendWhenMenuActive() {
       <div className="flex flex-wrap bg-white dark:bg-slate-800 py-2.5 px-2 sm:px-4 text-sm sm:text-lg uppercase font-semibold justify-around sm:justify-around shadow-[0_0_0_2px_white,0.3em_0.3em_1em_rgba(0,0,0,0.2)] dark:shadow-[0_0_0_2px_#1e293b,0.3em_0.3em_1em_rgba(0,0,0,0.4)] w-full rounded-none sm:rounded-xl">
         <div className="flex items-center whitespace-nowrap">
           <IconMust className="w-5 h-5" />
-          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-blue-400">
+          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-blue-500">
             <span className="block md:hidden">MUST</span>
             <span className="hidden md:block">MUST HAVE</span>
           </span>
         </div>
         <div className="flex items-center whitespace-nowrap">
           <IconLike className="w-5 h-5" />
-          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-green-400">
+          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-green-600">
             <span className="block md:hidden">LIKE</span>
             <span className="hidden md:block">WOULD LIKE</span>
           </span>
         </div>
         <div className="flex items-center whitespace-nowrap">
           <IconMaybe className="w-5 h-5" />
-          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-amber-500">MAYBE</span>
+          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-amber-600">MAYBE</span>
         </div>
         <div className="flex items-center whitespace-nowrap">
           <IconOffLimit className="w-5 h-5" />
-          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-red-400">
+          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-red-600">
             <span className="block md:hidden">NO-GO</span>
             <span className="hidden md:block">OFF LIMITS</span>
           </span>
         </div>
         <div className="flex items-center whitespace-nowrap">
           <IconTalk className="w-5 h-5" />
-          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-purple-400">
+          <span className="ml-1.5 text-[rgba(79,139,149,1)] dark:text-purple-500">
             <span className="block md:hidden">TALK</span>
             <span className="hidden md:block">CONVERSATION</span>
           </span>

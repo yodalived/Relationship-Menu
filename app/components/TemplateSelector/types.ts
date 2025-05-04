@@ -22,9 +22,10 @@ export type PeopleFormProps = {
 };
 
 export interface TemplateSelectorProps {
+  onClose?: () => void;
   title?: string;
   subtitle?: string;
   className?: string;
   isModal?: boolean;
-  onClose?: () => void;
+  onMenuPageWithNoMenu?: boolean;
 } 
