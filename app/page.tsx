@@ -10,18 +10,39 @@ import { migrateMenuData } from './utils/migrations';
 import {
   LEGACY_MENU_KEY,
   getAllMenus,
-  saveMenu
+  saveMenu,
+  getMenuById
 } from './utils/menuStorage';
+import { ImportConflictModal } from './components/FileSelector/ImportConflictModal';
+import { 
+  processSharedLink, 
+  handleConfirmImport, 
+  handleCancelImport 
+} from './utils/urlProcessor';
 
 // Check if we're running in the browser
 const isBrowser = typeof window !== 'undefined';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [importConflict, setImportConflict] = useState<{
+    exists: boolean;
+    isNewer: boolean;
+    data: MenuData;
+    id: string;
+  } | null>(null);
+
+  // Process URL hash data when the hash changes
+  const processHash = async () => {
+    if (isBrowser && window.location.hash) {
+      const hash = window.location.hash.substring(1); // Remove the # symbol
+      await processSharedLink(hash, setImportConflict);
+    }
+  };
 
   // Load saved menus on initial render
   useEffect(() => {
-    const loadSavedMenus = () => {
+    const loadSavedMenus = async () => {
       setIsLoading(true);
       
       if (!isBrowser) {
@@ -30,10 +51,13 @@ export default function Home() {
       }
       
       try {
-        // Migrate any legacy data first
+        // Check if there's data in the URL hash (shared link)
+        await processHash();
+        
+        // Migrate any legacy data
         migrateFromLegacyFormat();
         
-        // Load the menu list - we don't need to store it in state anymore
+        // Load the menu list
         getAllMenus();
       } catch (error) {
         console.error('Error loading saved menus:', error);
@@ -43,6 +67,18 @@ export default function Home() {
     };
     
     loadSavedMenus();
+    
+    // Add hashchange event listener to detect hash changes while the page is open
+    const handleHashChange = () => {
+      processHash();
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
   
   // Helper to migrate from legacy storage format to the new one
@@ -71,6 +107,17 @@ export default function Home() {
     }
   };
 
+  // Handlers for the import conflict modal
+  const onConfirmImport = () => {
+    handleConfirmImport(importConflict);
+    setImportConflict(null);
+  };
+
+  const onCancelImport = () => {
+    handleCancelImport(importConflict);
+    setImportConflict(null);
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -83,6 +130,13 @@ export default function Home() {
   return (
     <Container>
       <LandingPage />
+      
+      {/* Import conflict modal */}
+      <ImportConflictModal
+        conflict={importConflict}
+        onConfirm={onConfirmImport}
+        onCancel={onCancelImport}
+      />
     </Container>
   );
 }

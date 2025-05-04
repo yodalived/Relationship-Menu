@@ -384,7 +384,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
       <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-8 py-6">
         {savedMenus.length > 0 ? (
           <>
-            <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Open your Menus</h2>
+            <h2 className="text-2xl font-bold text-[var(--main-text-color)]">Open a Menu</h2>
             <p className="text-gray-600 dark:text-gray-300 mt-1">Select a saved menu to continue or import a new one</p>
           </>
         ) : (

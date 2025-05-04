@@ -1,5 +1,6 @@
 import { MenuData } from '../../../types';
 import { ToastType } from '../../../components/ui/Toast/ToastContext';
+import { createShareableUrl, copyToClipboard } from '../../../utils/urlProcessor';
 
 export type ExportHandlerProps = {
   menuData: MenuData;
@@ -92,42 +93,24 @@ export function createExportHandlers({
   /**
    * Copy a link to the menu to the clipboard
    */
-  const handleCopyLink = () => {
+  const handleCopyLink = async () => {
     try {
-      // Get LZString dynamically to avoid bundling it with the main chunk
-      import('lz-string').then((LZString) => {
-        const currentData = isEditing ? editedData : menuData;
-        
-        // Compress the JSON data
-        const jsonString = JSON.stringify(currentData);
-        const compressedData = LZString.default.compressToEncodedURIComponent(jsonString);
-        
-        // Manually replace any + with %2B to ensure compatibility with messaging apps
-        const safeCompressedData = compressedData.replace(/\+/g, '%2B');
-        
-        // Create the URL with the compressed data as a fragment (not a query parameter)
-        const baseUrl = window.location.origin + window.location.pathname;
-        const url = `${baseUrl}#data_v1=${safeCompressedData}`;
-        
-        // Copy to clipboard
-        navigator.clipboard.writeText(url).then(() => {
-          showToast('Link copied to clipboard!', 'success');
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-          
-          // Fallback for browsers without clipboard API
-          const textArea = document.createElement('textarea');
-          textArea.value = url;
-          document.body.appendChild(textArea);
-          textArea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textArea);
-          showToast('Link copied to clipboard!', 'success');
-        });
-      });
+      const currentData = isEditing ? editedData : menuData;
+      
+      // Use the utility function to create the shareable URL
+      const url = await createShareableUrl(currentData);
+      
+      // Use the utility function to copy to clipboard
+      const result = await copyToClipboard(url);
+      
+      if (result.success) {
+        showToast('Link copied to clipboard!', 'success');
+      } else {
+        showToast(result.error || 'Failed to copy link', 'error');
+      }
     } catch (error) {
-      console.error('Error creating share link:', error);
-      showToast('Failed to create share link', 'error');
+      console.error('Error creating or copying share link:', error);
+      showToast('Failed to create or copy share link', 'error');
     }
   };
 
