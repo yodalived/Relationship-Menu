@@ -152,7 +152,7 @@ export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
       aria-expanded={false}
     >
       {renderIcon(selectedIcon)}
-      <span className="text-sm font-bold text-white dark:text-white truncate max-w-[180px]">
+      <span className="text-sm font-bold text-black dark:text-white truncate max-w-[180px]">
         {selectedOption.label}
       </span>
       <IconChevron direction="down" className="h-4 w-4 ml-1.5" aria-hidden="true" />
