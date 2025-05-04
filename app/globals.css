@@ -176,10 +176,13 @@ header {
     box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.05);
     width: 100%; /* Ensure full width */
+    overflow: hidden;
   }
   
   .category .title {
     background-color: var(--main-bg-color) !important;
+    border-top-left-radius: 0.74rem;
+    border-top-right-radius: 0.74rem;
   }
   
   .category .item .item-note {
@@ -199,6 +202,8 @@ header {
   color: white;
   font-weight: bold;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
 }
 
 /* Prevent gradients from applying to buttons and dropdown items */
