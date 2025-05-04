@@ -3,6 +3,7 @@ import { MenuData, MenuMode } from '../../types';
 import { MenuHeader } from './MenuHeader';
 import { MenuToolbar } from './MenuToolbar';
 import { MenuContent } from './MenuContent';
+import { FloatingModeSelector } from './MenuToolbar/FloatingModeSelector';
 import { useToast } from '../ui/Toast';
 import {
   createDataHandlers,
@@ -116,7 +117,7 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   }, [isEditing]);
 
   return (
-    <div>
+    <div className="pb-16 md:pb-0">
       <div className="bg-[rgba(148,188,194,0.07)] dark:bg-[rgba(79,139,149,0.07)] rounded-xl shadow-sm border border-[rgba(148,188,194,0.2)] dark:border-[rgba(79,139,149,0.2)] p-4 md:p-5 mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           {/* Menu Header Component */}
@@ -132,8 +133,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
           {/* Menu Toolbar Component */}
           <div className="w-full md:w-auto mt-4 md:mt-0">
             <MenuToolbar 
-              mode={mode}
-              onModeChange={handleModeChange}
               shareDropdownOpen={shareDropdownOpen}
               toggleShareDropdown={toggleShareDropdown}
               onCopyLink={handleCopyLink}
@@ -163,6 +162,12 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
         onMoveItemUp={handleMoveItemUp}
         onMoveItemDown={handleMoveItemDown}
         autoResizeTextarea={autoResizeTextarea}
+      />
+
+      {/* Floating Mode Selector */}
+      <FloatingModeSelector 
+        currentMode={mode}
+        onModeChange={handleModeChange}
       />
     </div>
   );

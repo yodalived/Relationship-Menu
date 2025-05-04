@@ -1,12 +1,8 @@
 import React from 'react';
-import { MenuMode } from '../../../types';
-import { ModeSelector } from './ModeSelector';
 import { ShareButton } from './ShareButton';
 import { MenuButton } from './MenuButton';
 
 interface MenuToolbarProps {
-  mode: MenuMode;
-  onModeChange: (mode: MenuMode) => void;
   shareDropdownOpen: boolean;
   toggleShareDropdown: () => void;
   onCopyLink: () => void;
@@ -15,8 +11,6 @@ interface MenuToolbarProps {
 }
 
 export function MenuToolbar({
-  mode,
-  onModeChange,
   shareDropdownOpen,
   toggleShareDropdown,
   onCopyLink,
@@ -24,18 +18,14 @@ export function MenuToolbar({
   onExportPDF,
 }: MenuToolbarProps) {
   return (
-    <div className="flex flex-col w-full md:w-auto gap-3">
-      {/* Mode Selector Component - Full width on all screens */}
-      <div className="w-full">
-        <ModeSelector 
-          currentMode={mode} 
-          onModeChange={onModeChange} 
-        />
+    <div className="flex w-full md:w-auto gap-2 justify-end">
+      {/* New Menu Button Component - 50% width on small screens */}
+      <div className="w-1/2 md:w-auto">
+        <MenuButton />
       </div>
       
-      {/* Action Buttons Row */}
-      <div className="flex gap-2 justify-end">
-        {/* Share Button Component */}
+      {/* Share Button Component - 50% width on small screens */}
+      <div className="w-1/2 md:w-auto">
         <ShareButton 
           isOpen={shareDropdownOpen}
           onToggle={toggleShareDropdown}
@@ -43,15 +33,12 @@ export function MenuToolbar({
           onJSONDownload={onJSONDownload}
           onExportPDF={onExportPDF}
         />
-        
-        {/* New Menu Button Component */}
-        <MenuButton />
       </div>
     </div>
   );
 }
 
 // Export individual components for direct use if needed
-export { ModeSelector } from './ModeSelector';
 export { ShareButton } from './ShareButton';
-export { MenuButton } from './MenuButton'; 
+export { MenuButton } from './MenuButton';
+export { FloatingModeSelector } from './FloatingModeSelector'; 
