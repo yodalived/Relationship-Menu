@@ -60,7 +60,7 @@ export function ConfirmModal({
   if (!showDownloadOption) {
     return (
       <div 
-        className="fixed inset-0 z-50 overflow-y-auto"
+        className="fixed inset-0 z-[2000] overflow-y-auto"
         role="dialog"
         aria-labelledby="modal-title"
         aria-modal="true"
@@ -113,7 +113,7 @@ export function ConfirmModal({
   // For download option case (reset menu functionality)
   return (
     <div 
-      className="fixed inset-0 z-50 overflow-y-auto"
+      className="fixed inset-0 z-[2000] overflow-y-auto"
       role="dialog"
       aria-labelledby="modal-title"
       aria-modal="true"

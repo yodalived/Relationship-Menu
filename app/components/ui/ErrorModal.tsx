@@ -49,7 +49,7 @@ export function ErrorModal({ title, message, buttonText, onButtonClick }: ErrorM
   
   return (
     <div 
-      className="fixed inset-0 z-50 overflow-y-auto"
+      className="fixed inset-0 z-[2000] overflow-y-auto"
       role="dialog" 
       aria-modal="true"
       aria-labelledby="error-modal-title"
