@@ -26,7 +26,6 @@ export function MenuButton() {
   };
 
   const handleCloseMenu = () => {
-    setIsDropdownOpen(false);
     window.location.href = '/';
   };
 
