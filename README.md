@@ -1,5 +1,6 @@
 # Non-Escalator Relationship Menu
-![Menu](https://github.com/user-attachments/assets/179a2ba4-abad-4409-9db0-a739246dd01f)
+![relationship_menu_editor](https://github.com/user-attachments/assets/e1264d90-e473-47f1-9f19-c11ce79924b1)
+
 
 A web-based tool that helps people define and reflect on their relationships according to their own preferences and needs, rather than following predefined social norms.
 This is the source code of [relationshipmenu.org](https://relationshipmenu.org).
