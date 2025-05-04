@@ -55,7 +55,7 @@ export function MenuContent({
         {menu.map((category, catIndex) => (
           <div 
             key={catIndex} 
-            className="category bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700"
+            className="category bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-visible border border-gray-200 dark:border-gray-700"
             role="region"
             aria-labelledby={`category-header-${catIndex}`}
           >
