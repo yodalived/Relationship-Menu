@@ -47,7 +47,7 @@ export default function ConditionalSubtitle() {
   if (!showSubtitle) return null;
   
   return (
-    <p className="text-white/90 text-base font-normal m-0 pb-1.5 whitespace-nowrap sm:whitespace-normal sm:max-w-[90%] leading-normal">
+    <p className="hidden sm:block text-white/90 text-base font-normal m-0 pb-1.5 whitespace-nowrap sm:whitespace-normal sm:max-w-[90%] leading-normal">
       Create unique relationship agreements, free from traditional expectations.
     </p>
   );

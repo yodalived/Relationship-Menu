@@ -3,16 +3,12 @@ import { ShareButton } from './ShareButton';
 import { MenuButton } from './MenuButton';
 
 interface MenuToolbarProps {
-  shareDropdownOpen: boolean;
-  toggleShareDropdown: () => void;
   onCopyLink: () => void;
   onJSONDownload: () => void;
   onExportPDF: () => void;
 }
 
 export function MenuToolbar({
-  shareDropdownOpen,
-  toggleShareDropdown,
   onCopyLink,
   onJSONDownload,
   onExportPDF,
@@ -27,8 +23,6 @@ export function MenuToolbar({
       {/* Share Button Component - 50% width on small screens */}
       <div className="w-1/2 md:w-auto">
         <ShareButton 
-          isOpen={shareDropdownOpen}
-          onToggle={toggleShareDropdown}
           onCopyLink={onCopyLink}
           onJSONDownload={onJSONDownload}
           onExportPDF={onExportPDF}

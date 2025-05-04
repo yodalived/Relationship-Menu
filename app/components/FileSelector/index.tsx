@@ -395,7 +395,7 @@ export function FileSelector({ isModal = false, onClose }: FileSelectorProps) {
         )}
       </div>
 
-      <div className="p-8">
+      <div className="p-4 sm:p-8">
         {/* Display saved menus if available */}
         {savedMenus.length > 0 && (
           <div className="mb-8">
