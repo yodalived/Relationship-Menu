@@ -76,7 +76,7 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
  */
 export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, dryRun: boolean = false): number {
 
-    const iconTypes = ['must', 'like', 'maybe', 'talk', 'prefer-not', 'off-limit'];
+    const iconTypes = ['must', 'like', 'maybe', 'prefer-not', 'off-limit', 'talk'];
     
     // Increased padding for more room around the legend items
     const vertPadding = isCompact ? 5 : 6;
@@ -284,7 +284,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     const nameWidth = pdf.getTextWidth(item.name);
   
     // Draw marker if needed
-    if (item.icon && item.icon !== 'notSet') {
+    if (item.icon && item.icon !== 'notSet' && item.icon !== 'talk') {
       createItemMarker(pdf, item.icon || null, textStartX, centerY, nameWidth, PDF_CONFIG.lineHeight);
     }
   
