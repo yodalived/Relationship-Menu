@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { TemplateItem as TemplateItemType, TemplateSelectorProps } from './types';
 import { MenuData } from '../../types';
 import PeopleForm from './PeopleForm';
@@ -81,6 +82,7 @@ export default function TemplateSelector({
   isModal = false,
   onMenuPageWithNoMenu = false,
 }: TemplateSelectorProps) {
+  const router = useRouter();
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateItemType | null>(null);
   const [templates, setTemplates] = useState<TemplateItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -202,7 +204,7 @@ export default function TemplateSelector({
       }
       
       // Navigate to the menu page with the uuid and the initial mode
-      window.location.href = `/editor#id=${migratedData.uuid}&mode=${initialMode}`;
+      router.push(`/editor?id=${migratedData.uuid}&mode=${initialMode}`);
       
     } catch (error) {
       console.error('Error processing template:', error);

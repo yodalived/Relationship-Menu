@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { MenuData } from '../../types';
 import { migrateMenuData } from '../../utils/migrations';
 import { extractMenuDataFromPDF } from '../../utils/pdf/extract';
@@ -20,6 +21,8 @@ interface FileSelectorProps {
 }
 
 export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = false, onCreateNewMenu }: FileSelectorProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -38,18 +41,9 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
     loadSavedMenus();
   }, []);
 
-  // Get the current menu ID from URL hash
+  // Get the current menu ID from URL search params
   const getCurrentMenuId = (): string | null => {
-    if (typeof window === 'undefined') return null;
-    
-    try {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      return params.get('id');
-    } catch (error) {
-      console.error('Error getting current menu ID:', error);
-      return null;
-    }
+    return searchParams.get('id');
   };
 
   // Prevent scrolling when modal is open
@@ -197,7 +191,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         }
         
         // Open the existing menu
-        window.location.href = `/editor/#id=${menuId}&mode=view`;
+        router.push(`/editor?id=${menuId}&mode=view`);
         return;
       }
       
@@ -220,7 +214,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
       }
       
       // Always open existing menus in view mode
-      window.location.href = `/editor/#id=${menuId}&mode=view`;
+      router.push(`/editor?id=${menuId}&mode=view`);
     }
   };
 
@@ -235,7 +229,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         onClose();
       }
       
-      window.location.href = `/editor/#id=${importConflict.id}&mode=view`;
+      router.push(`/editor?id=${importConflict.id}&mode=view`);
       setImportConflict(null);
     }
   };
@@ -248,7 +242,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         onClose();
       }
       
-      window.location.href = `/editor/#id=${importConflict.id}&mode=view`;
+      router.push(`/editor?id=${importConflict.id}&mode=view`);
       setImportConflict(null);
     }
   };
@@ -259,7 +253,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
     }
     
     // Always open existing menus in view mode
-    window.location.href = `/editor/#id=${menuId}&mode=view`;
+    router.push(`/editor?id=${menuId}&mode=view`);
   };
 
   const handleMenuDelete = (menuId: string, event: React.MouseEvent) => {
@@ -279,8 +273,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         // Check if the deleted menu is currently open
         const currentMenuId = getCurrentMenuId();
         if (currentMenuId === menuToDelete) {
-          // Redirect to home page if we're deleting the currently open menu
-          window.location.href = '/';
+          router.push('/editor/');
         }
         
         // Refresh the menu list
@@ -358,7 +351,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onClick={handleFileInputClick}
-              compact={true}
+              compact={savedMenus.length > 0}
             />
             
             <input 

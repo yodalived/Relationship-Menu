@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import LandingPage from './components/LandingPage';
 import { LoadingIndicator } from './components/ui/LoadingIndicator';
 import { Container } from './components/ui/Container';
@@ -23,6 +24,7 @@ import {
 const isBrowser = typeof window !== 'undefined';
 
 export default function Home() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [importConflict, setImportConflict] = useState<{
     exists: boolean;
@@ -31,16 +33,16 @@ export default function Home() {
     id: string;
   } | null>(null);
 
-  // Process URL hash data when the hash changes
-  const processHash = async () => {
-    if (isBrowser && window.location.hash) {
-      const hash = window.location.hash.substring(1); // Remove the # symbol
-      await processSharedLink(hash, setImportConflict);
-    }
-  };
-
   // Load saved menus on initial render
   useEffect(() => {
+    // Process URL hash data when the hash changes
+    const processHash = async () => {
+      if (isBrowser && window.location.hash) {
+        const hash = window.location.hash.substring(1); // Remove the # symbol
+        await processSharedLink(hash, setImportConflict, router);
+      }
+    };
+
     const loadSavedMenus = async () => {
       setIsLoading(true);
       
@@ -78,7 +80,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, []);
+  }, [router]);
   
   // Helper to migrate from legacy storage format to the new one
   const migrateFromLegacyFormat = () => {
@@ -108,12 +110,12 @@ export default function Home() {
 
   // Handlers for the import conflict modal
   const onConfirmImport = () => {
-    handleConfirmImport(importConflict);
+    handleConfirmImport(importConflict, router);
     setImportConflict(null);
   };
 
   const onCancelImport = () => {
-    handleCancelImport(importConflict);
+    handleCancelImport(importConflict, router);
     setImportConflict(null);
   };
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { RelationshipMenu } from '../components/RelationshipMenu/RelationshipMenu';
 import { LoadingIndicator } from '../components/ui/LoadingIndicator';
 import { Container } from '../components/ui/Container';
@@ -11,8 +11,10 @@ import { ErrorModal } from '../components/ui/ErrorModal';
 import { FileSelector } from '../components/FileSelector';
 import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
 
-export default function EditorPage() {
+// Create a separate client component that uses useSearchParams
+function EditorContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [menuData, setMenuData] = useState<MenuData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [initialMode, setInitialMode] = useState<MenuMode>('view');
@@ -23,6 +25,16 @@ export default function EditorPage() {
     title: string;
     message: string;
   }>({ show: false, title: '', message: '' });
+
+  // Effect to handle initial URL parameters on mount
+  useEffect(() => {
+    // Only run once on component mount
+    const modeParam = searchParams.get('mode') as MenuMode | null;
+    
+    if (modeParam && ['view', 'fill', 'edit'].includes(modeParam)) {
+      setInitialMode(modeParam);
+    }
+  }, [searchParams]);
 
   // Update document title when menu data changes
   useEffect(() => {
@@ -55,39 +67,39 @@ export default function EditorPage() {
     return () => clearTimeout(timeoutId);
   }, [menuData]);
 
-  // Load the menu based on the hash ID
+  // Load the menu from URL parameters
   useEffect(() => {
-    const loadMenuFromHash = () => {
+    const loadMenuFromParams = () => {
       setIsLoading(true);
       setError({ show: false, title: '', message: '' });
       setShowFileSelector(false);
       setShowTemplateSelector(false);
       
       try {
-        // Extract ID from hash
-        const hash = window.location.hash.substring(1);
-        const params = new URLSearchParams(hash);
-        const menuId = params.get('id');
-        const modeParam = params.get('mode');
+        // Extract ID and mode from search params
+        const menuId = searchParams.get('id');
+        const modeParam = searchParams.get('mode') as MenuMode | null;
         
         // Set the initial mode from URL parameter if it exists
         if (modeParam && ['view', 'fill', 'edit'].includes(modeParam)) {
-          setInitialMode(modeParam as MenuMode);
+          setInitialMode(modeParam);
           
-          // Remove the mode parameter from the URL after using it
-          if (menuId) {
-            // Update the URL without triggering a navigation
-            const cleanHash = `#id=${menuId}`;
-            window.history.replaceState(
-              null, 
-              '', 
-              window.location.pathname + cleanHash
-            );
+          // Remove the mode parameter from the URL after using it, without triggering a re-render
+          if (menuId && typeof window !== 'undefined') {
+            // Small delay to ensure the mode is applied before cleaning the URL
+            setTimeout(() => {
+              // Create a clean URL without the mode parameter
+              const url = new URL(window.location.href);
+              url.searchParams.delete('mode');
+              
+              // Update browser history without triggering navigation or re-render
+              window.history.replaceState(null, '', url.toString());
+            }, 500); // Increased delay for more reliable mode application
           }
         }
         
         if (!menuId) {
-          console.warn('No menu ID found in URL hash');
+          console.warn('No menu ID found in URL parameters');
           setIsLoading(false);
           
           // Check if there are any saved menus
@@ -133,17 +145,10 @@ export default function EditorPage() {
       }
     };
     
-    // Load menu on initial render
-    loadMenuFromHash();
+    // Load menu whenever search params change
+    loadMenuFromParams();
     
-    // Also handle hash changes
-    const handleHashChange = () => {
-      loadMenuFromHash();
-    };
-    
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [router]);
+  }, [searchParams, router]);
 
   // Handle menu data saving
   const handleSaveMenu = (updatedMenu: MenuData) => {
@@ -223,6 +228,7 @@ export default function EditorPage() {
     return (
       <Container>
         <RelationshipMenu 
+          key={`menu-${initialMode}-${menuData.uuid}`}
           menuData={menuData} 
           onSave={handleSaveMenu}
           initialMode={initialMode}
@@ -245,5 +251,14 @@ export default function EditorPage() {
         </button>
       </div>
     </Container>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function EditorPage() {
+  return (
+    <Suspense fallback={<Container><LoadingIndicator message="Loading..." /></Container>}>
+      <EditorContent />
+    </Suspense>
   );
 } 

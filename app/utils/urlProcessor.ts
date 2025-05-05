@@ -2,6 +2,7 @@ import { MenuData } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { migrateMenuData } from './migrations';
 import { getMenuById, saveMenu } from './menuStorage';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface ImportConflict {
   exists: boolean;
@@ -15,7 +16,8 @@ interface ImportConflict {
  */
 export async function processSharedLink(
   hash: string,
-  setImportConflict: (conflict: ImportConflict | null) => void
+  setImportConflict: (conflict: ImportConflict | null) => void,
+  router: AppRouterInstance
 ): Promise<boolean> {
   try {
     const params = new URLSearchParams(hash);
@@ -55,7 +57,7 @@ export async function processSharedLink(
           
           // If timestamps are identical, just open the existing menu
           if (existingDate === importedDate) {
-            window.location.href = `/editor#id=${menuId}&mode=view`;
+            router.push(`/editor?id=${menuId}&mode=view`);
             return true;
           }
           
@@ -77,7 +79,7 @@ export async function processSharedLink(
           saveMenu(migratedData);
           
           // Navigate to the menu view
-          window.location.href = `/editor#id=${menuId}&mode=view`;
+          router.push(`/editor?id=${menuId}&mode=view`);
           return true;
         }
       }
@@ -92,19 +94,19 @@ export async function processSharedLink(
 /**
  * Handle confirmation of importing a menu from a shared link
  */
-export function handleConfirmImport(importConflict: ImportConflict | null): void {
+export function handleConfirmImport(importConflict: ImportConflict | null, router: AppRouterInstance): void {
   if (importConflict) {
     saveMenu(importConflict.data);
-    window.location.href = `/editor#id=${importConflict.id}&mode=view`;
+    router.push(`/editor?id=${importConflict.id}&mode=view`);
   }
 }
 
 /**
  * Handle cancellation of importing a menu from a shared link
  */
-export function handleCancelImport(importConflict: ImportConflict | null): void {
+export function handleCancelImport(importConflict: ImportConflict | null, router: AppRouterInstance): void {
   if (importConflict) {
-    window.location.href = `/editor#id=${importConflict.id}&mode=view`;
+    router.push(`/editor?id=${importConflict.id}&mode=view`);
   }
 }
 
@@ -125,7 +127,7 @@ export function createShareableUrl(menuData: MenuData): Promise<string> {
           const safeCompressedData = compressedData.replace(/\+/g, '%2B');
           
           // Create the URL with the compressed data as a fragment (not a query parameter)
-          // Always use the root URL
+          // For sharing we still use hash to keep the data client-side
           const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
           const url = `${baseUrl}/#data_v1=${safeCompressedData}`;
           

@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { IconPlus, IconFile, IconChevron, IconX } from '../../icons';
 import { TemplateSelector } from '../../TemplateSelector';
 import { FileSelector } from '../../FileSelector';
 
 export function MenuButton() {
+  const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showTemplateModal, setShowTemplateModal] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
@@ -62,7 +64,7 @@ export function MenuButton() {
   };
 
   const handleCloseMenu = () => {
-    window.location.href = '/editor/';
+    router.push('/editor/');
   };
 
   // Close the dropdown when clicking outside
