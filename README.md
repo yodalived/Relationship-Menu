@@ -16,10 +16,11 @@ Think of relationships as customizable recipes — you and others select ingredi
 - Create personalized relationship menus with custom categories and items
 - Add notes to each menu item
 - Support for multiple people in a relationship
-- Edit and fill modes for creating and using menus
+- Support for multiple menus stored within the app
+- Edit and fill modes for creating and filling out menus
 - Export menus as JSON or PDF
 - Share menus via links (not recommended currently)
-- Local storage to save your work in the browser
+- Uses local storage to save the menus on device only
 - Mobile-friendly responsive design
 - Dark/light mode support
 
@@ -62,3 +63,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 # Build for production
 npm run build
 ```
+
+## Contributing
+
+Hi there! 👋 I'm working on this project in my spare time, and it's still very much in flux. While I welcome contributions a lot, I'd like to coordinate efforts to make sure we're not duplicating work.
+
+If you're interested in contributing:
+
+1. Please open a discussion topic in the "ideas" category before starting any work
+2. Share what you plan to implement or change
+3. I'll respond as soon as I can to let you know:
+   - If it's a good time to work on that feature
+   - If I might already be working on something similar
+   - If the approach aligns with where I'm taking the project
+
+This helps us align our efforts and ensures your valuable time is well spent on contributions that can be successfully integrated. Thank you for your interest in making this project better!
