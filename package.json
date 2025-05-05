@@ -1,7 +1,7 @@
 {
   "name": "non-escalator-relationship-menu",
   "version": "0.1.0",
-  "author": "Paul-Vincent Roll <non-escalator-relationship-menu@paviro.de> (https://paulvincentroll.com)",
+  "author": "Paul-Vincent Roll <paul-vincent@relationshipmenu.org> (https://paulvincentroll.com)",
   "license": "EUPL-1.2",
   "private": true,
   "scripts": {
