@@ -72,7 +72,7 @@ export function MenuHeader({
         <div className="transition-all duration-150">
           <div className="flex items-center">
             <h2 className="text-[var(--main-text-color)] dark:text-[var(--main-text-color)] font-bold text-2xl transition-colors">
-              Menu for {formatPeople(people)}
+              {formatPeople(people)}
             </h2>
           </div>
           <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors">Last updated: {formatDate(lastUpdate)}</p>
