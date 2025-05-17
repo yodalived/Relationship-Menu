@@ -76,8 +76,9 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
     editedData,
     setEditedData,
     onSave,
-    setActiveIconPicker
-  }), [editedData, onSave]);
+    setActiveIconPicker,
+    showToast
+  }), [editedData, onSave, showToast]);
 
   // Create item handlers
   const {

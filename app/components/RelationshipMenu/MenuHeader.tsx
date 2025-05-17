@@ -54,8 +54,8 @@ export function MenuHeader({
                 name={personName}
                 index={index}
                 onChange={(value) => onPersonNameChange(index, value)}
-                onDelete={people.length > 2 ? () => onDeletePerson(index) : undefined}
-                showDelete={people.length > 2}
+                onDelete={people.length > 1 ? () => onDeletePerson(index) : undefined}
+                showDelete={people.length > 1}
               />
             ))}
             <button

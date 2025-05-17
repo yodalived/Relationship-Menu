@@ -1,10 +1,12 @@
 import { MenuData } from '../../../types';
+import { ToastType } from '../../ui/Toast/ToastContext';
 
 export type DataHandlerProps = {
   editedData: MenuData;
   setEditedData: (data: MenuData) => void;
   onSave: (data: MenuData) => void;
   setActiveIconPicker?: (picker: { catIndex: number; itemIndex: number } | null) => void;
+  showToast: (message: string, type?: ToastType, duration?: number) => void;
 };
 
 /**
@@ -14,7 +16,8 @@ export function createDataHandlers({
   editedData,
   setEditedData,
   onSave,
-  setActiveIconPicker
+  setActiveIconPicker,
+  showToast
 }: DataHandlerProps) {
   /**
    * Update a note for a menu item
@@ -91,9 +94,9 @@ export function createDataHandlers({
    */
   const handleDeletePerson = (personIndex: number) => {
     const updatedData = { ...editedData };
-    // Ensure we maintain at least 2 people
-    if (updatedData.people.length <= 2) {
-      alert("A relationship menu must have at least 2 people.");
+    // Ensure we maintain at least 1 person
+    if (updatedData.people.length <= 1) {
+      showToast("A relationship menu must have at least 1 person.", "error", 4000);
       return;
     }
     updatedData.people.splice(personIndex, 1);
