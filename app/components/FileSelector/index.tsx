@@ -322,7 +322,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
               className="absolute right-4 top-4 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] z-10 bg-white dark:bg-gray-800 rounded-md px-3 py-1 flex items-center justify-center shadow-md border border-[var(--main-bg-color)] dark:border-gray-700 modal-action-button"
               aria-label="Create new menu"
             >
-              <span className="text-sm font-medium">Create New Menu</span>
+              <span className="text-sm font-medium">New Menu</span>
             </button>
           ) : (
             <button 

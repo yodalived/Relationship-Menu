@@ -220,9 +220,9 @@ export default function TemplateSelector({
             <button 
               onClick={onClose}
               className="absolute right-4 top-4 text-[var(--main-text-color)] hover:text-[var(--main-text-color-hover)] z-10 bg-white dark:bg-gray-800 rounded-md px-3 py-1 flex items-center justify-center shadow-md border border-[var(--main-bg-color)] dark:border-gray-700 modal-action-button"
-              aria-label="Back to menu list"
+              aria-label="Open existing menu"
             >
-              <span className="text-sm font-medium">Open Existing Menu</span>
+              <span className="text-sm font-medium">Open Menu</span>
             </button>
           ) : (
             <button 
