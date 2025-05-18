@@ -15,7 +15,7 @@ export function AboutSection() {
           className="inline-flex items-center px-3 py-1.5 bg-[rgba(148,188,194,0.2)] hover:bg-[rgba(148,188,194,0.3)] text-[rgba(79,139,149,1)] rounded-md transition-colors text-sm"
         >
           <IconEye className="h-4 w-4 mr-1.5" />
-          View Example
+          Example
         </Link>
       </div>
       
