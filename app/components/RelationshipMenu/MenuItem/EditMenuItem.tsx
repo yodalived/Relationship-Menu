@@ -61,22 +61,21 @@ export function EditMenuItem({
               className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 order-first sm:order-last font-bold"
               placeholder="Edit item title..."
             />
-            <IconButton 
-              selectedIcon={iconType}
-              onClick={() => onToggleIconPicker(catIndex, itemIndex)}
-            />
-          </div>
-          
-          <div className="relative">
-            <IconPicker
-              selectedIcon={iconType}
-              onSelectIcon={(icon) => onIconChange(catIndex, itemIndex, icon)}
-              isOpen={activeIconPicker !== null && 
-                    activeIconPicker.catIndex === catIndex && 
-                    activeIconPicker.itemIndex === itemIndex}
-              mode="edit"
-              onClose={() => onToggleIconPicker(catIndex, itemIndex)}
-            />
+            <div className="relative w-full sm:w-auto">
+              <IconButton 
+                selectedIcon={iconType}
+                onClick={() => onToggleIconPicker(catIndex, itemIndex)}
+              />
+              <IconPicker
+                selectedIcon={iconType}
+                onSelectIcon={(icon) => onIconChange(catIndex, itemIndex, icon)}
+                isOpen={activeIconPicker !== null && 
+                      activeIconPicker.catIndex === catIndex && 
+                      activeIconPicker.itemIndex === itemIndex}
+                mode="edit"
+                onClose={() => onToggleIconPicker(catIndex, itemIndex)}
+              />
+            </div>
           </div>
         </div>
       </div>

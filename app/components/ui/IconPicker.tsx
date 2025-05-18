@@ -104,7 +104,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
   return (
     <div 
       ref={pickerRef}
-      className="absolute z-10 mt-1 left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-[360px]"
+      className={`absolute z-10 ${mode === 'edit' ? 'mt-3' : 'mt-1'} left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-[360px]`}
       role="dialog"
       aria-label="Select icon"
     >
@@ -148,7 +148,7 @@ export function IconButton({ selectedIcon, onClick }: IconButtonProps) {
     <button 
       type="button"
       onClick={onClick}
-      className={`flex items-center pl-2 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 sm:mr-3 ${
+      className={`flex items-center p-2 rounded border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 sm:mr-3 w-full sm:w-auto h-[42px] font-bold text-base box-border ${
         selectedIcon ? selectedOption.bgColor : 'bg-white dark:bg-gray-800'
       }`}
       aria-label={label}
