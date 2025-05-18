@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { TemplateItem as TemplateItemType, TemplateSelectorProps } from './types';
