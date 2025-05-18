@@ -1,6 +1,5 @@
 import { MenuData } from '../../../types';
 import { ToastType } from '../../../components/ui/Toast/ToastContext';
-import { createShareableUrl, copyToClipboard } from '../../../utils/urlProcessor';
 
 export type ExportHandlerProps = {
   menuData: MenuData;
@@ -90,33 +89,8 @@ export function createExportHandlers({
     }
   };
 
-  /**
-   * Copy a link to the menu to the clipboard
-   */
-  const handleCopyLink = async () => {
-    try {
-      const currentData = isEditing ? editedData : menuData;
-      
-      // Use the utility function to create the shareable URL
-      const url = await createShareableUrl(currentData);
-      
-      // Use the utility function to copy to clipboard
-      const result = await copyToClipboard(url);
-      
-      if (result.success) {
-        showToast('Link copied to clipboard!', 'success');
-      } else {
-        showToast(result.error || 'Failed to copy link', 'error');
-      }
-    } catch (error) {
-      console.error('Error creating or copying share link:', error);
-      showToast('Failed to create or copy share link', 'error');
-    }
-  };
-
   return {
     handleJSONDownload,
-    handleExportPDF,
-    handleCopyLink
+    handleExportPDF
   };
 } 

@@ -11,7 +11,6 @@ import { ErrorModal } from '../components/ui/ErrorModal';
 import { FileSelector } from '../components/FileSelector';
 import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
 
-// Create a separate client component that uses useSearchParams
 function EditorContent() {
   const router = useRouter();
   const searchParams = useSearchParams();

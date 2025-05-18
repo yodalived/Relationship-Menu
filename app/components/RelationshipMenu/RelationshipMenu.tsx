@@ -42,8 +42,7 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   // Create export handlers first
   const {
     handleJSONDownload,
-    handleExportPDF,
-    handleCopyLink
+    handleExportPDF
   } = useMemo(() => createExportHandlers({
     menuData,
     editedData,
@@ -127,7 +126,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
           {/* Menu Toolbar Component */}
           <div className="w-full md:w-auto mt-4 md:mt-0">
             <MenuToolbar 
-              onCopyLink={handleCopyLink}
               onJSONDownload={handleJSONDownload}
               onExportPDF={handleExportPDF}
             />

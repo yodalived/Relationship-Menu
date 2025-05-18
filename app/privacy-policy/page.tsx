@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { Container } from '../components/ui/Container';
 
@@ -97,19 +95,6 @@ export default function PrivacyPolicy() {
                       Can be used to put the menu into a git repository or other version control system.
                     </p>
                   </div>
-                  
-                  <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
-                    <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                      Sharing via URL
-                    </h4>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6">
-                      When sharing your menu via a link, all your data is encoded within the URL itself. 
-                      The recipient can simply click the link to view your menu without downloading any files.
-                    </p>
-                  </div>
                 </div>
                 
                 <h4 className="font-medium text-gray-800 dark:text-gray-200 mt-4 mb-2">Privacy Benefits of All Sharing Methods</h4>
@@ -119,7 +104,7 @@ export default function PrivacyPolicy() {
                   <li>You maintain absolute control over who can access your relationship preferences</li>
                 </ul>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                   <div className="bg-green-50/50 dark:bg-green-900/20 p-2 rounded-lg border border-green-100 dark:border-green-800">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">PDF Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
@@ -130,14 +115,6 @@ export default function PrivacyPolicy() {
                       <li>Editable on this website</li>
                     </ul>
                   </div>
-                  <div className="bg-purple-50/50 dark:bg-purple-900/20 p-2 rounded-lg border border-purple-100 dark:border-purple-800  ">
-                    <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">URL Sharing Advantages</h5>
-                    <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
-                      <li>One-click access for recipients</li>
-                      <li>No file handling required</li>
-                      <li>Works on any device with a browser</li>
-                    </ul>
-                  </div>
                   <div className="bg-blue-50/50 dark:bg-blue-900/20 p-2 rounded-lg border border-blue-100 dark:border-blue-800 ">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">JSON File Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
@@ -146,65 +123,6 @@ export default function PrivacyPolicy() {
                       <li>Version control possibilities</li>
                     </ul>
                   </div>
-                </div>
-                
-                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200 dark:border-yellow-800 mt-3">
-                  <h4 className="font-medium text-yellow-800 dark:text-yellow-300 mb-1 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    Privacy vs. Convenience Tradeoff
-                  </h4>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6">
-                    While URL-encoded menus result in very long links, this approach was deliberately chosen to prioritize your privacy. 
-                    By embedding data in the URL rather than storing it in a database, your personal relationship preferences remain 
-                    private and under your control at all times. However, PDF files are currently recommended for sharing as long
-                    links can break easily in some apps.
-                  </p>
-                </div>
-                
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mt-3">
-                  <b>Privacy Advisory:</b> Because your menu data is embedded directly in the shared URL, only share your unique link through secure channels and exclusively with trusted individuals you want to grant access to your relationship menu.
-                </p>
-                
-                <div className="bg-white dark:bg-gray-700 p-4 rounded-lg mt-4 border border-blue-100 dark:border-blue-800">
-                  <h4 className="text-lg font-medium mb-2 text-blue-600 dark:text-blue-400">How URL Fragment Encoding Works</h4>
-                  <p className="text-gray-700 dark:text-gray-300 mb-3">
-                    The application uses URL fragments (the part after the # symbol) rather than query parameters (the part after the ? symbol) to encode your menu data in a link. This technical choice provides enhanced privacy:
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
-                    <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-                      <div className="flex items-center mb-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 dark:text-red-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                        <p className="font-medium text-red-600 dark:text-red-400">Query Parameters (?)</p>
-                      </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">
-                        <code className="bg-red-100 dark:bg-red-900/40 px-1 py-0.5 rounded">example.com?data=12345</code>
-                      </p>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm mt-2">
-                        The data parameter is sent to the server during the request to load the page, potentially allowing the server to store your data.
-                      </p>
-                    </div>
-                    <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                      <div className="flex items-center mb-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500 dark:text-green-400 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <p className="font-medium text-green-600 dark:text-green-400">URL Fragments (#)</p>
-                      </div>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm">
-                        <code className="bg-green-100 dark:bg-green-900/40 px-1 py-0.5 rounded">example.com#data=12345</code>
-                      </p>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm mt-2">
-                        The data parameter stays in your browser and is not sent to the server, keeping your data private and on your device.
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm">
-                    When you share a URL with a fragment, only the part before the # is sent to the server. The fragment containing your menu data is processed entirely by your browser after the page loads, ensuring your relationship preferences remain private.
-                  </p>
                 </div>
               </div>
             </div>

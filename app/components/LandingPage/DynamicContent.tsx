@@ -1,16 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { TemplateSelector } from '../TemplateSelector';
 import { FileSelector } from '../FileSelector';
-import { AboutSection } from './AboutSection';
-import { GettingStartedSection } from './GettingStartedSection';
-import { PrivacySection } from './PrivacySection';
-import { AttributionSection } from './AttributionSection';
 import { Divider } from './Divider';
 import { getAllMenus } from '../../utils/menuStorage';
 
-export default function LandingPage() {
+export default function DynamicContent() {
   const [hasSavedMenus, setHasSavedMenus] = useState(false);
   
   // Check if we have saved menus on component mount
@@ -24,7 +20,7 @@ export default function LandingPage() {
   }, []);
   
   return (
-    <div className="max-w-4xl mx-auto">
+    <>
       {hasSavedMenus ? (
         // When saved menus exist, show FileSelector first
         <>
@@ -54,24 +50,6 @@ export default function LandingPage() {
           <FileSelector />
         </>
       )}
-
-      {/* Info Cards - Displayed in a grid layout */}
-      <div className="grid md:grid-cols-2 gap-8 mt-8">
-        {/* About this tool - Left column */}
-        <AboutSection />
-        
-        {/* Right column - stacked cards */}
-        <div className="space-y-8">
-          {/* Getting Started - Top right */}
-          <GettingStartedSection />
-          
-          {/* Privacy Information - Bottom right */}
-          <PrivacySection />
-        </div>
-      </div>
-      
-      {/* Attribution */}
-      <AttributionSection />
-    </div>
+    </>
   );
 } 

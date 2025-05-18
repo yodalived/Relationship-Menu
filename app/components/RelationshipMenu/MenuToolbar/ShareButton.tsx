@@ -1,14 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { IconShare, IconChevron, IconCopy, IconFile, IconDownload } from '../../icons';
+import { IconShare, IconChevron, IconFile, IconDownload } from '../../icons';
 
 interface ShareButtonProps {
-  onCopyLink: () => void;
   onJSONDownload: () => void;
   onExportPDF: () => void;
 }
 
 export function ShareButton({
-  onCopyLink,
   onJSONDownload,
   onExportPDF
 }: ShareButtonProps) {
@@ -141,20 +139,6 @@ export function ShareButton({
             
             {advancedOpen && (
               <div className="pl-2">
-                <button
-                  onClick={() => {
-                    onCopyLink();
-                    setIsDropdownOpen(false);
-                  }}
-                  className="flex flex-col px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"
-                >
-                  <div className="flex items-center">
-                    <IconCopy className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-                    <span>Copy Link</span>
-                  </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">Not recommended currently.</span>
-                </button>
-                
                 <button
                   onClick={() => {
                     onJSONDownload();

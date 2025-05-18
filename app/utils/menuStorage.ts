@@ -1,4 +1,6 @@
 import { MenuData } from '../types';
+import { v4 as uuidv4 } from 'uuid';
+import { migrateMenuData } from './migrations';
 
 // LocalStorage keys
 export const MENU_ITEM_PREFIX = 'relationship_menu_';
@@ -20,9 +22,40 @@ export function createMenuTitle(people: string[]): string {
 }
 
 /**
+ * Migrates data from legacy storage format to the new one
+ */
+export function migrateFromLegacyFormat(): void {
+  if (typeof window === 'undefined') return;
+  
+  try {
+    const legacyData = localStorage.getItem(LEGACY_MENU_KEY);
+    if (legacyData) {
+      const parsedData = JSON.parse(legacyData) as MenuData;
+      const migratedData = migrateMenuData(parsedData);
+      
+      // Ensure it has a UUID
+      if (!migratedData.uuid) {
+        migratedData.uuid = uuidv4();
+      }
+      
+      // Save to new format
+      saveMenu(migratedData);
+      
+      // Remove the legacy data
+      localStorage.removeItem(LEGACY_MENU_KEY);
+    }
+  } catch (error) {
+    console.error('Error migrating legacy data:', error);
+  }
+}
+
+/**
  * Gets all menus by scanning localStorage
  */
 export function getAllMenus(): MenuInfo[] {
+  // Run migration before getting menus
+  migrateFromLegacyFormat();
+  
   const menus: MenuInfo[] = [];
   
   if (typeof window === 'undefined') return menus;
