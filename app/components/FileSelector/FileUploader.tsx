@@ -21,8 +21,8 @@ export function FileUploader({
 }: FileUploaderProps) {
   return (
     <div 
-      className={`border-3 border-dashed rounded-xl ${compact ? 'p-5' : 'p-10'} text-center cursor-pointer transition-all duration-300 hover:bg-[rgba(158,198,204,0.05)] dark:hover:bg-[rgba(158,198,204,0.03)] ${
-        isDragging ? 'border-[var(--main-text-color)] bg-blue-50 dark:bg-blue-900/20 scale-[1.02]' : 'border-[var(--main-bg-color)] dark:border-[rgba(158,198,204,0.4)]'
+      className={`border-3 border-dashed rounded-xl ${compact ? 'p-5' : 'p-10'} text-center cursor-pointer hover:bg-[rgba(158,198,204,0.05)] dark:hover:bg-[rgba(158,198,204,0.03)] ${
+        isDragging ? 'border-[var(--main-text-color)] bg-blue-50 dark:bg-blue-900/20' : 'border-[var(--main-bg-color)] dark:border-[rgba(158,198,204,0.4)]'
       } ${isProcessing ? 'opacity-70 pointer-events-none' : ''}`}
       onDrop={onDrop}
       onDragOver={onDragOver}
@@ -46,8 +46,8 @@ export function FileUploader({
       ) : (
         // Full version with icon
         <>
-          <div className="mb-6 transform transition-transform duration-300 hover:scale-110">
-            <IconCloud className="h-16 w-16 mx-auto text-[var(--main-text-color)]" />
+          <div className="mb-6">
+            <IconCloud className={`h-16 w-16 mx-auto text-[var(--main-text-color)] transition-transform duration-200 ${isDragging ? 'scale-110' : ''}`} />
           </div>
           <p className="mb-3 text-xl text-[var(--main-text-color)] font-semibold">
             Import from File
