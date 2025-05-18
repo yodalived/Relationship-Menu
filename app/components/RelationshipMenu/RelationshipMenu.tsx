@@ -53,7 +53,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
   // Create UI handlers with the now-available handleExportPDF
   const {
     handleModeChange,
-    toggleIconPicker,
   } = useMemo(() => createUIHandlers({
     menuData,
     setEditedData,
@@ -137,8 +136,6 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
       <MenuContent 
         menu={menu}
         mode={mode}
-        activeIconPicker={activeIconPicker}
-        onToggleIconPicker={toggleIconPicker}
         onIconChange={handleIconChange}
         onCategoryNameChange={handleCategoryNameChange}
         onItemNameChange={handleItemNameChange}

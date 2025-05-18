@@ -61,24 +61,11 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
   const firstOptionRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (pickerRef.current && !pickerRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      // Focus the first option when the picker opens
-      if (firstOptionRef.current) {
-        firstOptionRef.current.focus();
-      }
+    // Focus the first option when the picker opens
+    if (isOpen && firstOptionRef.current) {
+      firstOptionRef.current.focus();
     }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   useEffect(() => {
     // Handle keyboard navigation for the picker

@@ -11,8 +11,6 @@ interface MenuItemProps {
   item: MenuItemType;
   mode: MenuMode;
   isEditing?: boolean;
-  activeIconPicker: { catIndex: number, itemIndex: number } | null;
-  onToggleIconPicker: (catIndex: number, itemIndex: number) => void;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
   onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
@@ -28,8 +26,6 @@ export function MenuItem({
   catIndex,
   itemIndex,
   mode,
-  activeIconPicker,
-  onToggleIconPicker,
   onIconChange,
   onItemNameChange,
   onNoteChange,
@@ -56,8 +52,6 @@ export function MenuItem({
           catIndex={catIndex}
           itemIndex={itemIndex}
           item={item}
-          activeIconPicker={activeIconPicker}
-          onToggleIconPicker={onToggleIconPicker}
           onIconChange={onIconChange}
           onItemNameChange={onItemNameChange}
           onNoteChange={onNoteChange}
@@ -77,8 +71,6 @@ export function MenuItem({
           catIndex={catIndex}
           itemIndex={itemIndex}
           item={item}
-          activeIconPicker={activeIconPicker}
-          onToggleIconPicker={onToggleIconPicker}
           onIconChange={onIconChange}
           onNoteChange={onNoteChange}
           autoResizeTextarea={autoResizeTextarea}

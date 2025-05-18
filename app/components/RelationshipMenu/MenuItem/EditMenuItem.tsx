@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MenuItem } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
 import { IconChevron } from '../../icons';
@@ -7,8 +7,6 @@ interface EditMenuItemProps {
   catIndex: number;
   itemIndex: number;
   item: MenuItem;
-  activeIconPicker: { catIndex: number, itemIndex: number } | null;
-  onToggleIconPicker: (catIndex: number, itemIndex: number) => void;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
   onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
@@ -23,8 +21,6 @@ export function EditMenuItem({
   catIndex,
   itemIndex,
   item,
-  activeIconPicker,
-  onToggleIconPicker,
   onIconChange,
   onItemNameChange,
   onNoteChange,
@@ -37,6 +33,8 @@ export function EditMenuItem({
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const pickerWrapperRef = useRef<HTMLDivElement>(null);
   
   // Effect to resize textarea when the component mounts with existing content
   useEffect(() => {
@@ -44,6 +42,20 @@ export function EditMenuItem({
       autoResizeTextarea(textareaRef.current);
     }
   }, [autoResizeTextarea, item.note]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (pickerWrapperRef.current && !pickerWrapperRef.current.contains(event.target as Node)) {
+        setIsPickerOpen(false);
+      }
+    };
+    if (isPickerOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isPickerOpen]);
 
   return (
     <>
@@ -61,19 +73,20 @@ export function EditMenuItem({
               className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 order-first sm:order-last font-bold"
               placeholder="Edit item title..."
             />
-            <div className="relative w-full sm:w-auto">
+            <div className="relative w-full sm:w-auto" ref={pickerWrapperRef}>
               <IconButton 
                 selectedIcon={iconType}
-                onClick={() => onToggleIconPicker(catIndex, itemIndex)}
+                onClick={() => setIsPickerOpen((open) => !open)}
               />
               <IconPicker
                 selectedIcon={iconType}
-                onSelectIcon={(icon) => onIconChange(catIndex, itemIndex, icon)}
-                isOpen={activeIconPicker !== null && 
-                      activeIconPicker.catIndex === catIndex && 
-                      activeIconPicker.itemIndex === itemIndex}
+                onSelectIcon={(icon) => {
+                  onIconChange(catIndex, itemIndex, icon);
+                  setIsPickerOpen(false);
+                }}
+                isOpen={isPickerOpen}
                 mode="edit"
-                onClose={() => onToggleIconPicker(catIndex, itemIndex)}
+                onClose={() => setIsPickerOpen(false)}
               />
             </div>
           </div>

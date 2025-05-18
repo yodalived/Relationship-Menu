@@ -8,8 +8,6 @@ interface FillMenuItemProps {
   catIndex: number;
   itemIndex: number;
   item: MenuItem;
-  activeIconPicker: { catIndex: number, itemIndex: number } | null;
-  onToggleIconPicker: (catIndex: number, itemIndex: number) => void;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
   autoResizeTextarea: (element: HTMLTextAreaElement) => void;
@@ -19,15 +17,29 @@ export function FillMenuItem({
   catIndex,
   itemIndex,
   item,
-  activeIconPicker,
-  onToggleIconPicker,
   onIconChange,
   onNoteChange,
   autoResizeTextarea
 }: FillMenuItemProps) {
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const pickerWrapperRef = useRef<HTMLDivElement>(null);
   
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (pickerWrapperRef.current && !pickerWrapperRef.current.contains(event.target as Node)) {
+        setIsPickerOpen(false);
+      }
+    };
+    if (isPickerOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isPickerOpen]);
+
   // Effect to resize textarea when entering edit mode with existing content
   useEffect(() => {
     if (isNoteExpanded && textareaRef.current) {
@@ -66,7 +78,7 @@ export function FillMenuItem({
     return (
       <button 
         type="button"
-        onClick={() => onToggleIconPicker(catIndex, itemIndex)}
+        onClick={() => setIsPickerOpen((open) => !open)}
         className={`inline-flex items-center px-1.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 ${
           iconType ? selectedOption.bgColor : 'bg-white dark:bg-gray-800'
         }`}
@@ -137,7 +149,7 @@ export function FillMenuItem({
   return (
     <>
       <div className="item-name">
-        <div className="relative flex items-start flex-col w-full">
+        <div className="relative flex items-start flex-col w-full" ref={pickerWrapperRef}>
           {/* Fill mode layout - icon stays before title */}
           <div className="flex flex-row items-center w-full mb-2 gap-2">
             {renderIconButton()}
@@ -148,12 +160,13 @@ export function FillMenuItem({
           
           <IconPicker
             selectedIcon={iconType}
-            onSelectIcon={(icon) => onIconChange(catIndex, itemIndex, icon)}
-            isOpen={activeIconPicker !== null && 
-                  activeIconPicker.catIndex === catIndex && 
-                  activeIconPicker.itemIndex === itemIndex}
+            onSelectIcon={(icon) => {
+              onIconChange(catIndex, itemIndex, icon);
+              setIsPickerOpen(false);
+            }}
+            isOpen={isPickerOpen}
             mode="fill"
-            onClose={() => onToggleIconPicker(catIndex, itemIndex)}
+            onClose={() => setIsPickerOpen(false)}
           />
         </div>
       </div>

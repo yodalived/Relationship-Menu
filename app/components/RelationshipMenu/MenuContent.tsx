@@ -7,8 +7,6 @@ import { IconPlus, IconPlusCircle } from '../icons';
 interface MenuContentProps {
   menu: MenuCategory[];
   mode: MenuMode;
-  activeIconPicker: { catIndex: number, itemIndex: number } | null;
-  onToggleIconPicker: (catIndex: number, itemIndex: number) => void;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onCategoryNameChange: (catIndex: number, newName: string) => void;
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
@@ -27,8 +25,6 @@ interface MenuContentProps {
 export function MenuContent({
   menu,
   mode,
-  activeIconPicker,
-  onToggleIconPicker,
   onIconChange,
   onCategoryNameChange,
   onItemNameChange,
@@ -81,8 +77,6 @@ export function MenuContent({
                   itemIndex={itemIndex}
                   item={item}
                   mode={mode}
-                  activeIconPicker={activeIconPicker}
-                  onToggleIconPicker={onToggleIconPicker}
                   onIconChange={onIconChange}
                   onItemNameChange={onItemNameChange}
                   onNoteChange={onNoteChange}
