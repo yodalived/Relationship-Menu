@@ -11,6 +11,7 @@ import { ErrorModal } from '../components/ui/ErrorModal';
 import { FileSelector } from '../components/FileSelector';
 import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
 import { formatPeopleNames } from '../utils/formatUtils';
+import { OnboardingWizard } from '../components/OnboardingWizard/index';
 
 function EditorContent() {
   const router = useRouter();
@@ -25,6 +26,55 @@ function EditorContent() {
     title: string;
     message: string;
   }>({ show: false, title: '', message: '' });
+
+  // Onboarding steps for the spotlight wizard
+  const onboardingSteps = [
+    {
+      selector: '[data-onboarding="menu-header"]',
+      title: 'People in the Menu',
+      description: 'This shows the people for whom this menu is created. In edit mode, you can add or remove people.'
+    },
+    {
+      selector: '[data-onboarding="file-button"]',
+      title: 'File Options',
+      description: 'Click here to create a new menu, open an existing one, or close the current menu.'
+    },
+    {
+      selector: '[data-onboarding="share-button"]',
+      title: 'Share & Export',
+      description: 'Here you can download your menu as a PDF or JSON file to share it with others.'
+    },
+    {
+      selector: '[data-onboarding="mode-selector"]',
+      title: 'Mode Selector',
+      description: 'You can interact with your menu in different ways:',
+      subSteps: [
+        {
+          title: 'View Mode',
+          description: 'Read your relationship menu.'
+        },
+        {
+          title: 'Fill Mode',
+          description: 'Make choices and add notes to your menu.'
+        },
+        {
+          title: 'Edit Mode',
+          description: 'Customize your menu by adding, removing, or changing items and categories as well as adding or removing names.'
+        }
+      ]
+    },
+    {
+      selector: '[data-onboarding="menu-content"]',
+      title: 'Relationship Menu',
+      description: 'This is where your menu lives. Depending on the mode you are in, you can interact with it in different ways.'
+    }
+  ];
+
+  // Welcome screen data for the onboarding wizard
+  const welcomeScreen = {
+    title: 'Welcome to Your Menu',
+    description: 'Create a personalized relationship agreement that reflects your unique relationship. This brief tour will help you navigate the editor and its features.'
+  };
 
   // Effect to handle initial URL parameters on mount
   useEffect(() => {
@@ -226,6 +276,7 @@ function EditorContent() {
   if (menuData) {
     return (
       <Container>
+        <OnboardingWizard steps={onboardingSteps} welcomeScreen={welcomeScreen} />
         <RelationshipMenu 
           key={`menu-${initialMode}-${menuData.uuid}`}
           menuData={menuData} 

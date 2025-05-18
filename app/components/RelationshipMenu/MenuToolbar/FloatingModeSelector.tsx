@@ -11,10 +11,13 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
   return (
     <div className="fixed bottom-4 right-4 z-50 md:block md:shadow-lg md:rounded-full md:border md:border-[var(--main-text-color)] md:bg-white md:dark:bg-gray-800">
       {/* Mobile Tab Bar (full width at bottom on small screens) */}
-      <div className="w-full fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 md:hidden"
-           style={{
-             boxShadow: '0 0px 100px 0px rgba(0, 0, 0, 0.1), 0 -2px 8px -2px rgba(0, 0, 0, 0.1)'
-           }}>
+      <div
+        className="w-full fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 md:hidden"
+        data-onboarding="mode-selector"
+        style={{
+          boxShadow: '0 0px 100px 0px rgba(0, 0, 0, 0.1), 0 -2px 8px -2px rgba(0, 0, 0, 0.1)'
+        }}
+      >
         <button
           onClick={() => onModeChange('view')}
           className={`flex flex-col items-center justify-center py-3 px-5 ${
@@ -50,7 +53,10 @@ export function FloatingModeSelector({ currentMode, onModeChange }: FloatingMode
       </div>
 
       {/* Desktop Floating Tooltip (circular buttons at bottom right) */}
-      <div className="hidden md:flex md:flex-col md:items-center md:gap-2 md:p-2">
+      <div
+        className="hidden md:flex md:flex-col md:items-center md:gap-2 md:p-2"
+        data-onboarding="mode-selector"
+      >
         <button
           onClick={() => onModeChange('view')}
           className={`p-3 rounded-full ${

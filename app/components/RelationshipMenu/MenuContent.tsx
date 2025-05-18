@@ -51,6 +51,7 @@ export function MenuContent({
         className="content gap-4 sm:gap-5 md:gap-5 lg:gap-6 xl:gap-8"
         role="region" 
         aria-label="Relationship Menu Content"
+        data-onboarding="menu-content"
       >
         {menu.map((category, catIndex) => (
           <div 

@@ -37,7 +37,7 @@ export function MenuHeader({
   };
 
   return (
-    <div className="w-full md:w-auto transition-all duration-150">
+    <div className="w-full md:w-auto transition-all duration-150" data-onboarding="menu-header">
       {mode === 'edit' ? (
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-200 dark:border-gray-700 transition-all">
           <h2 className="text-xl font-bold mb-5 text-[var(--main-text-color)] dark:text-[var(--main-text-color)] transition-colors">Menu for:</h2>
