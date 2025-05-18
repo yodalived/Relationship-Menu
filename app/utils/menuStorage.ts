@@ -66,6 +66,7 @@ export function getAllMenus(): MenuInfo[] {
       if (key && key.startsWith(MENU_ITEM_PREFIX)) {
         try {
           const menuData = JSON.parse(localStorage.getItem(key) || '{}') as MenuData;
+          
           if (menuData && menuData.uuid) {
             menus.push({
               id: menuData.uuid,
@@ -115,7 +116,11 @@ export function getMenuById(id: string): MenuData | null {
       return null;
     }
     
-    return JSON.parse(storedMenu) as MenuData;
+    // Parse and apply migrations to ensure up-to-date data structure
+    let menuData = JSON.parse(storedMenu) as MenuData;
+    menuData = migrateMenuData(menuData);
+    
+    return menuData;
   } catch (error) {
     console.error('Error loading menu:', error);
     return null;
