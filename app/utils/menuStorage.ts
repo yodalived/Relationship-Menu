@@ -1,6 +1,7 @@
 import { MenuData } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { migrateMenuData } from './migrations';
+import { formatPeopleNames } from './formatUtils';
 
 // LocalStorage keys
 export const MENU_ITEM_PREFIX = 'relationship_menu_';
@@ -15,10 +16,11 @@ export type MenuInfo = {
 
 /**
  * Creates a title from people names
+ * @deprecated Use formatPeopleNames from utils/formatUtils instead
  */
 export function createMenuTitle(people: string[]): string {
   if (!people || people.length === 0) return "Untitled Menu";
-  return people.join(" & ");
+  return formatPeopleNames(people);
 }
 
 /**

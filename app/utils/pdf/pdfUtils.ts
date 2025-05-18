@@ -180,13 +180,3 @@ export function drawRoundedRect(pdf: jsPDF, x: number, y: number, width: number,
   // Begin path
   pdf.roundedRect(x, y, width, height, radius, radius, 'F');
 }
-
-/**
- * Formats people's names into a readable string
- */
-export function formatPeople(people: string[]): string {
-  if (people.length === 0) return "";
-  if (people.length === 1) return people[0];
-  if (people.length === 2) return `${people[0]} & ${people[1]}`;
-  return `${people.slice(0, -1).join(', ')}, & ${people[people.length - 1]}`;
-} 

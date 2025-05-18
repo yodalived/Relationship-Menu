@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuMode } from '../../types';
 import { IconPlus } from '../icons';
 import { PersonNameInput } from '../ui/PersonNameInput';
+import { formatPeopleNames } from '../../utils/formatUtils';
 
 interface MenuHeaderProps {
   mode: MenuMode;
@@ -20,13 +21,6 @@ export function MenuHeader({
   onAddPerson,
   onDeletePerson
 }: MenuHeaderProps) {
-  const formatPeople = (people: string[]) => {
-    if (people.length === 0) return "";
-    if (people.length === 1) return people[0];
-    if (people.length === 2) return `${people[0]} and ${people[1]}`;
-    return `${people.slice(0, -1).join(', ')}, and ${people[people.length - 1]}`;
-  };
-  
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
@@ -72,7 +66,7 @@ export function MenuHeader({
         <div className="transition-all duration-150">
           <div className="flex items-center">
             <h2 className="text-[var(--main-text-color)] dark:text-[var(--main-text-color)] font-bold text-2xl transition-colors">
-              {formatPeople(people)}
+              {formatPeopleNames(people, 'and')}
             </h2>
           </div>
           <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors">Last updated: {formatDate(lastUpdate)}</p>

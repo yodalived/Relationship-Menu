@@ -1,7 +1,8 @@
 import jsPDF from 'jspdf';
 import { MenuData, MenuCategory, MenuItem } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
-import { drawIcon, formatPeople, createItemMarker } from './pdfUtils';
+import { drawIcon, createItemMarker } from './pdfUtils';
+import { formatPeopleNames } from '../formatUtils';
 
 /**
  * Adds the header section to the PDF for the first page
@@ -24,7 +25,7 @@ export function addHeader(pdf: jsPDF, menuData: MenuData, yPos: number, dryRun: 
     pdf.text('Relationship Menu', PDF_CONFIG.margin, yPos + 22); // Adjusted position
     
     // Add people involved - closer to the title
-    const peopleText = formatPeople(menuData.people);
+    const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
       pdf.setFontSize(PDF_CONFIG.subtitleFontSize);
       pdf.setFont('helvetica', 'normal');
@@ -58,7 +59,7 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
     pdf.setFont('helvetica', 'bold');
     pdf.text('Relationship Menu', PDF_CONFIG.margin, textY);
     
-    const peopleText = formatPeople(menuData.people);
+    const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
       // Add people part right-aligned
       pdf.setFontSize(PDF_CONFIG.subtitleFontSize - 4);

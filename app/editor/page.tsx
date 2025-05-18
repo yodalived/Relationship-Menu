@@ -10,6 +10,7 @@ import { getMenuById, saveMenu, getAllMenus } from '../utils/menuStorage';
 import { ErrorModal } from '../components/ui/ErrorModal';
 import { FileSelector } from '../components/FileSelector';
 import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
+import { formatPeopleNames } from '../utils/formatUtils';
 
 function EditorContent() {
   const router = useRouter();
@@ -47,8 +48,7 @@ function EditorContent() {
         const validNames = menuData.people.filter(name => name && name.trim() !== '');
         
         if (validNames.length > 0) {
-          const nameString = validNames.join(' & ');
-          document.title = `Relationship Menu - ${nameString}`;
+          document.title = `Relationship Menu - ${formatPeopleNames(validNames)}`;
         } else {
           document.title = 'Relationship Menu - Editor';
         }
