@@ -50,6 +50,9 @@ export function EditMenuItem({
       <div className="item-name">
         <div className="relative flex items-start flex-col w-full">
           {/* Edit mode layout - title appears above icon on mobile, after icon on larger screens */}
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Title and Icon
+          </label>
           <div className="flex flex-col sm:flex-row w-full mb-2 gap-2">
             <input
               type="text"
@@ -64,31 +67,36 @@ export function EditMenuItem({
             />
           </div>
           
-          <IconPicker
-            selectedIcon={iconType}
-            onSelectIcon={(icon) => onIconChange(catIndex, itemIndex, icon)}
-            isOpen={activeIconPicker !== null && 
-                  activeIconPicker.catIndex === catIndex && 
-                  activeIconPicker.itemIndex === itemIndex}
-            mode="edit"
-            onClose={() => onToggleIconPicker(catIndex, itemIndex)}
-          />
+          <div className="relative">
+            <IconPicker
+              selectedIcon={iconType}
+              onSelectIcon={(icon) => onIconChange(catIndex, itemIndex, icon)}
+              isOpen={activeIconPicker !== null && 
+                    activeIconPicker.catIndex === catIndex && 
+                    activeIconPicker.itemIndex === itemIndex}
+              mode="edit"
+              onClose={() => onToggleIconPicker(catIndex, itemIndex)}
+            />
+          </div>
         </div>
       </div>
       
       <div className="mt-2">
-        <textarea 
-          ref={textareaRef}
-          value={item.note || ''} 
-          onChange={(e) => {
-            onNoteChange(catIndex, itemIndex, e.target.value);
-            autoResizeTextarea(e.target as HTMLTextAreaElement);
-          }}
-          onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
-          placeholder="Add a note..."
-          style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
-        />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Notes
+          </label>
+          <textarea 
+            ref={textareaRef}
+            value={item.note || ''} 
+            onChange={(e) => {
+              onNoteChange(catIndex, itemIndex, e.target.value);
+              autoResizeTextarea(e.target as HTMLTextAreaElement);
+            }}
+            onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
+            className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
+            placeholder="Add a note..."
+            style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
+          />
         
         <div className="mt-4 p-2 sm:p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 flex flex-row justify-between items-center gap-2">
           <div className="flex items-center">

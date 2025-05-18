@@ -4,10 +4,10 @@ export function getItemClassName(iconType: string | null | undefined) {
 }
 
 export function getItemSpanClasses(iconType: string | null | undefined) {
-  if (!iconType) return '';
-  
   const baseClasses = 'rounded-[1em_0_1em_0] py-[2px] px-[5px]';
-  
+
+  if (!iconType) return baseClasses;
+
   switch(iconType) {
     case 'must':
       return `${baseClasses} [background-image:linear-gradient(-100deg,rgba(108,188,250,0.2),rgba(108,188,250,0.5)_95%,rgba(108,188,250,0.1))] dark:[background-image:linear-gradient(-100deg,rgba(59,130,246,0.3),rgba(59,130,246,0.7)_95%,rgba(59,130,246,0.3))]`;

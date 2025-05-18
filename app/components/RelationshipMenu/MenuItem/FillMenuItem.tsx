@@ -37,6 +37,9 @@ export function FillMenuItem({
 
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
+  
+  // Determine if icon is set
+  const hasIcon = !!item.icon && item.icon !== "talk";
 
   // Render icon button for fill mode
   const renderIconButton = () => {
@@ -47,7 +50,7 @@ export function FillMenuItem({
       // Render the icon in a button-like container but without arrow and interaction
       return (
         <div 
-          className={`inline-flex items-center justify-between px-1.5 mr-1 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md ${
+          className={`inline-flex items-center justify-between px-1.5 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md ${
             selectedOption.bgColor
           }`}
           style={{ minWidth: '42px' }}  /* Match width of buttons with arrows */
@@ -114,12 +117,16 @@ export function FillMenuItem({
         )) : 
         "Add a note...";
         
-      // Placeholder text that expands when clicked
+      // Note text that expands when clicked
       return (
         <div 
           onClick={handleExpandNote}
           className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white cursor-text text-sm whitespace-pre-line ${!item.note ? 'text-gray-500 dark:text-gray-400' : ''}`}
-          style={{ marginTop: '-0.8rem', marginLeft: '5.6rem' }}
+          style={{ 
+            transform: hasIcon ? 'translateY(-0.6rem)' : 'translateY(-1rem)',
+            marginBottom: hasIcon ? '-0.6rem' : '-1rem', 
+            paddingLeft: '5.4rem'
+          }}
         >
           {formattedNote}
         </div>
