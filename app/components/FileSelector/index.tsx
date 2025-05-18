@@ -177,7 +177,12 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
 
     // Prevent importing example menu
     if (menuId === 'example') {
-      setError('Cannot import the example menu. Please create a new menu instead.');
+      // Close the modal if it's open
+      if (isModal && onClose) {
+        onClose();
+      }
+      // Navigate to the example menu
+      router.push(`/editor?id=example`);
       return;
     }
     
