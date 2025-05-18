@@ -12,6 +12,7 @@ import { FileSelector } from '../components/FileSelector';
 import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
 import { formatPeopleNames } from '../utils/formatUtils';
 import { OnboardingWizard } from '../components/OnboardingWizard/index';
+import { IconInfo } from '../components/icons';
 
 function EditorContent() {
   const router = useRouter();
@@ -118,7 +119,7 @@ function EditorContent() {
 
   // Load the menu from URL parameters
   useEffect(() => {
-    const loadMenuFromParams = () => {
+    const loadMenuFromParams = async () => {
       setIsLoading(true);
       setError({ show: false, title: '', message: '' });
       setShowFileSelector(false);
@@ -162,6 +163,29 @@ function EditorContent() {
           }
           return;
         }
+
+        // Handle example menu
+        if (menuId === 'example') {
+          try {
+            const response = await fetch('/example-menu.json');
+            if (!response.ok) {
+              throw new Error('Failed to load example menu');
+            }
+            const exampleMenu = await response.json();
+            setMenuData(exampleMenu);
+            setIsLoading(false);
+            return;
+          } catch (error) {
+            console.error('Error loading example menu:', error);
+            setError({
+              show: true,
+              title: 'Error Loading Example Menu',
+              message: 'Failed to load the example menu. Please try again later.'
+            });
+            setIsLoading(false);
+            return;
+          }
+        }
         
         // Try to load menu from localStorage
         const menu = getMenuById(menuId);
@@ -202,6 +226,12 @@ function EditorContent() {
   // Handle menu data saving
   const handleSaveMenu = (updatedMenu: MenuData) => {
     try {
+      // Prevent saving example menu
+      if (updatedMenu.uuid === 'example') {
+        console.log('Example menu changes are not saved');
+        return;
+      }
+
       // Ensure we have a uuid
       if (!updatedMenu.uuid) {
         console.error('Cannot save menu without UUID');
@@ -276,7 +306,15 @@ function EditorContent() {
   if (menuData) {
     return (
       <Container>
-        <OnboardingWizard steps={onboardingSteps} welcomeScreen={welcomeScreen} />
+        {menuData.uuid !== 'example' && (
+          <OnboardingWizard steps={onboardingSteps} welcomeScreen={welcomeScreen} />
+        )}
+        {menuData.uuid === 'example' && (
+          <div className="mb-4 p-4 bg-[rgba(148,188,194,0.2)] text-[rgba(79,139,149,1)] rounded-lg flex items-center">
+            <IconInfo className="h-5 w-5 mr-2" />
+            <span>This is an example menu. Any changes you make will not be saved.</span>
+          </div>
+        )}
         <RelationshipMenu 
           key={`menu-${initialMode}-${menuData.uuid}`}
           menuData={menuData} 

@@ -174,6 +174,12 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
     }
     
     const menuId = importedData.uuid;
+
+    // Prevent importing example menu
+    if (menuId === 'example') {
+      setError('Cannot import the example menu. Please create a new menu instead.');
+      return;
+    }
     
     // Check if this menu already exists
     const existingMenu = getMenuById(menuId);

@@ -1,12 +1,22 @@
 import React from 'react';
-import { IconInfo } from '../icons';
+import { IconInfo, IconEye } from '../icons';
+import Link from 'next/link';
 
 export function AboutSection() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
-      <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-6 py-4 flex items-center">
-        <IconInfo className="h-6 w-6 text-[var(--main-text-color)] mr-2" />
-        <h3 className="text-xl font-bold text-[var(--main-text-color)]">About this tool</h3>
+      <div className="bg-gradient-to-r from-[rgba(158,198,204,0.3)] to-[rgba(99,159,169,0.2)] dark:from-[rgba(158,198,204,0.15)] dark:to-[rgba(99,159,169,0.1)] px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center">
+          <IconInfo className="h-6 w-6 text-[var(--main-text-color)] mr-2" />
+          <h3 className="text-xl font-bold text-[var(--main-text-color)]">About this tool</h3>
+        </div>
+        <Link 
+          href="/editor/?id=example" 
+          className="inline-flex items-center px-3 py-1.5 bg-[rgba(148,188,194,0.2)] hover:bg-[rgba(148,188,194,0.3)] text-[rgba(79,139,149,1)] rounded-md transition-colors text-sm"
+        >
+          <IconEye className="h-4 w-4 mr-1.5" />
+          View Example
+        </Link>
       </div>
       
       <div className="p-6">
