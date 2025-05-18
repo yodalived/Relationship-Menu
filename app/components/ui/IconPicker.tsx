@@ -91,7 +91,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
   return (
     <div 
       ref={pickerRef}
-      className={`absolute z-10 ${mode === 'edit' ? 'mt-3' : 'mt-1'} left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-[360px]`}
+      className={`absolute z-10 ${mode === 'edit' ? 'mt-3' : 'mt-1'} left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full max-w-xs sm:w-[360px] sm:max-w-none sm:left-0 sm:right-auto right-0`}
       role="dialog"
       aria-label="Select icon"
     >
@@ -112,7 +112,7 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
             <div className="mr-2" aria-hidden="true">
               <option.icon />
             </div>
-            <span className="text-sm font-medium px-1.5 py-1 dark:text-white">
+            <span className="text-sm font-medium px-1 py-1 sm:px-1.5 dark:text-white">
               {option.label}
             </span>
           </button>
