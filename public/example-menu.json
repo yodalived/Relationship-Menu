@@ -1,42 +1,34 @@
 {
-    "last_update": "2023-05-02T16:26:56.691002",
-    "document_version": 2.0,
-    "people": [
-        "Example"
-    ],
+    "last_update": "2025-05-18T23:33:56.691002",
+    "people": ["Alex", "Jordan"],
     "menu": [
         {
             "name": "Communication",
             "items": [
                 {
                     "name": "Daily or frequent check ins",
-                    "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": "Alex: Prefers morning texts \n Jordan: Prefers evening check-ins"
                 },
                 {
                     "name": "Texting",
-                    "icon": "maybe",
+                    "icon": "like",
                     "note": null
                 },
                 {
                     "name": "Phone / video calls",
                     "icon": "like",
-                    "note": null
-                },
-                {
-                    "name": "In-person visits",
-                    "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Weekly when apart"
                 },
                 {
                     "name": "Discussing work and hobbies",
-                    "icon": "maybe",
+                    "icon": "must",
                     "note": null
                 },
                 {
                     "name": "Discussing family, partners, relationships",
                     "icon": "must",
-                    "note": null
+                    "note": "Open discussions about all partners"
                 },
                 {
                     "name": "Discussing politics and current events",
@@ -54,39 +46,19 @@
                     "note": null
                 },
                 {
-                    "name": "Relationship meetings",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "name": "Relationship meetings (e.g. R.A.D.A.R.)",
+                    "icon": "like",
+                    "note": "Monthly check-ins"
+                },
+                {
+                    "name": "Nonviolent Communication",
+                    "icon": "like",
+                    "note": null
                 },
                 {
                     "name": "Radical honesty",
-                    "icon": "off-limit",
-                    "note": null
-                }
-            ]
-        },
-        {
-            "name": "Companionship",
-            "items": [
-                {
-                    "name": "Playfulness",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Shared hobbies, activities or interests",
                     "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Intellectual & philosophical discussions",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Friendship",
-                    "icon": "must",
-                    "note": null
+                    "note": "Alex: Values gentle honesty \nJordan: Prefers directness"
                 }
             ]
         },
@@ -94,34 +66,24 @@
             "name": "Collaborative",
             "items": [
                 {
-                    "name": "Working together",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Teaching",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Projects",
+                    "name": "Teaching each other things",
                     "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Creativity",
+                    "name": "Working on projects together",
                     "icon": "maybe",
+                    "note": "Only when interests naturally align"
+                },
+                {
+                    "name": "Being creative together",
+                    "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Organizations",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Associations",
-                    "icon": "maybe",
-                    "note": null
+                    "name": "Sharing a hobby or interest",
+                    "icon": "like",
+                    "note": "Currently: hiking and board games"
                 }
             ]
         },
@@ -129,29 +91,29 @@
             "name": "Religious / Spiritual",
             "items": [
                 {
-                    "name": "Shared ritual / prayer",
+                    "name": "Having shared beliefs",
+                    "icon": "prefer-not",
+                    "note": "Both value spiritual independence"
+                },
+                {
+                    "name": "Praying together",
+                    "icon": "off-limit",
+                    "note": null
+                },
+                {
+                    "name": "Having shared rituals",
                     "icon": "maybe",
-                    "note": null
+                    "note": "Seasonal celebrations only"
                 },
                 {
-                    "name": "Shared beliefs",
-                    "icon": "must",
-                    "note": null
+                    "name": "Ceremonies & traditions",
+                    "icon": "talk",
+                    "note": "Alex: Comfortable with seasonal celebrations but prefers secular approach \nJordan: Values creating our own meaningful rituals"
                 },
                 {
-                    "name": "Discussions",
-                    "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Ceremony & Traditions",
-                    "icon": "like",
-                    "note": null
-                },
-                {
-                    "name": "Divination",
-                    "icon": "maybe",
-                    "note": null
+                    "name": "Religious & spiritual beliefs",
+                    "icon": "talk",
+                    "note": "Alex: Atheist but open to spiritual discussions \nJordan: Buddhist-influenced practices \n\nBoth agree to respect individual belief systems and support each other's practices without expectation of conversion or participation."
                 }
             ]
         },
@@ -159,24 +121,24 @@
             "name": "Professional & Work",
             "items": [
                 {
-                    "name": "Combining social, collaborative & financial",
-                    "icon": "off-limit",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
                     "name": "Colleagues",
-                    "icon": "maybe",
+                    "icon": "prefer-not",
+                    "note": "Prefer to keep work and relationship separate"
+                },
+                {
+                    "name": "Business partners",
+                    "icon": "off-limit",
                     "note": null
                 },
                 {
-                    "name": "Partners",
+                    "name": "Work-related stress support",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
-                    "name": "Co-operatives",
-                    "icon": "maybe",
-                    "note": null
+                    "name": "Impact of work on the relationship",
+                    "icon": "talk",
+                    "note": "Alex: Works remotely with flexible hours but occasional travel \nJordan: Has demanding in-person job with irregular schedule \n\nBoth agree to communicate schedule changes at least a week in advance when possible and maintain weekly date night as a priority regardless of work demands."
                 }
             ]
         },
@@ -184,24 +146,29 @@
             "name": "Technology",
             "items": [
                 {
-                    "name": "Sharing passwords",
-                    "icon": "maybe",
+                    "name": "Sharing passwords to phones or computers",
+                    "icon": "off-limit",
+                    "note": "Value privacy for all relationships"
+                },
+                {
+                    "name": "Accessing phones or computers without asking",
+                    "icon": "off-limit",
                     "note": null
                 },
                 {
-                    "name": "Sharing accounts",
+                    "name": "Sharing internet accounts",
                     "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Streaming services only"
                 },
                 {
                     "name": "Real-time location sharing",
-                    "icon": "like",
-                    "note": null
+                    "icon": "maybe",
+                    "note": "Only during travel or for safety"
                 },
                 {
-                    "name": "Accessing computers / phones without asking",
-                    "icon": "off-limit",
-                    "note": null
+                    "name": "Device-free time together",
+                    "icon": "like",
+                    "note": "During date nights"
                 }
             ]
         },
@@ -209,14 +176,19 @@
             "name": "Partnership",
             "items": [
                 {
-                    "name": "Shared goals / values",
+                    "name": "Shared goals in life",
                     "icon": "like",
-                    "note": null
+                    "note": "While maintaining individual paths"
                 },
                 {
-                    "name": "Routine",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "name": "Shared values",
+                    "icon": "must",
+                    "note": "Especially around honesty and autonomy"
+                },
+                {
+                    "name": "Having a routine together",
+                    "icon": "like",
+                    "note": "Weekly date night"
                 },
                 {
                     "name": "Embracing change in one another",
@@ -226,12 +198,12 @@
                 {
                     "name": "Consistency",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
                     "name": "Reliability",
-                    "icon": "like",
-                    "note": null
+                    "icon": "must",
+                    "note": "Following through on commitments"
                 }
             ]
         },
@@ -239,34 +211,14 @@
             "name": "Legal",
             "items": [
                 {
-                    "name": "Marriage",
-                    "icon": "off-limit",
-                    "note": null
-                },
-                {
-                    "name": "Civil partnership",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Business partner",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Adoption",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
                     "name": "Power of attorney",
                     "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "To be discussed after 3+ years together"
                 },
                 {
                     "name": "Executor of will",
-                    "icon": "off-limit",
-                    "note": null
+                    "icon": "maybe",
+                    "note": "To be discussed after 3+ years together"
                 }
             ]
         },
@@ -275,33 +227,33 @@
             "items": [
                 {
                     "name": "Shared bank account(s)",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "prefer-not",
+                    "note": null
                 },
                 {
-                    "name": "Mutual contributions to vacation / activity fund",
-                    "icon": "maybe",
+                    "name": "Mutual contributions to vacation / activity funds",
+                    "icon": "like",
                     "note": null
                 },
                 {
                     "name": "Co-ownership of property",
                     "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Financial support",
-                    "icon": "like",
                     "note": null
                 },
                 {
+                    "name": "Giving financial support to each other",
+                    "icon": "maybe",
+                    "note": "Only in emergencies"
+                },
+                {
                     "name": "Large gifts",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "maybe",
+                    "note": "Birthdays and anniversaries only"
                 },
                 {
                     "name": "Complete financial integration",
                     "icon": "off-limit",
-                    "note": null
+                    "note": "Value financial independence"
                 }
             ]
         },
@@ -311,32 +263,37 @@
                 {
                     "name": "Regularly scheduled time together",
                     "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "At least one dedicated day per week"
                 },
                 {
-                    "name": "Date nights",
+                    "name": "In-person visits",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Date nights / outings",
+                    "icon": "like",
+                    "note": "Bi-weekly"
+                },
+                {
+                    "name": "Shared activities",
                     "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Spending the night",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Sharing activities",
-                    "icon": "maybe",
-                    "note": null
+                    "name": "Intellectual & philosophical discussions",
+                    "icon": "like",
+                    "note": "Alex: Loves deep conversations \nJordan: Enjoys when not tired"
                 },
                 {
                     "name": "Parallel play",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Being in same space doing different activities"
                 },
                 {
-                    "name": "Vacations together",
-                    "icon": "off-limit",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "name": "Vacations or excursions together",
+                    "icon": "like",
+                    "note": "1-2 times per year"
                 }
             ]
         },
@@ -344,29 +301,49 @@
             "name": "Domestic",
             "items": [
                 {
-                    "name": "Sharing a dwelling/home",
-                    "icon": "maybe",
+                    "name": "Sharing an apartment or a home",
+                    "icon": "prefer-not",
+                    "note": "Prefer separate living spaces"
+                },
+                {
+                    "name": "Having a key to each other's home",
+                    "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Sharing a sleeping space",
-                    "icon": "off-limit",
-                    "note": null
+                    "name": "Sharing a permanent sleeping space",
+                    "icon": "prefer-not",
+                    "note": "Alex: Light sleeper \nJordan: Snores"
+                },
+                {
+                    "name": "Doing sleep overs",
+                    "icon": "like",
+                    "note": "1-2 nights per week"
                 },
                 {
                     "name": "Cooking together",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": null
                 },
                 {
-                    "name": "Sharing meals",
+                    "name": "Sharing meals together",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
+                },
+                {
+                    "name": "Cleaning up shared messes",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Cleaning up after each other",
+                    "icon": "maybe",
+                    "note": "When visiting each other's spaces"
                 },
                 {
                     "name": "Chores & Routines",
                     "icon": "talk",
-                    "note": null
+                    "note": "Alex: Prefers to plan and organize tasks in advance \nJordan: More spontaneous with household tasks \n\nBoth agree to maintain their own living spaces to personal standards, but when visiting each other's homes, they'll follow a \"clean up after yourself\" rule and help with meal preparation/cleanup."
                 }
             ]
         },
@@ -376,27 +353,27 @@
                 {
                     "name": "Family (sick, elderly)",
                     "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Support but not primary responsibility"
                 },
                 {
                     "name": "Animals",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Both love pets but keep them separate"
                 },
                 {
                     "name": "Plants",
-                    "icon": "maybe",
-                    "note": null
+                    "icon": "like",
+                    "note": "Plant sitting during travel"
                 },
                 {
                     "name": "Children (own or from other partnerships)",
-                    "icon": "must",
-                    "note": null
+                    "icon": "maybe",
+                    "note": "Jordan: Has 8-year-old daughter who lives primarily with other parent \nAlex: No children but enjoys being a supportive adult figure \n\nAlex agrees to participate in occasional outings and events as a trusted adult friend. Jordan handles all parenting decisions and discipline. Both agree that Alex will develop relationship at child's pace and comfort level. Child-free date nights remain a priority."
                 },
                 {
                     "name": "Long-term commitment (for the above)",
-                    "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "maybe",
+                    "note": null
                 }
             ]
         },
@@ -404,54 +381,64 @@
             "name": "Emotional Intimacy",
             "items": [
                 {
-                    "name": "Expressing happiness and joy",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
                     "name": "Active listening",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Being vulnerable",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Having difficult conversations",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Discussing values / beliefs",
                     "icon": "must",
                     "note": null
                 },
                 {
-                    "name": "Sharing stories about past",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "name": "Expressing happiness and joy",
+                    "icon": "must",
+                    "note": null
                 },
                 {
-                    "name": "Sharing hopes for future",
+                    "name": "Expressing sadness or grief",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Jordan: Takes time to open up \nAlex: Expresses freely"
+                },
+                {
+                    "name": "Expressing affection",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Expressing gratitude and appreciation",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Expressing disappointment or frustration",
+                    "icon": "like",
+                    "note": "Constructively and with care"
+                },
+                {
+                    "name": "Sharing fears and insecurities",
+                    "icon": "like",
+                    "note": null
+                },
+                {
+                    "name": "Sharing dreams and aspirations",
+                    "icon": "like",
+                    "note": null
+                },
+                {
+                    "name": "Having difficult conversations",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Sharing stories about the past",
+                    "icon": "like",
+                    "note": null
                 },
                 {
                     "name": "Knowing personal likes & dislikes",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "must",
+                    "note": null
                 },
                 {
                     "name": "Sharing about mental health challenges",
                     "icon": "like",
-                    "note": null
-                },
-                {
-                    "name": "Expressing affection",
-                    "icon": "like",
-                    "note": null
+                    "note": "Both see therapists separately"
                 }
             ]
         },
@@ -460,52 +447,67 @@
             "items": [
                 {
                     "name": "Body contact",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Hugs",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
-                    "name": "Massages",
+                    "name": "Hugging each other",
                     "icon": "must",
                     "note": null
                 },
                 {
-                    "name": "Dance",
+                    "name": "Giving each other massages",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
-                    "name": "Cuddles",
+                    "name": "Dancing together",
+                    "icon": "maybe",
+                    "note": "Alex: Loves dancing \nJordan: Two left feet"
+                },
+                {
+                    "name": "Cuddling with each other",
+                    "icon": "like",
+                    "note": null
+                },
+                {
+                    "name": "Holding hands",
+                    "icon": "like",
+                    "note": null
+                },
+                {
+                    "name": "Kissing each other",
                     "icon": "must",
                     "note": null
                 },
                 {
-                    "name": "Hand-holding",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Kissing",
-                    "icon": "maybe",
+                    "name": "Being naked around each other",
+                    "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Nudity",
+                    "name": "Co-sleeping",
                     "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Co-Sleeping",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Occasionally but not preferred for full nights"
                 },
                 {
                     "name": "Public displays of affection",
-                    "icon": "off-limit",
+                    "icon": "like",
+                    "note": "Appropriate to setting"
+                },
+                {
+                    "name": "Playing with each other's hair",
+                    "icon": "like",
+                    "note": "Jordan especially enjoys this"
+                },
+                {
+                    "name": "Back scratches",
+                    "icon": "like",
+                    "note": "Alex especially enjoys this"
+                },
+                {
+                    "name": "Sitting close together",
+                    "icon": "like",
                     "note": null
                 }
             ]
@@ -515,33 +517,38 @@
             "items": [
                 {
                     "name": "Offering support in hard times",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "must",
+                    "note": null
                 },
                 {
                     "name": "Being asked for advice",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Confidante",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Empathy",
                     "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Insecurities & reassurances",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "name": "Being a trusted confidant",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Showing empathy and understanding",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Giving each other reassurances",
+                    "icon": "like",
+                    "note": "Alex needs more reassurance than Jordan"
                 },
                 {
                     "name": "Supporting mental health work",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": "Both in therapy"
+                },
+                {
+                    "name": "Celebrating successes together",
+                    "icon": "must",
+                    "note": null
                 }
             ]
         },
@@ -550,23 +557,23 @@
             "items": [
                 {
                     "name": "Emotional attraction",
-                    "icon": "like",
+                    "icon": "must",
                     "note": null
                 },
                 {
-                    "name": "Feelings of being in love",
-                    "icon": "like",
+                    "name": "Expressing love and affection",
+                    "icon": "must",
                     "note": null
                 },
                 {
                     "name": "Unmotivated euphoria",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
                     "name": "Intense focus",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 }
             ]
         },
@@ -574,39 +581,49 @@
             "name": "Caregiving",
             "items": [
                 {
-                    "name": "General needs / favours",
+                    "name": "Helping each other out with favors",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
-                    "name": "Emergencies",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Health / illness",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Sponsorship",
+                    "name": "Emergency care and support",
                     "icon": "must",
                     "note": null
                 },
                 {
-                    "name": "Age",
-                    "icon": "maybe",
+                    "name": "Care in case of illness or injury",
+                    "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "End of life / death",
+                    "name": "Age-related care",
                     "icon": "maybe",
+                    "note": "To be discussed as relationship evolves"
+                },
+                {
+                    "name": "End-of-life care",
+                    "icon": "maybe",
+                    "note": "To be discussed as relationship evolves"
+                },
+                {
+                    "name": "Disability support",
+                    "icon": "like",
+                    "note": "Alex has chronic condition requiring occasional support"
+                },
+                {
+                    "name": "Recovery and rehabilitation support",
+                    "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Disability",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "name": "Mental health support",
+                    "icon": "like",
+                    "note": "While respecting boundaries"
+                },
+                {
+                    "name": "Caregiving boundaries and limits",
+                    "icon": "talk",
+                    "note": "Alex: Willing to provide emotional and practical support but needs recovery time after intense caregiving \nJordan: Comfortable with physical caregiving but prefers not to manage complex medical needs \n\nBoth agree to clearly communicate when feeling overwhelmed by caregiving responsibilities. Each maintains the right to say no to specific tasks without guilt. For extended health issues, they will involve other support people and consider professional help."
                 }
             ]
         },
@@ -614,34 +631,19 @@
             "name": "Social Integration",
             "items": [
                 {
-                    "name": "Meeting metamors (partners)",
+                    "name": "Meeting / spending time with friends",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Meeting friends",
-                    "icon": "must",
-                    "note": null
+                    "note": "Some friends shared, others separate"
                 },
                 {
                     "name": "Meeting parents/siblings/extended family",
+                    "icon": "maybe",
+                    "note": "To be discussed as relationship evolves"
+                },
+                {
+                    "name": "Meeting children (from other partnerships)",
                     "icon": "like",
-                    "note": null
-                },
-                {
-                    "name": "Meeting children",
-                    "icon": "maybe",
-                    "note": null
-                },
-                {
-                    "name": "Spending time as a couple with friends/family",
-                    "icon": "off-limit",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Positive relationships with metamors",
-                    "icon": "maybe",
-                    "note": null
+                    "note": "Alex has met Jordan's child"
                 },
                 {
                     "name": "Serving as +1 for social events",
@@ -650,23 +652,23 @@
                 },
                 {
                     "name": "Presenting as a couple in public settings",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": null
                 },
                 {
                     "name": "Presenting as a couple on social media",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "maybe",
+                    "note": "Limited posts, respecting privacy"
                 },
                 {
                     "name": "Presenting as a couple in professional settings",
                     "icon": "maybe",
-                    "note": null
+                    "note": "Depends on context"
                 },
                 {
-                    "name": "Joint vacations with family/metamors",
+                    "name": "Joint vacations with family or friends",
                     "icon": "maybe",
-                    "note": null
+                    "note": "Once relationship is more established"
                 }
             ]
         },
@@ -674,54 +676,104 @@
             "name": "Sexual",
             "items": [
                 {
+                    "name": "Talking about sex and sexuality",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Being sexual with each other",
+                    "icon": "like",
+                    "note": null
+                },
+                {
                     "name": "Mutual masturbation",
                     "icon": "like",
                     "note": null
                 },
                 {
-                    "name": "Orgasms",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Oral sex",
+                    "name": "Oral sex (cunnilingus & blowjobs)",
                     "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": null
                 },
                 {
                     "name": "Manual sex (fingering & hand jobs)",
-                    "icon": "maybe",
+                    "icon": "like",
                     "note": null
                 },
                 {
                     "name": "Penetrative vaginal sex",
-                    "icon": "maybe",
+                    "icon": "like",
                     "note": null
                 },
                 {
                     "name": "Penetrative anal sex",
-                    "icon": "maybe",
+                    "icon": "off-limit",
                     "note": null
                 },
                 {
                     "name": "Using sex toys",
-                    "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": "Own toys for each partner"
                 },
                 {
-                    "name": "Kinky stuff",
+                    "name": "Role play and power dynamics",
                     "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Mild only"
+                },
+                {
+                    "name": "Bondage and restraint",
+                    "icon": "like",
+                    "note": "Alex: Enjoys being restrained with silky ties/cuffs and gentle dominance \nJordan: Prefers switching roles and exploring with trusted partners \n\nBoth enjoy incorporating light restraints during play with clear safewords and regular check-ins. Agree to respect hard limits and discuss new activities beforehand."
+                },
+                {
+                    "name": "Impact play (spanking, etc.)",
+                    "icon": "maybe",
+                    "note": "Light only"
+                },
+                {
+                    "name": "Sensory play (blindfolds, ice, feathers, etc.)",
+                    "icon": "like",
+                    "note": null
                 },
                 {
                     "name": "Threesomes or group sex",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "maybe",
+                    "note": "With extensive communication beforehand"
                 },
                 {
-                    "name": "Frequency, Safer sex practices & STI testing ",
+                    "name": "Importance of orgasms",
                     "icon": "talk",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Both agree that orgasms are enjoyable but not the primary goal of sexual intimacy. They value communication during sex and agree not to pressure each other about reaching climax."
+                },
+                {
+                    "name": "Favorite positions and preferences",
+                    "icon": "talk",
+                    "note": "Jordan: Enjoys being on top and face-to-face positions that allow for intimate connection \nAlex: Prefers side-by-side and positions that allow for manual stimulation"
+                },
+                {
+                    "name": "How frequent is sex wanted",
+                    "icon": "talk",
+                    "note": "Jordan: Prefers 2-3 times per week when schedules align \nAlex: Enjoys 1-2 times per week but is flexible based on energy levels \n\nBoth check in regularly about sexual needs and understand that desire may fluctuate due to stress, health, or other factors. Neither feels pressure to have sex when not in the mood."
+                },
+                {
+                    "name": "Giving and receiving sexual feedback",
+                    "icon": "talk",
+                    "note": "Jordan: Prefers direct, specific feedback during and after sex \nAlex: More comfortable with gentle suggestions and positive reinforcement"
+                },
+                {
+                    "name": "Safer sex practices and protection",
+                    "icon": "talk",
+                    "note": "Jordan: Uses condoms with all partners and prefers to discuss protection before sexual activity \nAlex: On birth control and requires condoms for penetrative sex with all partners \n\nBoth agree to use protection for all penetrative sex and to discuss any changes in sexual health status immediately."
+                },
+                {
+                    "name": "STI testing and status",
+                    "icon": "talk",
+                    "note": "Both agree to get regular STI testing every 3-6 months or before new partners."
+                },
+                {
+                    "name": "Sexual boundaries and consent",
+                    "icon": "talk",
+                    "note": "Jordan: Prefers explicit verbal consent for new activities and appreciates ongoing check-ins \nAlex: Values enthusiastic consent and clear communication about boundaries"
                 }
             ]
         },
@@ -730,8 +782,8 @@
             "items": [
                 {
                     "name": "Alone time",
-                    "icon": "like",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "must",
+                    "note": "Both highly value personal space"
                 },
                 {
                     "name": "Balance of time together and apart",
@@ -740,8 +792,8 @@
                 },
                 {
                     "name": "Support to pursue independent interests",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "must",
+                    "note": null
                 },
                 {
                     "name": "Maintaining independent friendships",
@@ -751,17 +803,77 @@
                 {
                     "name": "Being sexually exclusive with each other",
                     "icon": "off-limit",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Polyamorous relationship structure"
                 },
                 {
                     "name": "Being romantically / emotionally exclusive",
-                    "icon": "maybe",
-                    "note": null
+                    "icon": "off-limit",
+                    "note": "Polyamorous relationship structure"
                 },
                 {
                     "name": "Equal distribution of relationship power",
+                    "icon": "must",
+                    "note": null
+                },
+                {
+                    "name": "Independent decision making",
+                    "icon": "like",
+                    "note": "Consult on decisions that affect both"
+                }
+            ]
+        },
+        {
+            "name": "Open Relationships",
+            "items": [
+                {
+                    "name": "Relationship style preferences",
+                    "icon": "talk",
+                    "note": "Both identify as parallel polyamorous, preferring to maintain separate relationships with minimal overlap. They value autonomy and privacy in their other relationships, with no expectation of close friendships or regular interaction between partners."
+                },
+                {
+                    "name": "Meeting metamors (other partners)",
                     "icon": "like",
                     "note": null
+                },
+                {
+                    "name": "Having positive relationships with metamors",
+                    "icon": "like",
+                    "note": "But not required"
+                },
+                {
+                    "name": "Joint vacations with metamors",
+                    "icon": "prefer-not",
+                    "note": null
+                },
+                {
+                    "name": "Prioritisation over other partners",
+                    "icon": "maybe",
+                    "note": "Situational, not hierarchical"
+                },
+                {
+                    "name": "Sharing compersion and joy",
+                    "icon": "like",
+                    "note": "Celebrating each other's relationships"
+                },
+                {
+                    "name": "Dealing with jealousy",
+                    "icon": "talk",
+                    "note": "Both agree to acknowledge jealousy when it arises, communicate needs directly, and focus on self-soothing strategies."
+                },
+                {
+                    "name": "Communication about other partners",
+                    "icon": "talk",
+                    "note": "Both enjoy hearing about each other's partners and experiences when shared voluntarily, but don't require detailed information."
+                },
+                {
+                    "name": "Relationship hierarchy",
+                    "icon": "talk",
+                    "note": "Both prefer a non-hierarchical approach to polyamory, where each relationship is valued for its unique qualities rather than being ranked. They acknowledge that different relationships may have different levels of commitment or time investment, but avoid using terms like 'primary' or 'secondary'."
+                },
+                {
+                    "name": "New partner protocols",
+                    "icon": "talk",
+                    "note": "Both are comfortable with informing each other either before or after becoming sexually active with new partners. They discuss any significant relationship developments and ensure new partners are aware of their polyamorous relationship structure."
                 }
             ]
         },
@@ -769,44 +881,49 @@
             "name": "Commitment",
             "items": [
                 {
-                    "name": "Having a key",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Prioritisation over other partners",
-                    "icon": "like",
+                    "name": "Prioritisation over friendships",
+                    "icon": "off-limit",
                     "note": null
                 },
                 {
                     "name": "Relationship labels",
-                    "icon": "must",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": "Partners"
                 },
                 {
                     "name": "Planning for future",
-                    "icon": "like",
+                    "icon": "maybe",
                     "note": null
                 },
                 {
                     "name": "Expectation of long term involvement",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "like",
+                    "note": "Open to long-term but no pressure"
                 },
                 {
                     "name": "Commitment to working through challenges",
-                    "icon": "maybe",
+                    "icon": "must",
                     "note": null
                 },
                 {
                     "name": "Commitment to relationship maintenance",
-                    "icon": "maybe",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "icon": "must",
+                    "note": "Regular check-ins and communication"
                 },
                 {
-                    "name": "Pregnancy/children together",
+                    "name": "Pregnancy or adopting together",
                     "icon": "off-limit",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Not interested in co-parenting together"
+                },
+                {
+                    "name": "Marriage or civil partnership",
+                    "icon": "off-limit",
+                    "note": "Not interested in legal entanglements"
+                },
+                {
+                    "name": "Time and energy commitment",
+                    "icon": "talk",
+                    "note": "Both value quality time over quantity, with weekly date nights and regular check-ins. They understand that energy levels and availability may fluctuate, and communicate openly about their capacity. They respect each other's need for alone time and space to maintain other relationships and personal interests."
                 }
             ]
         },
@@ -814,44 +931,24 @@
             "name": "Things to Discuss",
             "items": [
                 {
-                    "name": "Important boundaries",
-                    "icon": "talk",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
                     "name": "Love languages",
                     "icon": "talk",
-                    "note": null
+                    "note": "Jordan: Values quality time and physical touch, especially during one-on-one moments \nAlex: Appreciates words of affirmation and acts of service, particularly when feeling stressed"
                 },
                 {
                     "name": "Accountability",
                     "icon": "talk",
-                    "note": null
+                    "note": "Both take responsibility for their actions and commitments, communicate honestly about mistakes, and work to repair trust when needed."
                 },
                 {
-                    "name": "Security & privacy",
+                    "name": "Privacy",
                     "icon": "talk",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
+                    "note": "Both value privacy and respect each other's right to maintain separate social circles and keep certain aspects of their lives private."
                 },
                 {
                     "name": "Mental health & trauma",
                     "icon": "talk",
-                    "note": null
-                },
-                {
-                    "name": "Relationship duration",
-                    "icon": "talk",
-                    "note": null
-                },
-                {
-                    "name": "Living preferences",
-                    "icon": "talk",
-                    "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in ultricies turpis. Curabitur nec orci sit amet libero elementum varius."
-                },
-                {
-                    "name": "Career importance",
-                    "icon": "talk",
-                    "note": null
+                    "note": "Both have experienced past trauma and need extra care around certain topics. Jordan is sensitive to raised voices and sudden movements. Alex has triggers around abandonment and needs reassurance during periods of distance."
                 }
             ]
         }

@@ -94,7 +94,9 @@ function EditorContent() {
 
     // Function to update the title
     const updateTitle = () => {
-      if (menuData?.people && menuData.people.length > 0) {
+      if (menuData?.uuid === 'example') {
+        document.title = 'Relationship Menu - Example';
+      } else if (menuData?.people && menuData.people.length > 0) {
         // Filter out empty names and join the remaining ones
         const validNames = menuData.people.filter(name => name && name.trim() !== '');
         

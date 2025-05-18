@@ -1,5 +1,5 @@
 {
-    "last_update": "2023-01-02T16:26:56.691002",
+    "last_update": "2025-05-18T23:33:56.691002",
     "people": [],
     "menu": [
         {
@@ -17,11 +17,6 @@
                 },
                 {
                     "name": "Phone / video calls",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "In-person visits",
                     "icon": null,
                     "note": null
                 },
@@ -51,7 +46,12 @@
                     "note": null
                 },
                 {
-                    "name": "Relationship meetings",
+                    "name": "Relationship meetings (e.g. R.A.D.A.R.)",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Nonviolent Communication",
                     "icon": null,
                     "note": null
                 },
@@ -63,60 +63,25 @@
             ]
         },
         {
-            "name": "Companionship",
-            "items": [
-                {
-                    "name": "Playfulness",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Shared hobbies, activities or interests",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Intellectual & philosophical discussions",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Friendship",
-                    "icon": null,
-                    "note": null
-                }
-            ]
-        },
-        {
             "name": "Collaborative",
             "items": [
                 {
-                    "name": "Working together",
+                    "name": "Teaching each other things",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Teaching",
+                    "name": "Working on projects together",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Projects",
+                    "name": "Being creative together",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Creativity",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Organizations",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Associations",
+                    "name": "Sharing a hobby or interest",
                     "icon": null,
                     "note": null
                 }
@@ -126,28 +91,28 @@
             "name": "Religious / Spiritual",
             "items": [
                 {
-                    "name": "Shared ritual / prayer",
+                    "name": "Having shared beliefs",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Shared beliefs",
+                    "name": "Praying together",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Discussions",
+                    "name": "Having shared rituals",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Ceremony & Traditions",
-                    "icon": null,
+                    "name": "Ceremonies & traditions",
+                    "icon": "talk",
                     "note": null
                 },
                 {
-                    "name": "Divination",
-                    "icon": null,
+                    "name": "Religious & spiritual beliefs",
+                    "icon": "talk",
                     "note": null
                 }
             ]
@@ -156,23 +121,23 @@
             "name": "Professional & Work",
             "items": [
                 {
-                    "name": "Combining social, collaborative & financial",
-                    "icon": null,
-                    "note": null
-                },
-                {
                     "name": "Colleagues",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Partners",
+                    "name": "Business partners",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Co-operatives",
+                    "name": "Work-related stress support",
                     "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Impact of work on the relationship",
+                    "icon": "talk",
                     "note": null
                 }
             ]
@@ -181,12 +146,17 @@
             "name": "Technology",
             "items": [
                 {
-                    "name": "Sharing passwords",
+                    "name": "Sharing passwords to phones or computers",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Sharing accounts",
+                    "name": "Accessing phones or computers without asking",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Sharing internet accounts",
                     "icon": null,
                     "note": null
                 },
@@ -196,7 +166,7 @@
                     "note": null
                 },
                 {
-                    "name": "Accessing computers / phones without asking",
+                    "name": "Device-free time together",
                     "icon": null,
                     "note": null
                 }
@@ -206,12 +176,17 @@
             "name": "Partnership",
             "items": [
                 {
-                    "name": "Shared goals / values",
+                    "name": "Shared goals in life",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Routine",
+                    "name": "Shared values",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Having a routine together",
                     "icon": null,
                     "note": null
                 },
@@ -236,26 +211,6 @@
             "name": "Legal",
             "items": [
                 {
-                    "name": "Marriage",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Civil partnership",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Business partner",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Adoption",
-                    "icon": null,
-                    "note": null
-                },
-                {
                     "name": "Power of attorney",
                     "icon": null,
                     "note": null
@@ -276,7 +231,7 @@
                     "note": null
                 },
                 {
-                    "name": "Mutual contributions to vacation / activity fund",
+                    "name": "Mutual contributions to vacation / activity funds",
                     "icon": null,
                     "note": null
                 },
@@ -286,7 +241,7 @@
                     "note": null
                 },
                 {
-                    "name": "Financial support",
+                    "name": "Giving financial support to each other",
                     "icon": null,
                     "note": null
                 },
@@ -311,17 +266,22 @@
                     "note": null
                 },
                 {
-                    "name": "Date nights",
+                    "name": "In-person visits",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Spending the night",
+                    "name": "Date nights / outings",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Sharing activities",
+                    "name": "Shared activities",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Intellectual & philosophical discussions",
                     "icon": null,
                     "note": null
                 },
@@ -331,7 +291,7 @@
                     "note": null
                 },
                 {
-                    "name": "Vacations together",
+                    "name": "Vacations or excursions together",
                     "icon": null,
                     "note": null
                 }
@@ -342,6 +302,11 @@
             "items": [
                 {
                     "name": "Sharing an apartment or a home",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Having a key to each other's home",
                     "icon": null,
                     "note": null
                 },
@@ -361,12 +326,12 @@
                     "note": null
                 },
                 {
-                    "name": "Sharing meals",
+                    "name": "Sharing meals together",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Helping each other clean mess created together",
+                    "name": "Cleaning up shared messes",
                     "icon": null,
                     "note": null
                 },
@@ -416,17 +381,42 @@
             "name": "Emotional Intimacy",
             "items": [
                 {
-                    "name": "Expressing happiness and joy",
-                    "icon": null,
-                    "note": null
-                },
-                {
                     "name": "Active listening",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Being vulnerable",
+                    "name": "Expressing happiness and joy",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Expressing sadness or grief",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Expressing affection",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Expressing gratitude and appreciation",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Expressing disappointment or frustration",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Sharing fears and insecurities",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Sharing dreams and aspirations",
                     "icon": null,
                     "note": null
                 },
@@ -436,17 +426,7 @@
                     "note": null
                 },
                 {
-                    "name": "Discussing values / beliefs",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Sharing stories about past",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Sharing hopes for future",
+                    "name": "Sharing stories about the past",
                     "icon": null,
                     "note": null
                 },
@@ -457,11 +437,6 @@
                 },
                 {
                     "name": "Sharing about mental health challenges",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Expressing affection",
                     "icon": null,
                     "note": null
                 }
@@ -476,47 +451,62 @@
                     "note": null
                 },
                 {
-                    "name": "Hugs",
+                    "name": "Hugging each other",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Massages",
+                    "name": "Giving each other massages",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Dance",
+                    "name": "Dancing together",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Cuddles",
+                    "name": "Cuddling with each other",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Hand-holding",
+                    "name": "Holding hands",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Kissing",
+                    "name": "Kissing each other",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Nudity",
+                    "name": "Being naked around each other",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Co-Sleeping",
+                    "name": "Co-sleeping",
                     "icon": null,
                     "note": null
                 },
                 {
                     "name": "Public displays of affection",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Playing with each other's hair",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Back scratches",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Sitting close together",
                     "icon": null,
                     "note": null
                 }
@@ -536,22 +526,27 @@
                     "note": null
                 },
                 {
-                    "name": "Confidante",
+                    "name": "Being a trusted confidant",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Empathy",
+                    "name": "Showing empathy and understanding",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Insecurities & reassurances",
+                    "name": "Giving each other reassurances",
                     "icon": null,
                     "note": null
                 },
                 {
                     "name": "Supporting mental health work",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Celebrating successes together",
                     "icon": null,
                     "note": null
                 }
@@ -566,7 +561,7 @@
                     "note": null
                 },
                 {
-                    "name": "Feelings of being in love",
+                    "name": "Expressing love and affection",
                     "icon": null,
                     "note": null
                 },
@@ -586,38 +581,48 @@
             "name": "Caregiving",
             "items": [
                 {
-                    "name": "General needs / favours",
+                    "name": "Helping each other out with favors",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Emergencies",
+                    "name": "Emergency care and support",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Health / illness",
+                    "name": "Care in case of illness or injury",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Sponsorship",
+                    "name": "Age-related care",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Age",
+                    "name": "End-of-life care",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "End of life / death",
+                    "name": "Disability support",
                     "icon": null,
                     "note": null
                 },
                 {
-                    "name": "Disability",
+                    "name": "Recovery and rehabilitation support",
                     "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Mental health support",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Caregiving boundaries and limits",
+                    "icon": "talk",
                     "note": null
                 }
             ]
@@ -626,12 +631,7 @@
             "name": "Social Integration",
             "items": [
                 {
-                    "name": "Meeting metamors (partners)",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Meeting friends",
+                    "name": "Meeting / spending time with friends",
                     "icon": null,
                     "note": null
                 },
@@ -641,17 +641,7 @@
                     "note": null
                 },
                 {
-                    "name": "Meeting children",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Spending time as a couple with friends/family",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Positive relationships with metamors",
+                    "name": "Meeting children (from other partnerships)",
                     "icon": null,
                     "note": null
                 },
@@ -676,7 +666,7 @@
                     "note": null
                 },
                 {
-                    "name": "Joint vacations with family/metamors",
+                    "name": "Joint vacations with family or friends",
                     "icon": null,
                     "note": null
                 }
@@ -686,7 +676,12 @@
             "name": "Sexual",
             "items": [
                 {
-                    "name": "Sharing sexual experiences with each other",
+                    "name": "Talking about sex and sexuality",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Being sexual with each other",
                     "icon": null,
                     "note": null
                 },
@@ -696,12 +691,7 @@
                     "note": null
                 },
                 {
-                    "name": "Orgasms",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Oral sex",
+                    "name": "Oral sex (cunnilingus & blowjobs)",
                     "icon": null,
                     "note": null
                 },
@@ -726,7 +716,22 @@
                     "note": null
                 },
                 {
-                    "name": "Kinky stuff",
+                    "name": "Role play and power dynamics",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Bondage and restraint",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Impact play (spanking, etc.)",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Sensory play (blindfolds, ice, feathers, etc.)",
                     "icon": null,
                     "note": null
                 },
@@ -736,7 +741,37 @@
                     "note": null
                 },
                 {
-                    "name": "Frequency, Safer sex practices & STI testing ",
+                    "name": "Importance of orgasms",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Favorite positions and preferences",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "How frequent is sex wanted",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Giving and receiving sexual feedback",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Safer sex practices and protection",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "STI testing and status",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Sexual boundaries and consent",
                     "icon": "talk",
                     "note": null
                 }
@@ -779,6 +814,71 @@
                     "name": "Equal distribution of relationship power",
                     "icon": null,
                     "note": null
+                },
+                {
+                    "name": "Independent decision making",
+                    "icon": null,
+                    "note": null
+                }
+            ]
+        },
+        {
+            "name": "Open Relationships",
+            "items": [
+                {
+                    "name": "Relationship style preferences",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Meeting metamors (other partners)",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Having positive relationships with metamors",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Joint vacations with metamors",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Prioritisation over other partners",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Sharing compersion and joy",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Dealing with jealousy",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Communication about other partners",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Sexual health agreements",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "Relationship hierarchy",
+                    "icon": "talk",
+                    "note": null
+                },
+                {
+                    "name": "New partner protocols",
+                    "icon": "talk",
+                    "note": null
                 }
             ]
         },
@@ -786,12 +886,7 @@
             "name": "Commitment",
             "items": [
                 {
-                    "name": "Having a key",
-                    "icon": null,
-                    "note": null
-                },
-                {
-                    "name": "Prioritisation over other partners",
+                    "name": "Prioritisation over friendships",
                     "icon": null,
                     "note": null
                 },
@@ -821,8 +916,18 @@
                     "note": null
                 },
                 {
-                    "name": "Pregnancy/children together",
+                    "name": "Pregnancy or adopting together",
                     "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Marriage or civil partnership",
+                    "icon": null,
+                    "note": null
+                },
+                {
+                    "name": "Time and energy commitment",
+                    "icon": "talk",
                     "note": null
                 }
             ]
@@ -830,11 +935,6 @@
         {
             "name": "Things to Discuss",
             "items": [
-                {
-                    "name": "Important boundaries",
-                    "icon": "talk",
-                    "note": null
-                },
                 {
                     "name": "Love languages",
                     "icon": "talk",
@@ -846,7 +946,7 @@
                     "note": null
                 },
                 {
-                    "name": "Security & privacy",
+                    "name": "Privacy",
                     "icon": "talk",
                     "note": null
                 },
@@ -854,24 +954,10 @@
                     "name": "Mental health & trauma",
                     "icon": "talk",
                     "note": null
-                },
-                {
-                    "name": "Relationship duration",
-                    "icon": "talk",
-                    "note": null
-                },
-                {
-                    "name": "Living preferences",
-                    "icon": "talk",
-                    "note": null
-                },
-                {
-                    "name": "Career importance",
-                    "icon": "talk",
-                    "note": null
                 }
             ]
         }
     ],
-    "schema_version": 1.0
+    "schema_version": "1.1",
+    "uuid": null
 }
