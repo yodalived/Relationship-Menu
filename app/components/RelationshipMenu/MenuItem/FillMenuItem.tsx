@@ -167,6 +167,7 @@ export function FillMenuItem({
             isOpen={isPickerOpen}
             mode="fill"
             onClose={() => setIsPickerOpen(false)}
+            parentRef={pickerWrapperRef}
           />
         </div>
       </div>

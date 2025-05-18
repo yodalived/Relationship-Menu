@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { 
   IconMust, 
   IconLike, 
@@ -54,11 +54,27 @@ interface IconPickerProps {
   isOpen: boolean;
   onClose: () => void;
   mode?: 'view' | 'fill' | 'edit';
+  parentRef: React.RefObject<HTMLDivElement>;
 }
 
-export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode = 'edit' }: IconPickerProps) {
+export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode = 'edit', parentRef }: IconPickerProps) {
   const pickerRef = useRef<HTMLDivElement>(null);
   const firstOptionRef = useRef<HTMLButtonElement>(null);
+  const [openDirection, setOpenDirection] = useState<'up' | 'down'>('down');
+
+  useEffect(() => {
+    if (isOpen && parentRef.current && pickerRef.current) {
+      const parentRect = parentRef.current.getBoundingClientRect();
+      const pickerHeight = pickerRef.current.offsetHeight || 260; // fallback height
+      const spaceBelow = window.innerHeight - parentRect.bottom;
+      const spaceAbove = parentRect.top;
+      if (spaceBelow < pickerHeight && spaceAbove > pickerHeight) {
+        setOpenDirection('up');
+      } else {
+        setOpenDirection('down');
+      }
+    }
+  }, [isOpen, parentRef]);
 
   useEffect(() => {
     // Focus the first option when the picker opens
@@ -71,12 +87,10 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
     // Handle keyboard navigation for the picker
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
-      
       if (e.key === 'Escape') {
         onClose();
       }
     };
-    
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
@@ -88,10 +102,22 @@ export function IconPicker({ selectedIcon, onSelectIcon, isOpen, onClose, mode =
     ? ICON_OPTIONS.filter(option => option.value !== 'talk') 
     : ICON_OPTIONS;
   
+  // Picker position classes
+  let positionClass = '';
+  if (openDirection === 'up') {
+    positionClass = mode === 'fill'
+      ? 'bottom-full mb-2.5 sm:mb-3'
+      : 'bottom-full mb-2 sm:top-auto sm:bottom-full sm:mb-3';
+  } else {
+    positionClass = mode === 'fill'
+      ? 'top-full mt-0.5 sm:mt-1'
+      : 'top-full mt-1 sm:top-10 sm:mt-3';
+  }
+
   return (
-    <div 
+    <div
       ref={pickerRef}
-      className={`absolute z-10 ${mode === 'edit' ? 'mt-3' : 'mt-1'} left-0 top-full sm:top-10 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full max-w-xs sm:w-[360px] sm:max-w-none sm:left-0 sm:right-auto right-0`}
+      className={`absolute z-10 left-0 sm:left-0 sm:right-auto right-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-3 border border-gray-100 dark:border-gray-700 w-full max-w-xs sm:w-[360px] sm:max-w-none ${positionClass}`}
       role="dialog"
       aria-label="Select icon"
     >

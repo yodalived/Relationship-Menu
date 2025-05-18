@@ -87,6 +87,7 @@ export function EditMenuItem({
                 isOpen={isPickerOpen}
                 mode="edit"
                 onClose={() => setIsPickerOpen(false)}
+                parentRef={pickerWrapperRef}
               />
             </div>
           </div>
