@@ -4,7 +4,7 @@ import { ConfirmModal } from '../../ui/ConfirmModal';
 import { MenuData } from '../../../types';
 import { ToastType } from '../../../components/ui/Toast/ToastContext';
 import { encryptMenu } from '../../../utils/crypto';
-import { uploadEncryptedMenu } from '../../../utils/network';
+import { uploadEncryptedMenu, MenuRateLimitError } from '../../../utils/network';
 
 interface ExportButtonProps {
   onJSONDownload: () => void;
@@ -132,7 +132,14 @@ export function ExportButton({
     } catch (err: unknown) {
       let message = 'Failed to share menu: ';
       if (err instanceof Error) {
-        if (err.name === 'MenuEncryptionError') {
+        if (err.name === 'MenuRateLimitError' && err instanceof MenuRateLimitError) {
+          // Handle rate limiting specifically
+          if (err.waitTimeMinutes > 0) {
+            message = `Rate limit reached. Please wait ${err.waitTimeMinutes} minutes before sharing again.`;
+          } else {
+            message = 'Rate limit reached. You\'ve made too many sharing requests. Please try again later.';
+          }
+        } else if (err.name === 'MenuEncryptionError') {
           message += 'Encryption failed. Please try again.';
         } else if (err.name === 'MenuNetworkError') {
           message += 'Network error. Please check your connection and try again.';

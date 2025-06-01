@@ -7,6 +7,29 @@ export class MenuNetworkError extends Error {
   }
 }
 
+export class MenuRateLimitError extends Error {
+  public waitTimeMinutes: number;
+  
+  constructor(message: string, waitTimeMinutes: number = 0) {
+    super(message);
+    this.name = 'MenuRateLimitError';
+    this.waitTimeMinutes = waitTimeMinutes;
+  }
+}
+
+// Helper function to parse 429 rate limit responses
+async function parseRateLimitError(response: Response): Promise<MenuRateLimitError> {
+  const errorText = await response.text().catch(() => '');
+  if (errorText) {
+    const errorData = JSON.parse(errorText);
+    if (errorData && errorData.retryAfter?.minutes) {
+      const waitTimeMinutes = errorData.retryAfter.minutes;
+      return new MenuRateLimitError('Rate limit exceeded', waitTimeMinutes);
+    }
+  }
+  return new MenuRateLimitError('Too many requests. Please try again later.', 0);
+}
+
 function getApiBaseUrl() {
   if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
     // Use proxy in dev
@@ -32,10 +55,16 @@ export async function uploadEncryptedMenu(encryptedData: Uint8Array): Promise<st
       return json.token;
     } else if (res.status === 400) {
       throw new MenuNetworkError('Bad request: malformed data');
+    } else if (res.status === 429) {
+      throw await parseRateLimitError(res);
     } else {
       throw new MenuNetworkError(`Unexpected status: ${res.status}`);
     }
-  } catch {
+  } catch (error) {
+    // Re-throw our custom errors
+    if (error instanceof MenuRateLimitError || error instanceof MenuNetworkError) {
+      throw error;
+    }
     throw new MenuNetworkError('Upload failed');
   }
 }
@@ -51,11 +80,17 @@ export async function fetchEncryptedMenu(token: string): Promise<Uint8Array> {
       return new Uint8Array([...binary].map(c => c.charCodeAt(0)));
     } else if (res.status === 404) {
       throw new MenuNetworkError('Menu not found');
+    } else if (res.status === 429) {
+      throw await parseRateLimitError(res);
     } else {
       throw new MenuNetworkError(`Unexpected status: ${res.status}`);
     }
-  } catch {
-    console.error('Fetch failed:');
+  } catch (error) {
+    // Re-throw our custom errors
+    if (error instanceof MenuRateLimitError || error instanceof MenuNetworkError) {
+      throw error;
+    }
+    console.error('Fetch failed:', error);
     throw new MenuNetworkError('Fetch failed');
   }
 }
@@ -64,15 +99,22 @@ export async function fetchEncryptedMenu(token: string): Promise<Uint8Array> {
 export async function checkMenuExists(token: string): Promise<boolean> {
   try {
     const baseUrl = getApiBaseUrl();
-    const res = await fetch(`${baseUrl}/menus/${token}`, { method: 'HEAD' });
+    const res = await fetch(`${baseUrl}/menus/${token}/exists`);
     if (res.status === 200) {
-      return true;
+      const data = await res.json();
+      return data.exists;
     } else if (res.status === 404) {
       return false;
+    } else if (res.status === 429) {
+      throw await parseRateLimitError(res);
     } else {
       throw new MenuNetworkError(`Unexpected status: ${res.status}`);
     }
-  } catch {
+  } catch (error) {
+    // Re-throw our custom errors
+    if (error instanceof MenuRateLimitError || error instanceof MenuNetworkError) {
+      throw error;
+    }
     throw new MenuNetworkError('Failed to check menu existence');
   }
 } 

@@ -10,7 +10,7 @@ import { fetchEncryptedMenu } from '../utils/network';
 import { decryptMenuWithUrlSafeKey } from '../utils/crypto';
 import { useMenuImport } from '../components/FileSelector/useMenuImport';
 import { ErrorDisplay } from '../components/FileSelector/ErrorDisplay';
-import { checkMenuExists } from '../utils/network';
+import { checkMenuExists, MenuRateLimitError } from '../utils/network';
 import IconFile from '../components/icons/IconFile';
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/4drmtcfm";
@@ -31,6 +31,10 @@ function OpenMenuContent() {
   const [checking, setChecking] = useState(true);
   const [exists, setExists] = useState<boolean | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [rateLimitInfo, setRateLimitInfo] = useState<{
+    isRateLimit: boolean;
+    waitTimeMinutes: number;
+  } | null>(null);
   const id = searchParams.get("id");
   const [key, setKey] = useState<string | null>(null);
 
@@ -50,23 +54,35 @@ function OpenMenuContent() {
         return;
       }
       setChecking(true);
+      setRateLimitInfo(null); // Reset rate limit info
       try {
         const result = await checkMenuExists(id);
         setExists(result);
       } catch (err: unknown) {
         let message = 'Failed to check menu.';
         if (err instanceof Error) {
-          if (err.name === 'MenuNetworkError') {
+          if (err.name === 'MenuRateLimitError' && err instanceof MenuRateLimitError) {
+            // Handle rate limiting specifically
+            setRateLimitInfo({
+              isRateLimit: true,
+              waitTimeMinutes: err.waitTimeMinutes
+            });
+            setExists(false);
+          } else if (err.name === 'MenuNetworkError') {
             message = 'Network error while checking menu. Please try again.';
+            setErrorMsg(message);
+            setExists(false);
           } else {
             message = err.message;
+            setErrorMsg(message);
+            setExists(false);
           }
           console.error('checkMenuExists error:', err);
         } else {
           console.error('checkMenuExists unknown error:', err);
+          setErrorMsg(message);
+          setExists(false);
         }
-        setErrorMsg(message);
-        setExists(false);
       } finally {
         setChecking(false);
       }
@@ -101,6 +117,7 @@ function OpenMenuContent() {
   const handleImportWebApp = async () => {
     setImporting(true);
     setError(null);
+    setRateLimitInfo(null); // Reset rate limit info
     try {
       if (!id || !key) {
         setError('Missing menu id or key in the link.');
@@ -113,19 +130,28 @@ function OpenMenuContent() {
     } catch (err: unknown) {
       let message = 'Failed to import menu: ';
       if (err instanceof Error) {
-        if (err.name === 'MenuEncryptionError') {
+        if (err.name === 'MenuRateLimitError' && err instanceof MenuRateLimitError) {
+          // Handle rate limiting specifically for import
+          setRateLimitInfo({
+            isRateLimit: true,
+            waitTimeMinutes: err.waitTimeMinutes
+          });
+        } else if (err.name === 'MenuEncryptionError') {
           message += 'Decryption failed. The link or key may be invalid.';
+          setError(message);
         } else if (err.name === 'MenuNetworkError') {
           message += 'Network error. The menu may not exist or your connection failed.';
+          setError(message);
         } else {
           message += err.message;
+          setError(message);
         }
         console.error('OpenMenu import error:', err);
       } else {
         message += 'Unknown error';
         console.error('OpenMenu unknown error:', err);
+        setError(message);
       }
-      setError(message);
       setImporting(false);
     }
   };
@@ -138,6 +164,36 @@ function OpenMenuContent() {
           <LoadingIndicator message="Importing menu..." />
         ) : checking ? (
           <LoadingIndicator message="Checking menu link..." />
+        ) : rateLimitInfo?.isRateLimit ? (
+          <>
+            <div className="flex flex-col items-center">
+              <svg width="48" height="48" fill="none" viewBox="0 0 48 48" className="mb-4">
+                <circle cx="24" cy="24" r="24" fill="#FEE2E2"/>
+                <path d="M24 16v8M24 30v2" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round"/>
+              </svg>
+              <h1 className="text-2xl font-bold text-[#1a202c] dark:text-[#f5f6fa] mb-2 text-center">Rate Limit Reached</h1>
+              <p className="text-[#222] dark:text-[#e5e7eb] text-center mb-4">
+                You've made too many requests to the link sharing service.
+              </p>
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-lg p-4 mb-4 w-full">
+                {rateLimitInfo.waitTimeMinutes > 0 ? (
+                  <p className="text-red-600 dark:text-red-300 text-sm text-center mt-2 font-semibold">
+                    Please wait {rateLimitInfo.waitTimeMinutes} minutes before trying again.
+                  </p>
+                ) : (
+                  <p className="text-red-600 dark:text-red-300 text-sm text-center mt-2 font-semibold">
+                    Please try again later.
+                  </p>
+                )}
+              </div>
+              <button 
+                onClick={() => router.replace('/')} 
+                className="mt-2 px-5 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-semibold transition"
+              >
+                Go to Home
+              </button>
+            </div>
+          </>
         ) : !exists ? (
           <>
             <div className="flex flex-col items-center">
