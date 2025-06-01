@@ -6,10 +6,11 @@ export interface ConfirmModalProps {
   onClose: () => void;
   onConfirm: (shouldDownload?: boolean) => void;
   title: string;
-  message: string;
+  message: string | string[];
   confirmText?: string;
   cancelText?: string;
   showDownloadOption?: boolean;
+  initialFocus?: 'confirm' | 'cancel';
 }
 
 export function ConfirmModal({ 
@@ -20,18 +21,20 @@ export function ConfirmModal({
   message, 
   confirmText = "Confirm", 
   cancelText = "Cancel",
-  showDownloadOption = false
+  showDownloadOption = false,
+  initialFocus = 'confirm'
 }: ConfirmModalProps) {
-  const initialFocusRef = useRef<HTMLButtonElement>(null);
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+  const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     // Trap focus within modal when open
-    if (isOpen && initialFocusRef.current) {
-      initialFocusRef.current.focus();
-    }
-
-    // Prevent scrolling of background content when modal is open
     if (isOpen) {
+      if (initialFocus === 'cancel' && cancelButtonRef.current) {
+        cancelButtonRef.current.focus();
+      } else if (confirmButtonRef.current) {
+        confirmButtonRef.current.focus();
+      }
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -40,7 +43,7 @@ export function ConfirmModal({
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
+  }, [isOpen, initialFocus]);
 
   // Handle escape key press
   useEffect(() => {
@@ -81,16 +84,24 @@ export function ConfirmModal({
                   {title}
                 </h3>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500 dark:text-gray-400" id="modal-description">
-                    {message}
-                  </p>
+                  {Array.isArray(message) ? (
+                    message.map((part, idx) => (
+                      <p key={idx} className="text-sm text-gray-500 dark:text-gray-400 mb-2 last:mb-0">
+                        {part}
+                      </p>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500 dark:text-gray-400" id="modal-description">
+                      {message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
             <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
               <button
                 type="button"
-                ref={initialFocusRef}
+                ref={confirmButtonRef}
                 onClick={() => onConfirm()}
                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--main-text-color)] text-base font-medium text-white hover:bg-[var(--main-text-color-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:col-start-2 sm:text-sm"
               >
@@ -98,6 +109,7 @@ export function ConfirmModal({
               </button>
               <button
                 type="button"
+                ref={cancelButtonRef}
                 onClick={onClose}
                 className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
               >
@@ -134,16 +146,24 @@ export function ConfirmModal({
                 {title}
               </h3>
               <div className="mt-2">
-                <p className="text-sm text-gray-500 dark:text-gray-400" id="modal-description">
-                  {message}
-                </p>
+                {Array.isArray(message) ? (
+                  message.map((part, idx) => (
+                    <p key={idx} className="text-sm text-gray-500 dark:text-gray-400 mb-2 last:mb-0">
+                      {part}
+                    </p>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500 dark:text-gray-400" id="modal-description">
+                    {message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
           <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
             <button
               type="button"
-              ref={initialFocusRef}
+              ref={confirmButtonRef}
               onClick={() => onConfirm(true)}
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[var(--main-text-color)] text-base font-medium text-white hover:bg-[var(--main-text-color-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:col-start-2 sm:text-sm"
             >
@@ -151,6 +171,7 @@ export function ConfirmModal({
             </button>
             <button
               type="button"
+              ref={cancelButtonRef}
               onClick={() => onConfirm(false)}
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--main-text-color)] sm:mt-0 sm:col-start-1 sm:text-sm"
             >

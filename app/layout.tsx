@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import { ToastProvider } from "./components/ui/Toast";
-// Import temporarily removed due to TypeScript error - fix by ensuring proper module resolution
-// import ConditionalSubtitle from "./components/ConditionalSubtitle";
+import LayoutWrapper from "./components/LayoutWrapper";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -62,32 +59,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${nunito.variable} antialiased`}>
         <ToastProvider>
-          <div className="min-h-screen flex flex-col">
-            {/* Skip to content link for keyboard users */}
-            <a 
-              href="#main-content" 
-              className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black focus:outline focus:outline-2 focus:outline-[var(--main-text-color)]"
-            >
-              Skip to content
-            </a>
-            
-            <Header />
-            <main id="main-content" className="flex-grow" tabIndex={-1}>
-              <div className="wrapper">
-                {children}
-              </div>
-            </main>
-            <Footer />
-          </div>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </ToastProvider>
       </body>
     </html>

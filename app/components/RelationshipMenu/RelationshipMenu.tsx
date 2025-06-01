@@ -127,6 +127,8 @@ export function RelationshipMenu({ menuData, onSave, initialMode = 'view' }: Rel
             <MenuToolbar 
               onJSONDownload={handleJSONDownload}
               onExportPDF={handleExportPDF}
+              menuData={menuData}
+              showToast={showToast}
             />
           </div>
         </div>

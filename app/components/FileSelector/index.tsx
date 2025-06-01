@@ -5,13 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { MenuData } from '../../types';
 import { migrateMenuData } from '../../utils/migrations';
 import { extractMenuDataFromPDF } from '../../utils/pdf/extract';
-import { getAllMenus, MenuInfo, deleteMenu, saveMenu, updateMenuList, getMenuById } from '../../utils/menuStorage';
-import { ImportConflictModal } from './ImportConflictModal';
+import { MenuInfo, getAllMenus, deleteMenu } from '../../utils/menuStorage';
 import { DeleteMenuModal } from './DeleteMenuModal';
-import { v4 as uuidv4 } from 'uuid';
 import { MenuList } from './MenuList';
 import { FileUploader } from './FileUploader';
 import { ErrorDisplay } from './ErrorDisplay';
+import { useMenuImport } from './useMenuImport';
 
 interface FileSelectorProps {
   isModal?: boolean;
@@ -20,21 +19,37 @@ interface FileSelectorProps {
   onCreateNewMenu?: () => void;
 }
 
+// Utility function to validate MenuData structure
+function isValidMenuData(data: unknown): data is MenuData {
+  if (typeof data !== 'object' || data === null) return false;
+  const obj = data as Record<string, unknown>;
+  return (
+    typeof obj.last_update === 'string' &&
+    Array.isArray(obj.people) &&
+    Array.isArray(obj.menu)
+  );
+}
+
 export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = false, onCreateNewMenu }: FileSelectorProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [savedMenus, setSavedMenus] = useState<MenuInfo[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [menuToDelete, setMenuToDelete] = useState<string | null>(null);
-  const [importConflict, setImportConflict] = useState<{
-    exists: boolean;
-    isNewer: boolean;
-    data: MenuData;
-    id: string;
-  } | null>(null);
+
+  // Use the new import hook
+  const {
+    importMenu,
+    error,
+    setError,
+    ImportConflictModal,
+  } = useMenuImport({
+    onComplete: (menuId) => router.push(`/editor?id=${String(menuId)}&mode=view`),
+    isModal,
+    onClose,
+  });
 
   // Load saved menus on component mount
   useEffect(() => {
@@ -42,8 +57,8 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
   }, []);
 
   // Get the current menu ID from URL search params
-  const getCurrentMenuId = (): string | null => {
-    return searchParams.get('id');
+  const getCurrentMenuId = (): string => {
+    return searchParams.get('id') || '';
   };
 
   // Prevent scrolling when modal is open
@@ -73,7 +88,6 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
-    
     const file = event.dataTransfer.files?.[0];
     processFile(file);
   };
@@ -90,61 +104,43 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
   const processFile = async (file?: File) => {
     setError(null);
     setIsProcessing(true);
-    
     if (!file) {
       setError('No file selected');
       setIsProcessing(false);
       return;
     }
-
     try {
-      // Check if it's a PDF file
       if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
         try {
-          // Convert the file to an ArrayBuffer
           const arrayBuffer = await file.arrayBuffer();
-          
-          // Use the utility function to extract menu data
           const menuData = await extractMenuDataFromPDF(arrayBuffer);
-          
           if (menuData) {
             handleFileLoaded(menuData);
             setIsProcessing(false);
             return;
           }
-          
           setError('No relationship menu data found in this PDF');
           setIsProcessing(false);
-        } catch (err) {
-          console.error('Error processing PDF:', err);
+        } catch {
           setError('Failed to extract data from PDF. Please select a JSON file instead.');
           setIsProcessing(false);
         }
         return;
       }
-      
-      // Process JSON files
       if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu')) {
         setError('Please select a .json, .relationshipmenu, or .pdf file');
         setIsProcessing(false);
         return;
       }
-
       const reader = new FileReader();
-      
       reader.onload = (e) => {
         try {
           const content = e.target?.result as string;
-          const data = JSON.parse(content) as MenuData;
-          
-          // Validate the data structure
-          if (!data.last_update || !Array.isArray(data.people) || !Array.isArray(data.menu)) {
+          const data = JSON.parse(content);
+          if (!isValidMenuData(data)) {
             throw new Error('Invalid JSON structure. The file must contain last_update, people, and menu fields.');
           }
-          
-          // Migrate data to latest schema version
           const migratedData = migrateMenuData(data);
-          
           handleFileLoaded(migratedData);
           setIsProcessing(false);
         } catch (err) {
@@ -152,12 +148,10 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
           setIsProcessing(false);
         }
       };
-      
       reader.onerror = () => {
         setError('Error reading file');
         setIsProcessing(false);
       };
-      
       reader.readAsText(file);
     } catch (err) {
       setError((err as Error).message || 'Failed to process file');
@@ -165,97 +159,9 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
     }
   };
 
-  // Method to handle the file being loaded
+  // Use the hook for import
   const handleFileLoaded = (data: MenuData) => {
-    // Ensure we have a UUID
-    const importedData = { ...data };
-    if (!importedData.uuid) {
-      importedData.uuid = uuidv4();
-    }
-    
-    const menuId = importedData.uuid;
-
-    // Prevent importing example menu
-    if (menuId === 'example') {
-      // Close the modal if it's open
-      if (isModal && onClose) {
-        onClose();
-      }
-      // Navigate to the example menu
-      router.push(`/editor?id=example`);
-      return;
-    }
-    
-    // Check if this menu already exists
-    const existingMenu = getMenuById(menuId);
-    
-    if (existingMenu) {
-      // Menu exists, check dates
-      const existingDate = new Date(existingMenu.last_update).getTime();
-      const importedDate = new Date(importedData.last_update).getTime();
-      
-      // If timestamps are identical, just open the existing file
-      if (existingDate === importedDate) {
-        // Close the modal if it's open
-        if (isModal && onClose) {
-          onClose();
-        }
-        
-        // Open the existing menu
-        router.push(`/editor?id=${menuId}&mode=view`);
-        return;
-      }
-      
-      const isNewer = importedDate > existingDate;
-      
-      // Show conflict dialog
-      setImportConflict({
-        exists: true,
-        isNewer,
-        data: importedData,
-        id: menuId
-      });
-    } else {
-      saveMenu(importedData);
-      updateMenuList(importedData);
-      
-      // Close the modal if it's open
-      if (isModal && onClose) {
-        onClose();
-      }
-      
-      // Always open existing menus in view mode
-      router.push(`/editor?id=${menuId}&mode=view`);
-    }
-  };
-
-  // Handle confirming an import (replacing existing menu)
-  const handleConfirmImport = () => {
-    if (importConflict) {
-      saveMenu(importConflict.data);
-      updateMenuList(importConflict.data);
-      
-      // Close the modal if it's open
-      if (isModal && onClose) {
-        onClose();
-      }
-      
-      router.push(`/editor?id=${importConflict.id}&mode=view`);
-      setImportConflict(null);
-    }
-  };
-
-  // Handle canceling an import (keeping existing menu)
-  const handleCancelImport = () => {
-    if (importConflict) {
-      // Close the modal if it's open
-      if (isModal && onClose) {
-        onClose();
-      }
-      
-      router.push(`/editor?id=${importConflict.id}&mode=view`);
-      setImportConflict(null);
-    }
+    importMenu(data);
   };
 
   const handleMenuSelect = (menuId: string) => {
@@ -291,7 +197,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         loadSavedMenus();
       } catch (error) {
         console.error('Error deleting menu:', error);
-        setError('Failed to delete menu');
+        // Optionally: setError('Failed to delete menu');
       }
     }
     // Close the modal and reset the menuToDelete
@@ -385,11 +291,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         />
         
         {/* Import conflict modal */}
-        <ImportConflictModal
-          conflict={importConflict}
-          onConfirm={handleConfirmImport}
-          onCancel={handleCancelImport}
-        />
+        {ImportConflictModal}
       </div>
     );
   }
@@ -454,11 +356,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
       />
       
       {/* Import conflict modal */}
-      <ImportConflictModal
-        conflict={importConflict}
-        onConfirm={handleConfirmImport}
-        onCancel={handleCancelImport}
-      />
+      {ImportConflictModal}
     </div>
   );
 } 

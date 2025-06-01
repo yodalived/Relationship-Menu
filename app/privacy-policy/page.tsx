@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
                 <h3 className="text-lg sm:text-xl font-medium text-[var(--main-text-color)]">100% Local Processing</h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
-                All menu data is processed and stored entirely within your browser using local storage. Nothing about your relationship preferences is ever transmitted to any servers.
+                All menu data is processed and stored entirely within your browser using local storage. Nothing about your relationship preferences is ever transmitted to any servers without your explicit consent and initiation.
               </p>
             </div>
             
@@ -65,10 +65,22 @@ export default function PrivacyPolicy() {
               <div>
                 <h3 className="text-xl font-medium mb-2 text-blue-700 dark:text-blue-400">Sharing Your Menu with Others</h3>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  There are two ways to share your relationship menu with others, both designed with your privacy in mind:
+                  There are three ways to share your relationship menu with others, both designed with your privacy in mind:
                 </p>
                 
                 <div className="mt-4 space-y-4">
+                <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
+                    <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 13a5 5 0 007.07 0l1.414-1.414a5 5 0 00-7.07-7.07L10 5.93M14 11a5 5 0 00-7.07 0l-1.414 1.414a5 5 0 007.07 7.07l1.414-1.414" />
+                    </svg>
+                      Share as Link
+                    </h4>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
+                      Share a copy of your menu via an end-to-end encrypted link. Your menu is encrypted on your device and only the encrypted data is uploaded to the server without the encryption key.
+                    </p>
+                  </div>
+
                   <div className="bg-white dark:bg-gray-700 p-3 rounded-lg border border-gray-200 dark:border-gray-600">
                     <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-1 flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -79,7 +91,6 @@ export default function PrivacyPolicy() {
                     <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
                       Export your menu as a beautifully formatted PDF document that's ready for printing or sharing.
                       The exported PDF file can be opened on any device with a PDF viewer and be edited on this website.
-                      <b>This is the recommended method for sharing your menu.</b>
                     </p>
                   </div>
 
@@ -100,12 +111,19 @@ export default function PrivacyPolicy() {
                 <h4 className="font-medium text-gray-800 dark:text-gray-200 mt-4 mb-2">Privacy Benefits of All Sharing Methods</h4>
                 <ul className="list-disc ml-3 sm:ml-5 space-y-1 text-gray-700 dark:text-gray-300">
                   <li>Your personal data remains on your device until you explicitly choose to share it</li>
-                  <li>No menu information is ever stored in external databases or transmitted to servers</li>
                   <li>You maintain absolute control over who can access your relationship preferences</li>
                 </ul>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-                  <div className="bg-green-50/50 dark:bg-green-900/20 p-2 rounded-lg border border-green-100 dark:border-green-800">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+                  <div className="bg-blue-50/70 dark:bg-blue-900/30 p-2 rounded-lg border border-blue-100 dark:border-blue-800">
+                    <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">Link Advantages</h5>
+                    <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
+                      <li>Protected with end-to-end encryption</li>
+                      <li>Valid for 5 days / 5 minutes after it is used</li>
+                      <li>Easy to share via messaging apps</li>
+                    </ul>
+                  </div>
+                  <div className="bg-green-50/70 dark:bg-green-900/30 p-2 rounded-lg border border-green-100 dark:border-green-800">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">PDF Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
                       <li>Professional presentation</li>
@@ -115,7 +133,7 @@ export default function PrivacyPolicy() {
                       <li>Editable on this website</li>
                     </ul>
                   </div>
-                  <div className="bg-blue-50/50 dark:bg-blue-900/20 p-2 rounded-lg border border-blue-100 dark:border-blue-800 ">
+                  <div className="bg-yellow-50/70 dark:bg-yellow-900/30 p-2 rounded-lg border border-yellow-100 dark:border-yellow-800">
                     <h5 className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">JSON File Advantages</h5>
                     <ul className="list-disc ml-4 sm:ml-5 text-sm text-gray-700 dark:text-gray-300">
                       <li>Permanent offline storage</li>
@@ -184,43 +202,70 @@ export default function PrivacyPolicy() {
             </div>
           </div>
           
-          {/* Server Log Files Section */}
+          {/* Data Collection Section */}
           <div>
             <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">2. Data collection on this website</h3>
-            <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl">
-              <h4 className="text-lg font-medium mb-3 text-[var(--main-text-color)]">2.1. Server log files</h4>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl mb-6">
+              <h4 className="text-lg font-medium mb-3 text-[var(--main-text-color)]">2.1. Sharing Your Menu via Link</h4>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                Each time the website is accessed, information that your browser transmits is automatically collected and stored in "server log files".
+                When you share a menu via a link, an encrypted copy of your menu is uploaded to the app's server.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                Encryption happens locally on your device using AES-256-GCM. A new encryption key is generated each time you create a sharing link.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                Only the encrypted data is uploaded and the decryption key is never sent to the server. Instead, it's embedded in the link as a URL fragment after the # symbol, ensuring that even I cannot decrypt your menu.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                Shared links remain valid for up to 5 days and expire automatically 5 minutes after the menu data is requested and the menu is imported in the app or on the website. After expiration, the data is deleted from the server. To enable this, the server stores a timestamp of when the menu was uploaded.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                Menus are only uploaded when you explicitly choose to share them. No menus are transmitted to the server without your direct action.
+              </p>
+              <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-600 p-4 rounded-r-lg">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                  Menu data is stored and processed based on your consent under Art. 6(1)(a) and Art. 9(2)(a) of the GDPR.
+                </p>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  You may request deletion of an uploaded menu by emailing me the menu ID from the link. Please be sure to remove the decryption key before sending.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl">
+              <h4 className="text-lg font-medium mb-3 text-[var(--main-text-color)]">2.2. Server log files</h4>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                When you access the website, certain technical data is automatically collected and stored in server log files. This helps ensure the security, stability, and proper functioning of the service.
               </p>
               
               <div className="bg-white dark:bg-gray-600 p-4 rounded-lg border border-gray-200 dark:border-gray-500 mb-4">
                 <p className="font-medium mb-2 text-gray-800 dark:text-gray-200">These log files include:</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <ul className="list-disc ml-4 sm:ml-6 text-gray-700 dark:text-gray-300 space-y-1">
-                    <li>Your IP address</li>
-                    <li>Host name of the accessing computer</li>
-                    <li>Duration of the request</li>
-                    <li>Time of the server request</li>
-                    <li>First Line of Request (what is requested)</li>
-                    <li>Status of the request</li>
+                    <li>IP address of the device making the request</li>
+                    <li>Host name of the requesting device</li>
+                    <li>Timestamp and duration of the request</li>
+                    <li>Request line indicating the requested resource</li>
                   </ul>
                   <ul className="list-disc ml-4 sm:ml-6 text-gray-700 dark:text-gray-300 space-y-1">
-                    <li>Transmitted data (volume)</li>
-                    <li>Useragent</li>
-                    <li>Browser type and browser version</li>
-                    <li>Operating system used</li>
-                    <li>Referrer URL</li>
+                    <li>HTTP status code returned by the server</li>
+                    <li>Amount of data transmitted during the request</li>
+                    <li>User agent string (including browser type and version, operating system)</li>
+                    <li>Referrer URL (the webpage that linked to the resource)</li>
                   </ul>
                 </div>
               </div>
-              
+
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                The basis for data processing is Art. 6 (1) (f) GDPR, which allows the processing of data to fulfill a contract or for measures preliminary to a contract.
+                This data may also be used to detect and prevent malicious activity, such as abuse or unauthorized access attempts, including implementing rate limiting on IP addresses to protect the service from overload or attacks.
               </p>
               
               <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-600 p-4 rounded-r-lg">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                  The processing of this data is based on Article 6(1)(f) GDPR (legitimate interests), aimed at ensuring service security, stability, and abuse prevention.
+                </p>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  This data will be stored for fourteen days and not be merged with other data sources.
+                  Log files are retained for a maximum of fourteen (14) days and are not linked with any other personal data.
                 </p>
               </div>
             </div>
@@ -228,7 +273,7 @@ export default function PrivacyPolicy() {
           
           {/* Third Party Section */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">3. Data processing by third party providers</h3>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">3. Data Processing by Third-Party Providers</h3>
             <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
@@ -245,11 +290,11 @@ export default function PrivacyPolicy() {
                 </p>
                 
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  The collected data mentioned in Section 2 is processed and stored on servers provided by phasedrei.
+                  The collected data mentioned in Section 2 is processed and stored on servers operated by phasedrei.
                 </p>
                 
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  A data processing agreement with phasedrei has been established for the outsourcing of data processing, fully implementing the strict requirements of the German data protection authorities when using phasedrei's services.
+                  A data processing agreement is in place with phasedrei, ensuring full compliance with the strict requirements of German data protection authorities.
                 </p>
                 
                 <div className="flex items-center bg-white dark:bg-gray-600 p-3 rounded-lg border border-gray-200 dark:border-gray-500">
@@ -262,7 +307,7 @@ export default function PrivacyPolicy() {
                 </div>
                 
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed italic">
-                  The use of phasedrei is based on legitimate interest (per Art. 6 (1) p. 1 lit. f GDPR) in the efficient and secure hosting of this website.
+                  The use of phasedrei is based on a legitimate interest (Art. 6 (1)(f) GDPR) in ensuring the secure and reliable hosting of this service.
                 </p>
               </div>
             </div>
