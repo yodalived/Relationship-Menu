@@ -109,7 +109,7 @@ export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, 
     });
     let itemWidths = computeItemWidths();
     let totalItemsWidth = itemWidths.reduce((s, w) => s + w, 0);
-    let horizontalMargin = isCompact ? 10 : 15;
+    const horizontalMargin = isCompact ? 10 : 15;
     let availableWidth = 210 - horizontalMargin * 2;
     let spacing = (availableWidth - totalItemsWidth) / (iconTypes.length - 1);
 

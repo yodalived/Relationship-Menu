@@ -62,7 +62,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
         const testItem = category.items[k];
         const isLastItemInMenu = k === category.items.length - 1 && categoryIndex === workingMenuData.menu.length - 1;
         const isLastInSection = k === category.items.length - 1;
-        const testHeight = drawMenuItem(pdf, testItem as any, 0, isLastItemInMenu, true, isLastInSection);
+        const testHeight = drawMenuItem(pdf, testItem, 0, isLastItemInMenu, true, isLastInSection);
         if (prospectiveY + testHeight <= context.contentMaxY) {
           canFitAnyItem = true;
           break;

@@ -15,7 +15,6 @@ export function drawIcon(pdf: jsPDF, iconType: string | null, x: number, y: numb
     : COLORS.notSet;
   
   const bgColor = 'bg' in iconColor ? iconColor.bg : COLORS.notSet.bg;
-  const borderColor = 'border' in iconColor ? iconColor.border : COLORS.notSet.border;
   
   // Set scale factor based on size (20 is reference for curves)
   const scale = size / 20;

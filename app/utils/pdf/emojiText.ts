@@ -59,7 +59,14 @@ function renderEmojiToDataUrl(emoji: string): string {
  */
 function getCurrentTextHeight(pdf: jsPDF): number {
   // getTextDimensions returns width/height in the current unit (mm here)
-  const dims = (pdf as any).getTextDimensions ? (pdf as any).getTextDimensions('Hg') : { h: PDF_CONFIG.lineHeight };
+  interface TextDimensions {
+    h: number;
+    w: number;
+  }
+  
+  const dims = 'getTextDimensions' in pdf && typeof pdf.getTextDimensions === 'function' 
+    ? (pdf.getTextDimensions as (text: string) => TextDimensions)('Hg') 
+    : { h: PDF_CONFIG.lineHeight };
   return typeof dims === 'object' && 'h' in dims ? dims.h : PDF_CONFIG.lineHeight;
 }
 
@@ -135,8 +142,8 @@ export function drawTextWithEmojis(
   tokens.forEach(t => {
     if (t.type === 'text') {
       if (t.value) {
-        const options: any = baseline === 'middle' ? { baseline: 'middle' } : undefined;
-        pdf.text(t.value, cursorX, y, options as any);
+        const options = baseline === 'middle' ? { baseline: 'middle' } : undefined;
+        pdf.text(t.value, cursorX, y, options);
         cursorX += pdf.getTextWidth(t.value);
       }
     } else {
@@ -144,9 +151,10 @@ export function drawTextWithEmojis(
       const imgY = baseline === 'middle' ? y - emojiBox / 2 : y - emojiBox * 0.8; // align visually to baseline
       try {
         pdf.addImage(dataUrl, 'PNG', cursorX, imgY, emojiBox, emojiBox);
-      } catch (_) {
+      } catch {
         // Fallback: draw as plain text if image add fails
-        pdf.text(t.value, cursorX, y, baseline === 'middle' ? { baseline: 'middle' } : undefined);
+        const options = baseline === 'middle' ? { baseline: 'middle' } : undefined;
+        pdf.text(t.value, cursorX, y, options);
       }
       cursorX += emojiBox + 0.4;
     }
