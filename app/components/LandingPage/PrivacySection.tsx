@@ -18,7 +18,7 @@ export function PrivacySection() {
             </div>
             <div>
               <strong className="text-[var(--main-text-color)]">100% Private:</strong> 
-              <span className="ml-2 text-gray-600 dark:text-gray-300">All your relationship menu data stays locally in your browser until you explicitly share it with someone as a PDF or JSON file.</span>
+              <span className="ml-2 text-gray-600 dark:text-gray-300">All your relationship menu data stays locally in your browser until you explicitly share it with someone.</span>
             </div>
           </div>
           
