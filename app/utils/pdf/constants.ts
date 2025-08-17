@@ -77,7 +77,7 @@ export const PDF_CONFIG = {
   iconOffset: 10.5, // Horizontal space between icon and text
   markerHorizontalPadding: 2, // Padding around highlighted item text
   markerVerticalPadding: 0, // Vertical padding for item markers
-  markerBorderRadius: 3, // Corner radius for item highlight markers
+  markerBorderRadius: 1, // Corner radius for item highlight markers
   sectionHeaderMargin: 4.5, // Space after section headers
   sectionLastItemMargin: 5.6, // Extra space after last item in section
   itemSpacing: 3.5, // Space between individual menu items
