@@ -2,8 +2,6 @@ import jsPDF from 'jspdf';
 import { NUNITO_FONTS_COMPRESSED } from '../../../node_modules/.fonts';
 import { ungzip } from 'pako';
 
-let fontsLoaded = false;
-
 /**
  * Helper function to decompress font data
  */
@@ -25,10 +23,14 @@ function decompressFont(compressedBase64: string): string {
 
 /**
  * Loads Nunito fonts into jsPDF
- * This should be called once before generating any PDF
+ * This should be called for each jsPDF instance before generating any PDF
  */
 export function loadNunitoFonts(pdf: jsPDF): void {
-  if (fontsLoaded) return;
+  // Check if Nunito fonts are already loaded in this instance
+  const fontList = pdf.getFontList();
+  if (fontList.Nunito && fontList.Nunito.includes('normal') && fontList.Nunito.includes('bold')) {
+    return; // Fonts already loaded
+  }
   
   try {
     // Decompress and add only the Nunito font variants we actually use
@@ -40,8 +42,6 @@ export function loadNunitoFonts(pdf: jsPDF): void {
     pdf.addFileToVFS('Nunito-Bold.ttf', nunitoBold);
     pdf.addFont('Nunito-Bold.ttf', 'Nunito', 'bold');
     
-    fontsLoaded = true;
-    console.log('✓ Nunito fonts decompressed and loaded successfully into jsPDF');
   } catch (error) {
     console.error('Failed to load Nunito fonts:', error);
     throw error;
