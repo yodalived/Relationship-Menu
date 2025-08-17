@@ -3,6 +3,7 @@ import { PDFDocument } from 'pdf-lib';
 import { MenuData } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
 import { addHeader, addCompactHeader, addLegend, addFooter, drawSectionHeader, drawMenuItem } from './components';
+import { splitTextToSizeWithEmojis } from './emojiText';
 import { DocumentContext } from './types';
 import { loadNunitoFonts } from './fontLoader';
 
@@ -130,7 +131,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
                 pdf.setFontSize(PDF_CONFIG.noteFontSize);
                 const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
                 const textWidth = pageInnerWidth - PDF_CONFIG.iconOffset;
-                const allNoteLines = pdf.splitTextToSize(item.note, textWidth);
+                const allNoteLines = splitTextToSizeWithEmojis(pdf, item.note, textWidth);
                 
                 // Check if all lines fit on the first page
                 if (approximateLinesFitting >= allNoteLines.length) {
