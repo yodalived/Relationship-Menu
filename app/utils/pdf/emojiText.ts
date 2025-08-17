@@ -93,32 +93,45 @@ export function computeTextWidthWithEmojis(pdf: jsPDF, text: string, emojiScale:
 /**
  * Splits text into lines that fit within maxWidth, accounting for emoji widths.
  * Preserves explicit newlines in the input by starting new lines.
+ * Ensures no line starts with leading spaces.
  */
 export function splitTextToSizeWithEmojis(pdf: jsPDF, text: string, maxWidth: number): string[] {
   if (text === undefined || text === null) return [];
   const lines: string[] = [];
   const rawLines = String(text).split('\n');
+  
   for (const rawLine of rawLines) {
     // Preserve explicit blank lines
-    if (rawLine.length === 0) {
+    if (rawLine.trim().length === 0) {
       lines.push('');
       continue;
     }
-    let current = '';
-    // Keep spaces with words by splitting on groups of spaces or non-spaces
-    const parts = rawLine.match(/\s+|\S+/g) || [];
-    for (const part of parts) {
-      const candidate = current + part;
-      const candidateWidth = computeTextWidthWithEmojis(pdf, candidate);
-      if (candidateWidth <= maxWidth || current.length === 0) {
-        current = candidate;
+    
+    // Split into words, removing all whitespace
+    const words = rawLine.trim().split(/\s+/).filter(word => word.length > 0);
+    let currentLine = '';
+    
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      const testLine = currentLine.length === 0 ? word : currentLine + ' ' + word;
+      const testWidth = computeTextWidthWithEmojis(pdf, testLine);
+      
+      if (testWidth <= maxWidth || currentLine.length === 0) {
+        // Word fits on current line, or it's the first word (must fit even if too long)
+        currentLine = testLine;
       } else {
-        lines.push(current.trimEnd());
-        current = part.trimStart();
+        // Word doesn't fit, start a new line
+        lines.push(currentLine);
+        currentLine = word;
       }
     }
-    lines.push(current.trimEnd());
+    
+    // Add the final line if it has content
+    if (currentLine.length > 0) {
+      lines.push(currentLine);
+    }
   }
+  
   return lines;
 }
 
