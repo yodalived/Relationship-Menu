@@ -17,12 +17,11 @@ export function drawIcon(pdf: jsPDF, iconType: string | null, x: number, y: numb
   const bgColor = 'bg' in iconColor ? iconColor.bg : COLORS.notSet.bg;
   const borderColor = 'border' in iconColor ? iconColor.border : COLORS.notSet.border;
   
-  // Set scale factor based on size (20 is the reference size in user example)
+  // Set scale factor based on size (20 is reference for curves)
   const scale = size / 20;
   const centerX = x + size/2;
   
-  // Get proper vertical centering for legends vs. menu items
-  // In legends, we want perfect vertical centering with text
+  // Use provided Y coordinate as center point for icon positioning
   const centerY = y;
   
   // Set line settings
@@ -30,20 +29,33 @@ export function drawIcon(pdf: jsPDF, iconType: string | null, x: number, y: numb
   pdf.setLineCap('round');
   pdf.setLineJoin('round');
   
+  // Draw colored background circle for all status icons
+  if (iconType !== 'notSet' && iconType !== 'not-set' && iconType !== null && iconType !== undefined && iconType !== '') {
+    pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+    pdf.circle(centerX, centerY, 9 * scale, 'F');
+  }
+
+  // Draw icon symbol on top of background
   switch(iconType) {
     case 'like':
-      pdf.setDrawColor(borderColor[0], borderColor[1], borderColor[2]);
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      pdf.circle(centerX, centerY, 9 * scale, 'FD');
-      pdf.lines([[3 * scale, 3 * scale], [5 * scale, -6 * scale]], centerX - 4 * scale, centerY);
+      // Checkmark symbol
+      pdf.setDrawColor(255, 255, 255);
+      pdf.setLineWidth(2.4 * scale);
+      pdf.setLineCap('round');
+      pdf.setLineJoin('round');
+      // Checkmark path
+      pdf.line(centerX - 3.5 * scale, centerY, centerX - 1 * scale, centerY + 2.5 * scale);
+      pdf.line(centerX - 1 * scale, centerY + 2.5 * scale, centerX + 3.5 * scale, centerY - 2.5 * scale);
       break;
       
     case 'maybe':
-      pdf.setDrawColor(borderColor[0], borderColor[1], borderColor[2]);
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      pdf.circle(centerX, centerY, 9 * scale, 'FD');
+      // Question mark symbol
+      pdf.setDrawColor(255, 255, 255);
+      pdf.setLineWidth(2.4 * scale);
+      pdf.setLineCap('round');
+      pdf.setLineJoin('round');
       
-      // Question mark path (adjusted for vertical alignment)
+      // Question mark path coordinates
       const pts = [
         [centerX - 3 * scale, centerY - 2.5 * scale],
         [centerX - 2.4 * scale, centerY - 3.5 * scale],
@@ -62,66 +74,70 @@ export function drawIcon(pdf: jsPDF, iconType: string | null, x: number, y: numb
         pdf.line(pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]);
       }
       
-      // Dot under the curve
-      pdf.line(centerX, centerY + 4.5 * scale, centerX, centerY + 4.51 * scale);
+      // Question mark dot
+      pdf.setFillColor(255, 255, 255);
+      pdf.circle(centerX, centerY + 4.5 * scale, 1.2 * scale, 'F');
       break;
       
     case 'must':
-      pdf.setDrawColor(borderColor[0], borderColor[1], borderColor[2]);
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      pdf.circle(centerX, centerY, 9 * scale, 'FD');
-      
-      // Exclamation mark
-      pdf.line(centerX, centerY - 5 * scale, centerX, centerY + 2 * scale);
-      pdf.line(centerX, centerY + 5 * scale, centerX, centerY + 5.01 * scale);
+      // Exclamation mark symbol
+      pdf.setDrawColor(255, 255, 255);
+      pdf.setLineWidth(2.4 * scale);
+      pdf.setLineCap('round');
+      // Exclamation line
+      pdf.line(centerX, centerY - 4 * scale, centerX, centerY + 0.5 * scale);
+      // Dot
+      pdf.setFillColor(255, 255, 255);
+      pdf.circle(centerX, centerY + 3.2 * scale, 1.2 * scale, 'F');
       break;
       
     case 'prefer-not':
-      pdf.setDrawColor(borderColor[0], borderColor[1], borderColor[2]);
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      pdf.circle(centerX, centerY, 9 * scale, 'FD');
-      
-      // Dash
-      pdf.line(centerX - 4 * scale, centerY, centerX + 4 * scale, centerY);
+      // Minus sign symbol
+      pdf.setDrawColor(255, 255, 255);
+      pdf.setLineWidth(3 * scale);
+      pdf.setLineCap('round');
+      pdf.line(centerX - 3.5 * scale, centerY, centerX + 3.5 * scale, centerY);
       break;
       
     case 'off-limit':
-      pdf.setDrawColor(borderColor[0], borderColor[1], borderColor[2]);
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      pdf.circle(centerX, centerY, 9 * scale, 'FD');
-      
-      // X mark
-      pdf.line(centerX - 4 * scale, centerY - 4 * scale, centerX + 4 * scale, centerY + 4 * scale);
-      pdf.line(centerX + 4 * scale, centerY - 4 * scale, centerX - 4 * scale, centerY + 4 * scale);
+      // X symbol
+      pdf.setDrawColor(255, 255, 255);
+      pdf.setLineWidth(2.4 * scale);
+      pdf.setLineCap('round');
+      pdf.line(centerX - 3 * scale, centerY - 3 * scale, centerX + 3 * scale, centerY + 3 * scale);
+      pdf.line(centerX + 3 * scale, centerY - 3 * scale, centerX - 3 * scale, centerY + 3 * scale);
       break;
       
     case 'talk':
-      pdf.setDrawColor(borderColor[0], borderColor[1], borderColor[2]);
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+      // Speech bubble symbol
+      pdf.setFillColor(255, 255, 255);
+      const bubbleW = 12 * scale;
+      const bubbleH = 7.5 * scale;
       
-      // Approximate bubble shape - rectangle with rounded corners
-      pdf.rect(centerX - 6 * scale, centerY - 4.5 * scale, 12 * scale, 9 * scale, 'FD');
+      // Speech bubble body
+      pdf.roundedRect(centerX - bubbleW/2, centerY - bubbleH/2, bubbleW, bubbleH, 2 * scale, 2 * scale, 'F');
       
-      // Triangle pointer at bottom
-      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-      pdf.triangle(
-        centerX + 1 * scale, centerY + 4.5 * scale, 
-        centerX, centerY + 6 * scale, 
-        centerX - 1 * scale, centerY + 4.5 * scale, 
-        'FD'
-      );
+      // Speech bubble tail
+      pdf.triangle(centerX + 1.5 * scale, centerY + bubbleH/2,
+                   centerX + 0.2 * scale, centerY + bubbleH/2 + 2 * scale,
+                   centerX - 0.5 * scale, centerY + bubbleH/2,
+                   'F');
       break;
       
     case 'notSet':
-      // Simple black dot
-      pdf.setFillColor(0, 0, 0);
-      pdf.circle(centerX, centerY, 3 * scale, 'F');
+    case 'not-set':
+    case null:
+    case undefined:
+    case '':
+      // Small bullet point for unset items
+      pdf.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+      pdf.circle(centerX, centerY, 2.5 * scale, 'F');
       break;
       
     default:
-      // Simple black dot for any undefined icon
-      pdf.setFillColor(0, 0, 0);
-      pdf.circle(centerX, centerY, 3 * scale, 'F');
+      // Default bullet point for unknown icons
+      pdf.setFillColor(158, 158, 158); // Use notSet gray color
+      pdf.circle(centerX, centerY, 2.5 * scale, 'F');
       break;
   }
 }
@@ -142,20 +158,20 @@ export function createItemMarker(pdf: jsPDF, iconType: string | null, x: number,
   if (iconKey !== 'notSet') {
     const markerColor = 'marker' in iconColor ? iconColor.marker : COLORS.notSet.marker;
     
-    // Calculate proper marker width based on text width with less extreme padding
+    // Calculate marker dimensions based on text width
     const horizontalPadding = PDF_CONFIG.markerHorizontalPadding;
     const verticalPadding = PDF_CONFIG.markerVerticalPadding;
     const markerWidth = width + (horizontalPadding * 2);
     const markerHeight = height + verticalPadding;
     const borderRadius = PDF_CONFIG.markerBorderRadius;
     
-    // Draw a pill-shaped rounded rectangle with subtle color
+    // Draw colored background marker behind item text
     pdf.setFillColor(markerColor[0], markerColor[1], markerColor[2]);
     
-    // Position the marker centered on the text
+    // Center marker vertically on text baseline
     const markerY = y - markerHeight/2;
     
-    // Draw rounded rectangle as a pill shape
+    // Draw rounded rectangle marker
     drawRoundedRect(
       pdf, 
       x - horizontalPadding, 
@@ -168,15 +184,15 @@ export function createItemMarker(pdf: jsPDF, iconType: string | null, x: number,
 }
 
 /**
- * Draw a rounded rectangle with consistent radius on all corners
+ * Draws a filled rounded rectangle
  */
 export function drawRoundedRect(pdf: jsPDF, x: number, y: number, width: number, height: number, radius: number) {
-  // Make sure radius isn't too large for the rectangle
+  // Constrain radius to rectangle dimensions
   const maxRadius = Math.min(width, height) / 2;
   radius = Math.min(radius, maxRadius);
   
-  pdf.setLineWidth(0); // No border, just fill
+  // Fill only, no border
   
-  // Begin path
+  // Draw filled rounded rectangle
   pdf.roundedRect(x, y, width, height, radius, radius, 'F');
 }

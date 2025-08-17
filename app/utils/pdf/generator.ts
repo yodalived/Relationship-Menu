@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf';
 import { PDFDocument } from 'pdf-lib';
 import { MenuData } from '../../types';
-import { PDF_CONFIG } from './constants';
+import { COLORS, PDF_CONFIG } from './constants';
 import { addHeader, addCompactHeader, addLegend, addFooter, drawSectionHeader, drawMenuItem } from './components';
 import { DocumentContext } from './types';
 
@@ -14,6 +14,9 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
   // Create PDF instance
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
   pdf.setFont('helvetica');
+  // Subtle page background like iOS
+  pdf.setFillColor((COLORS.pageBackground as number[])[0], (COLORS.pageBackground as number[])[1], (COLORS.pageBackground as number[])[2]);
+  pdf.rect(0, 0, 210, 297, 'F');
   
   // Create a deep copy of menu data to avoid modifying the original
   const workingMenuData = JSON.parse(JSON.stringify(menuData));
@@ -44,18 +47,32 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
     
     // Check if we need to render section header
     if (!context.renderedSectionsOnPage.has(category.name)) {
-      // Calculate section header height
+      // Calculate section header height (includes margins)
       const sectionHeaderHeight = drawSectionHeader(pdf, category, 0, false, true);
-      
-      // Check if section header fits on current page
+
+      // If header itself doesn't fit, start a new page first
       if (context.yPos + sectionHeaderHeight > context.contentMaxY) {
-        // Start a new page
         startNewPage(pdf, menuData, context);
       }
-      
-      // Render section header
-      context.yPos = drawSectionHeader(pdf, category, context.yPos, false);
-      context.renderedSectionsOnPage.add(category.name);
+
+      // Before drawing header, ensure at least one item can fit below it
+      let canFitAnyItem = false;
+      const prospectiveY = context.yPos + sectionHeaderHeight;
+      for (let k = 0; k < category.items.length; k++) {
+        const testItem = category.items[k];
+        const isLastItemInMenu = k === category.items.length - 1 && categoryIndex === workingMenuData.menu.length - 1;
+        const isLastInSection = k === category.items.length - 1;
+        const testHeight = drawMenuItem(pdf, testItem as any, 0, isLastItemInMenu, true, isLastInSection);
+        if (prospectiveY + testHeight <= context.contentMaxY) {
+          canFitAnyItem = true;
+          break;
+        }
+      }
+
+      if (canFitAnyItem) {
+        context.yPos = drawSectionHeader(pdf, category, context.yPos, false);
+        context.renderedSectionsOnPage.add(category.name);
+      }
     }
     
     // Process items within the category
@@ -104,7 +121,8 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
                 // Split the note text
                 pdf.setFont('helvetica', 'normal');
                 pdf.setFontSize(PDF_CONFIG.noteFontSize);
-                const textWidth = 190 - PDF_CONFIG.margin - PDF_CONFIG.iconOffset;
+                const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
+                const textWidth = pageInnerWidth - PDF_CONFIG.iconOffset;
                 const allNoteLines = pdf.splitTextToSize(item.note, textWidth);
                 
                 // Check if all lines fit on the first page
@@ -225,6 +243,9 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
 function startNewPage(pdf: jsPDF, menuData: MenuData, context: DocumentContext): void {
   pdf.addPage();
   context.currentPage++;
+  // Page background
+  pdf.setFillColor((COLORS.pageBackground as number[])[0], (COLORS.pageBackground as number[])[1], (COLORS.pageBackground as number[])[2]);
+  pdf.rect(0, 0, 210, 297, 'F');
   
   // Add compact header to new page
   context.yPos = addCompactHeader(pdf, menuData, context.currentPage);

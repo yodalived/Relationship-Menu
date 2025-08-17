@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf';
 import { MenuData, MenuCategory, MenuItem } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
-import { drawIcon, createItemMarker } from './pdfUtils';
+import { drawIcon, createItemMarker, drawRoundedRect } from './pdfUtils';
 import { formatPeopleNames } from '../formatUtils';
 
 /**
@@ -12,25 +12,24 @@ export function addHeader(pdf: jsPDF, menuData: MenuData, yPos: number, dryRun: 
       return PDF_CONFIG.headerHeight;
     }
     
-    // Add darker teal background to the header area
+    // Header background
     pdf.setFillColor(COLORS.headerBg[0], COLORS.headerBg[1], COLORS.headerBg[2]);
     pdf.rect(0, 0, 210, PDF_CONFIG.headerHeight, 'F');
     
-    // Set white text for header
+    // Header text styling
     pdf.setTextColor(COLORS.white[0], COLORS.white[1], COLORS.white[2]);
     
-    // Add title - make it bigger
+    // Main title
     pdf.setFontSize(PDF_CONFIG.titleFontSize + 3);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('Relationship Menu', PDF_CONFIG.margin, yPos + 22); // Adjusted position
+    pdf.text('Relationship Menu', PDF_CONFIG.margin, yPos + 12, { baseline: 'middle' });
     
-    // Add people involved - closer to the title
+    // People names subtitle
     const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
       pdf.setFontSize(PDF_CONFIG.subtitleFontSize);
       pdf.setFont('helvetica', 'normal');
-      // Removed "For" before people's names
-      pdf.text(peopleText, PDF_CONFIG.margin, yPos + 32); // Moved closer to title
+      pdf.text(peopleText, PDF_CONFIG.margin, yPos + 22, { baseline: 'middle' });
     }
     
     return PDF_CONFIG.headerHeight;
@@ -44,28 +43,27 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
       return PDF_CONFIG.compactHeaderHeight;
     }
     
-    // Add darker teal background to the slim header
+    // Compact header background
     pdf.setFillColor(COLORS.headerBg[0], COLORS.headerBg[1], COLORS.headerBg[2]);
     pdf.rect(0, 0, 210, PDF_CONFIG.compactHeaderHeight, 'F');
     
-    // Set white text
+    // Header text styling
     pdf.setTextColor(COLORS.white[0], COLORS.white[1], COLORS.white[2]);
     
-    // Center text vertically in the header
+    // Vertical center position for text
     const textY = (PDF_CONFIG.compactHeaderHeight / 2);
     
-    // Add title part - bold and larger
+    // Main title on left
     pdf.setFontSize(PDF_CONFIG.subtitleFontSize + 3);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('Relationship Menu', PDF_CONFIG.margin, textY);
+    pdf.text('Relationship Menu', PDF_CONFIG.margin, textY, { baseline: 'middle' });
     
     const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
-      // Add people part right-aligned
+      // People names on right
       pdf.setFontSize(PDF_CONFIG.subtitleFontSize - 4);
       pdf.setFont('helvetica', 'normal');
-      // Right align at page margin
-      pdf.text(peopleText, 210 - PDF_CONFIG.margin, textY, { align: 'right' });
+      pdf.text(peopleText, 210 - PDF_CONFIG.margin, textY, { align: 'right', baseline: 'middle' });
     }
     
     // Return the position below the header
@@ -76,74 +74,80 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
  * Adds a legend explaining the icons (horizontal compact version)
  */
 export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, dryRun: boolean = false): number {
-
     const iconTypes = ['must', 'like', 'maybe', 'prefer-not', 'off-limit', 'talk'];
-    
-    // Increased padding for more room around the legend items
-    const vertPadding = isCompact ? 5 : 6;
-    
+    // Responsive padding and sizing based on compact mode
+    const vertPadding = isCompact ? 3 : 4;
+    let iconSize = isCompact ? PDF_CONFIG.legendIconSize - 0.7 : PDF_CONFIG.legendIconSize;
+    let fontSize = isCompact ? PDF_CONFIG.legendCompactFontSize : PDF_CONFIG.legendFontSize;
+    const calcLegendHeight = () => vertPadding * 2 + iconSize;
+    let legendHeight = calcLegendHeight();
+
     if (dryRun) {
-      return yPos + vertPadding;
+      return yPos + legendHeight + PDF_CONFIG.legendBottomMargin;
     }
-    
-    // Add a light background for the legend - full width
-    pdf.setFillColor(245, 245, 245);
-    
-    // Create the background box with equal padding top and bottom
-    pdf.rect(0, yPos - vertPadding, 210, vertPadding * 2, 'F');
-    
-    // Set font for measurements
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(isCompact ? PDF_CONFIG.legendCompactFontSize : PDF_CONFIG.legendFontSize);
-    
-    // Calculate actual width needed for each legend item (icon + text)
-    const itemWidths = iconTypes.map(iconType => {
+
+    // Legend background
+    pdf.setFillColor((COLORS.legendBg as number[])[0], (COLORS.legendBg as number[])[1], (COLORS.legendBg as number[])[2]);
+    pdf.rect(0, yPos, 210, legendHeight, 'F');
+
+    // Subtle bottom border
+    pdf.setDrawColor(240, 240, 240);
+    pdf.setLineWidth(0.2);
+    pdf.line(0, yPos + legendHeight, 210, yPos + legendHeight);
+
+    // Legend typography
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(fontSize);
+
+    // Compute widths for tight icon-label pairs
+    const iconTextGap = 3; // Tighter gap between icon and text
+    const computeItemWidths = () => iconTypes.map(iconType => {
       const iconColor = COLORS[iconType];
-      // Width = icon (size) + spacing between icon and text (6) + text width
-      const iconWidth = isCompact ? PDF_CONFIG.legendIconSize - 0.5 : PDF_CONFIG.legendIconSize;
-      // Ensure iconColor is of type ColorConfig before accessing label
       const label = 'label' in iconColor ? iconColor.label : '';
-      const textWidth = pdf.getTextWidth(label);
-      return iconWidth + 6 + textWidth;
+      return iconSize + iconTextGap + pdf.getTextWidth(label);
     });
-    
-    // Calculate total width of all items
-    const totalItemsWidth = itemWidths.reduce((sum, width) => sum + width, 0);
-    
-    // Calculate the spacing between items
-    const pageWidth = 210;
-    const horizontalMargin = 10; // Margin on each side
-    const availableWidth = pageWidth - (horizontalMargin * 2);
-    const spacing = (availableWidth - totalItemsWidth) / (iconTypes.length - 1);
-    
-    // Position first item at left margin
+    let itemWidths = computeItemWidths();
+    let totalItemsWidth = itemWidths.reduce((s, w) => s + w, 0);
+    let horizontalMargin = isCompact ? 10 : 15;
+    let availableWidth = 210 - horizontalMargin * 2;
+    let spacing = (availableWidth - totalItemsWidth) / (iconTypes.length - 1);
+
+    // If spacing is too small/negative, reduce font size and recompute
+    let attempts = 0;
+    while (spacing < 8 && attempts < 3) {
+      fontSize -= 1;
+      iconSize -= 0.2;
+      legendHeight = calcLegendHeight();
+      pdf.setFontSize(fontSize);
+      itemWidths = computeItemWidths();
+      totalItemsWidth = itemWidths.reduce((s, w) => s + w, 0);
+      availableWidth = 210 - horizontalMargin * 2;
+      spacing = (availableWidth - totalItemsWidth) / (iconTypes.length - 1);
+      attempts += 1;
+    }
+    spacing = Math.max(spacing, 8);
+
+    // Vertical center line for icons/labels
+    const centerY = yPos + legendHeight / 2;
+
+    // Lay out items with tight icon-label pairing
     let currentX = horizontalMargin;
-    
-    // Use the new larger icon size
-    const iconSize = isCompact ? PDF_CONFIG.legendIconSize - 0.5 : PDF_CONFIG.legendIconSize;
-    
-    // Add each icon and its label
     iconTypes.forEach((iconType, index) => {
+      drawIcon(pdf, iconType, currentX, centerY, iconSize);
+
       const iconColor = COLORS[iconType];
-      
-      // Draw the icon
-      drawIcon(pdf, iconType, currentX, yPos, iconSize);
-      
-      // Add label text
-      pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
-      // Ensure iconColor is of type ColorConfig before accessing label
       const label = 'label' in iconColor ? iconColor.label : '';
-      pdf.text(label, currentX + 6, yPos, {baseline: 'middle'});
-      
-      // Move to next position: current position + this item's width + spacing
+      // Darker legend text positioned close to icon
+      pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
+      pdf.text(label, currentX + iconSize + iconTextGap, centerY, { baseline: 'middle' });
+
       if (index < iconTypes.length - 1) {
         currentX += itemWidths[index] + spacing;
       }
     });
-    
-    // Return position after the legend with equal padding applied
-    return yPos + vertPadding;
-  }
+
+    return yPos + legendHeight + PDF_CONFIG.legendBottomMargin;
+}
 
 /**
  * Adds the footer to the PDF
@@ -164,35 +168,37 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
   for (let i = 1; i <= pageCount; i++) {
     pdf.setPage(i);
     
-    // Gradient background (darker at bottom, slightly lighter at top)
     const footerHeight = PDF_CONFIG.footerHeight;
     const footerTop = 297 - footerHeight;
     
-    // Draw background
-    pdf.setFillColor(40, 40, 40); // Slightly darker than before
+    // Footer background
+    pdf.setFillColor(COLORS.footerBg[0], COLORS.footerBg[1], COLORS.footerBg[2]);
     pdf.rect(0, footerTop, 210, footerHeight, 'F');
     
-    // Add a subtle divider line at the top of the footer
-    pdf.setDrawColor(80, 80, 80);
+    // Subtle top border
+    pdf.setDrawColor(255, 255, 255);
     pdf.setLineWidth(0.2);
-    pdf.line(0, footerTop + 0.5, 210, footerTop + 0.5);
+    pdf.line(0, footerTop, 210, footerTop);
     
-    // Calculate positions
+    // Calculate positions for properly centered text
     const footerMidY = footerTop + (footerHeight / 2);
+    const lineSpacing = 4; // Space between the two lines
+    const firstLineY = footerMidY - (lineSpacing / 2);
+    const secondLineY = footerMidY + (lineSpacing / 2);
     
     // Left section: site attribution and edit info
-    pdf.setTextColor(255, 255, 255);
-    pdf.setFontSize(9.5);
+    pdf.setTextColor(230, 230, 230);
+    pdf.setFontSize(11);
     pdf.setFont('helvetica', 'bold');
     const siteText = "relationshipmenu.org";
-    pdf.text(siteText, PDF_CONFIG.margin, footerMidY - 2, { baseline: 'middle' });
+    pdf.text(siteText, PDF_CONFIG.margin, firstLineY, { baseline: 'middle' });
 
-    // Add clearer editable note below website name
-    pdf.setFontSize(7.5);
+    // Instructions for editing the menu
+    pdf.setFontSize(8.5);
     pdf.setFont('helvetica', 'normal');
-    pdf.setTextColor(210, 210, 210); // Slightly lighter color for secondary text
-    const editableText = "You can import and edit this PDF file on the website.";
-    pdf.text(editableText, PDF_CONFIG.margin, footerMidY + 2, { baseline: 'middle' });
+    pdf.setTextColor(200, 200, 200);
+    const editableText = "Edit this menu by importing the PDF into the app or website.";
+    pdf.text(editableText, PDF_CONFIG.margin, secondLineY, { baseline: 'middle' });
     
     // Calculate maximum width for the clickable area
     const siteTextWidth = pdf.getTextWidth(siteText);
@@ -202,28 +208,27 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
     // Add clickable link covering both lines of text
     pdf.link(
       PDF_CONFIG.margin, 
-      footerMidY - 8, 
+      firstLineY - 6, 
       maxWidth, 
-      16, 
+      12, 
       { url: 'https://relationshipmenu.org' }
     );
     
     // Right side: page number and last updated
     const rightX = 210 - PDF_CONFIG.margin;
     
-    // Page number if multiple pages
-    if (pageCount > 1) {
-      pdf.setFontSize(8.5);
-      pdf.setFont('helvetica', 'bold');
-      pdf.setTextColor(210, 210, 210);
-      pdf.text(`Page ${i} of ${pageCount}`, rightX, footerMidY - 2, { align: 'right', baseline: 'middle' });
-    }
+    // Always show page number
+    pdf.setFontSize(9.5);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(230, 230, 230);
+    const pageText = pageCount > 1 ? `Page ${i} of ${pageCount}` : `Page ${i}`;
+    pdf.text(pageText, rightX, firstLineY, { align: 'right', baseline: 'middle' });
     
     // Last updated info (moved to right side, below page counter)
-    pdf.setFontSize(7);
+    pdf.setFontSize(8);
     pdf.setFont('helvetica', 'normal');
-    pdf.setTextColor(180, 180, 180);
-    pdf.text(`Last updated: ${updateDate}`, rightX, footerMidY + 2, { align: 'right', baseline: 'middle' });
+    pdf.setTextColor(200, 200, 200);
+    pdf.text(`Last updated: ${updateDate}`, rightX, secondLineY, { align: 'right', baseline: 'middle' });
   }
 }
 
@@ -236,25 +241,27 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
  * @returns The new Y position after drawing (bottom edge)
  */
 export function drawSectionHeader(pdf: jsPDF, category: MenuCategory, yPos: number, isLastElementOnPage: boolean, dryRun: boolean = false): number {
-  const sectionHeaderHeight = 12;
+  // Section header dimensions and styling
+  const sectionHeaderHeight = 12.5; // ~36pt
+  const sideMargin = 9;
+  const cornerRadius = 3.2;
 
   if (!dryRun) {
     pdf.setFillColor(COLORS.sectionHeader[0], COLORS.sectionHeader[1], COLORS.sectionHeader[2]);
-    pdf.rect(0, yPos, 210, sectionHeaderHeight, 'F');
+    drawRoundedRect(pdf, sideMargin, yPos + 2, 210 - sideMargin * 2, sectionHeaderHeight, cornerRadius);
     pdf.setTextColor(COLORS.white[0], COLORS.white[1], COLORS.white[2]);
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(PDF_CONFIG.sectionTitleFontSize);
-    pdf.text(category.name, PDF_CONFIG.margin, yPos + sectionHeaderHeight / 2, { baseline: 'middle' });
+    const textY = yPos + 2 + sectionHeaderHeight / 2;
+    pdf.text(category.name, PDF_CONFIG.margin, textY, { baseline: 'middle' });
   }
 
   if (isLastElementOnPage) {
-    return yPos + sectionHeaderHeight;
+    return yPos + sectionHeaderHeight + 4;
   } else if (PDF_CONFIG.sectionHeaderMargin === 0) {
-    // For zero margin, position exactly at the bottom of the section header
-    return yPos + sectionHeaderHeight;
+    return yPos + sectionHeaderHeight + 4;
   } else {
-    // For non-zero margin, add the margin to create space
-    return yPos + sectionHeaderHeight + PDF_CONFIG.sectionHeaderMargin;
+    return yPos + sectionHeaderHeight + PDF_CONFIG.sectionHeaderMargin + 4;
   }
 }
 
@@ -277,18 +284,19 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
   if (!dryRun) {
     // Draw icon
     drawIcon(pdf, item.icon || null, iconX, centerY, PDF_CONFIG.iconSize);
-  
+
     // Draw item text
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(PDF_CONFIG.itemFontSize);
     pdf.setTextColor(COLORS.black[0], COLORS.black[1], COLORS.black[2]);
     const nameWidth = pdf.getTextWidth(item.name);
-  
-    // Draw marker if needed
-    if (item.icon && item.icon !== 'notSet' && item.icon !== 'talk') {
+
+    // Draw background marker for items with status (excluding unset and talk items)
+    const iconKey = (item.icon || '').toString();
+    if (iconKey && iconKey !== 'notSet' && iconKey !== 'not-set' && iconKey !== 'talk') {
       createItemMarker(pdf, item.icon || null, textStartX, centerY, nameWidth, PDF_CONFIG.lineHeight);
     }
-  
+
     // Draw item name
     pdf.text(item.name, textStartX, centerY, { baseline: 'middle' });
   }
@@ -303,44 +311,44 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     pdf.setFontSize(PDF_CONFIG.noteFontSize);
     pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
     
-    const textWidth = 190 - textStartX;
+    const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
+    const textWidth = pageInnerWidth - (PDF_CONFIG.iconOffset);
     const split = pdf.splitTextToSize(item.note, textWidth);
     
     // Filter out empty lines for spacing and rendering
     const nonEmptyLines = split.filter((line: string) => line.trim().length > 0);
     
     if (!dryRun) {
-      // Add continuation indicator if this is a continued note
+      // Handle notes that continue from previous page
       if (item.continuedNote) {
         if (nonEmptyLines.length > 0) {
-          // Add lighter gray color for continuation indicators
-          pdf.setTextColor(180, 180, 180); // Lighter gray
+          // Continuation indicator
+          pdf.setTextColor(180, 180, 180);
           pdf.setFont('helvetica', 'normal');
-          // Add the prefix with more prominent spacing
           pdf.text("...  ", textStartX, noteCenterY);
           
-          // Calculate width of the prefix with wider spacing
+          // Calculate prefix width
           const prefixWidth = pdf.getTextWidth("...  ");
           
-          // Add the first line after the prefix
-          pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]); // Reset to normal gray
+          // First line of continued note
+          pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
           pdf.setFont('helvetica', 'normal');
           pdf.text(nonEmptyLines[0], textStartX + prefixWidth, noteCenterY);
           
-          // Add the rest of the lines normally
+          // Remaining lines
           for (let idx = 1; idx < nonEmptyLines.length; idx++) {
             pdf.text(nonEmptyLines[idx], textStartX, noteCenterY + idx * PDF_CONFIG.noteLineHeight);
           }
         }
       } else {
-        // For notes that continue onto next page
+        // Handle notes that continue to next page
         if (item.continuesOnNextPage && nonEmptyLines.length > 0) {
-          // Draw all lines except the last one
+          // Draw all lines except the last
           for (let idx = 0; idx < nonEmptyLines.length - 1; idx++) {
             pdf.text(nonEmptyLines[idx], textStartX, noteCenterY + idx * PDF_CONFIG.noteLineHeight);
           }
           
-          // For the last line, append "..."
+          // Last line with continuation indicator
           const lastLineIdx = nonEmptyLines.length - 1;
           const lastLineY = noteCenterY + lastLineIdx * PDF_CONFIG.noteLineHeight;
           
@@ -348,11 +356,9 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           const lastLine = nonEmptyLines[lastLineIdx];
           pdf.text(lastLine, textStartX, lastLineY);
           
-          // Calculate position for the suffix
+          // Continuation indicator at end of line
           const lastLineWidth = pdf.getTextWidth(lastLine);
-          
-          // Add the suffix with lighter gray and a space before it
-          pdf.setTextColor(180, 180, 180); // Lighter gray
+          pdf.setTextColor(180, 180, 180);
           pdf.setFont('helvetica', 'normal');
           pdf.text("  ...", textStartX + lastLineWidth, lastLineY);
           

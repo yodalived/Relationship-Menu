@@ -3,86 +3,91 @@ import { ColorTypes } from './types';
 
 export const COLORS: ColorTypes = {
   // Core colors
-  primary: [99, 159, 169], // RGB for var(--main-text-color) - teal blue
-  sectionHeader: [158, 198, 204], // Section header background - semi-transparent light teal
-  headerBg: [78, 138, 148], // Slightly darker teal for header background
-  footerBg: [40, 40, 40],
-  black: [0, 0, 0],
-  gray: [100, 100, 100],
-  lightGray: [220, 220, 220],
+  primary: [99, 159, 169],
+  sectionHeader: [41, 112, 140],
+  headerBg: [41, 112, 140],
+  footerBg: [33, 33, 38],
+  black: [26, 26, 26],
+  gray: [115, 115, 115],
+  lightGray: [217, 217, 217],
   white: [255, 255, 255],
+  // Page/legend backgrounds
+  pageBackground: [250, 250, 250],
+  legendBg: [255, 255, 255],
   
-  // Icon colors with bg and marker colors
+  // Icon colors with background, border, and marker colors
   must: {
-    bg: [222, 240, 255],
-    border: [108, 188, 250],
-    marker: [222, 240, 255],
-    label: "Must have"
+    bg: [108, 157, 216], // Blue
+    border: [33, 150, 242],
+    marker: [236, 241, 247],
+    label: "Must"
   },
   like: {
-    bg: [234, 255, 237],
-    border: [135, 231, 126],
-    marker: [234, 255, 237],
-    label: "Would like"
+    bg: [119, 191, 105], // Green
+    border: [77, 176, 79],
+    marker: [237, 244, 236],
+    label: "Like"
   },
   maybe: {
-    bg: [253, 243, 222],
-    border: [247, 206, 19],
-    marker: [253, 243, 222],
+    bg: [225, 183, 99], // Yellow
+    border: [255, 194, 8],
+    marker: [247, 243, 234],
     label: "Maybe"
   },
   'prefer-not': {
-    bg: [226, 232, 240],
-    border: [148, 163, 184],
-    marker: [226, 232, 240],
+    bg: [153, 153, 153], // Gray
+    border: [158, 158, 158],
+    marker: [240, 240, 240],
     label: "Prefer not"
   },
   'off-limit': {
-    bg: [255, 233, 233],
-    border: [210, 102, 102],
-    marker: [255, 233, 233],
-    label: "Off limits"
+    bg: [210, 100, 99], // Red
+    border: [232, 74, 61],
+    marker: [246, 234, 234],
+    label: "Off Limits"
   },
   talk: {
-    bg: [240, 237, 255],
-    border: [166, 155, 232],
-    marker: [240, 237, 255],
+    bg: [179, 130, 222], // Purple
+    border: [156, 38, 176],
+    marker: [248, 245, 255],
     label: "Conversation"
   },
   notSet: {
-    bg: [245, 245, 245],
-    border: [200, 200, 200],
-    marker: [255, 255, 255, 0], // Transparent
+    bg: [158, 166, 179], // Gray
+    border: [158, 158, 158],
+    marker: [255, 255, 255, 0],
     label: "Not set"
   }
 };
 
 // PDF layout configuration
 export const PDF_CONFIG = {
-  margin: 20,
-  headerHeight: 50, // Reduced from 70
-  compactHeaderHeight: 25, // Height for subsequent pages
-  titleFontSize: 26, // Increased from 22
-  subtitleFontSize: 14,
-  sectionTitleFontSize: 16,
-  itemFontSize: 12,
-  noteFontSize: 10,
-  lineHeight: 6, // Increased from 5 (was originally 7)
-  noteLineHeight: 5, // Increased from 4 (was originally 5)
-  iconSize: 4, // Size of the icon circles in mm
-  iconOffset: 8, // Increased from 7 - More space for the icon
-  markerHorizontalPadding: 2, // Horizontal padding (smaller than before)
-  markerVerticalPadding: 0, // Vertical padding for marker
-  markerBorderRadius: 3, // Border radius for rounded corners
-  sectionHeaderMargin: 4, // Distance between section header bottom and first item's marker/icon top
-  sectionLastItemMargin: 4, // Distance between last item in a section and the next section header
-  itemSpacing: 3, // Distance between menu items (0 means items touch without overlap)
-  noteItemSpacing: 1, // Distance between an item's text and its note
-  legendHeight: 16, // Height of the legend section
-  legendIconSize: 4.5, // Increased from 3.5 - Larger icons for legend
-  legendFontSize: 10, // New property for legend text size
-  legendCompactFontSize: 8, // New property for compact legend text size
-  pageHeight: 270, // Usable page height before footer area (A4 is 297mm minus footer area)
-  footerHeight: 15, // Actual height of the footer area as used in rendering
-  minFooterMargin: 1, // Minimum distance (in mm) between content and footer
-}; 
+  // Layout in millimeters (jsPDF unit)
+  margin: 18, // Page margins on all sides
+  headerHeight: 32, // Height of main page header
+  compactHeaderHeight: 16, // Height of subsequent page headers
+  titleFontSize: 28, // Main title font size
+  subtitleFontSize: 16, // People names subtitle font size
+  sectionTitleFontSize: 17, // Category section header font size
+  itemFontSize: 13, // Menu item name font size
+  noteFontSize: 11, // Menu item note text font size
+  lineHeight: 7.7, // Vertical space for each menu item line
+  noteLineHeight: 3.9, // Line height for note text
+  iconSize: 6.4, // Size of menu item status icons
+  iconOffset: 10.5, // Horizontal space between icon and text
+  markerHorizontalPadding: 2, // Padding around highlighted item text
+  markerVerticalPadding: 0, // Vertical padding for item markers
+  markerBorderRadius: 3, // Corner radius for item highlight markers
+  sectionHeaderMargin: 4.5, // Space after section headers
+  sectionLastItemMargin: 5.6, // Extra space after last item in section
+  itemSpacing: 3.5, // Space between individual menu items
+  noteItemSpacing: 1.1, // Space between item name and note text
+  legendHeight: 14, // Height of icon legend section
+  legendIconSize: 5.2, // Size of icons in legend
+  legendFontSize: 10, // Font size for legend text
+  legendCompactFontSize: 9, // Font size for compact legend
+  legendBottomMargin: 3, // Space after legend before first section
+  pageHeight: 270, // Usable page height for content
+  footerHeight: 15.9, // Height of page footer
+  minFooterMargin: 5, // Minimum space above footer
+};
