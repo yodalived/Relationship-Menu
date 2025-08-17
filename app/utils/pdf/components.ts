@@ -22,14 +22,14 @@ export function addHeader(pdf: jsPDF, menuData: MenuData, yPos: number, dryRun: 
     
     // Main title
     pdf.setFontSize(PDF_CONFIG.titleFontSize + 3);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     pdf.text('Relationship Menu', PDF_CONFIG.margin, yPos + 12, { baseline: 'middle' });
     
     // People names subtitle
     const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
       pdf.setFontSize(PDF_CONFIG.subtitleFontSize);
-      pdf.setFont('helvetica', 'normal');
+      pdf.setFont('Nunito', 'normal');
       pdf.text(peopleText, PDF_CONFIG.margin, yPos + 22, { baseline: 'middle' });
     }
     
@@ -56,14 +56,14 @@ export function addCompactHeader(pdf: jsPDF, menuData: MenuData, pageNum: number
     
     // Main title on left
     pdf.setFontSize(PDF_CONFIG.subtitleFontSize + 3);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     pdf.text('Relationship Menu', PDF_CONFIG.margin, textY, { baseline: 'middle' });
     
     const peopleText = formatPeopleNames(menuData.people);
     if (peopleText) {
       // People names on right
       pdf.setFontSize(PDF_CONFIG.subtitleFontSize - 4);
-      pdf.setFont('helvetica', 'normal');
+      pdf.setFont('Nunito', 'normal');
       pdf.text(peopleText, 210 - PDF_CONFIG.margin, textY, { align: 'right', baseline: 'middle' });
     }
     
@@ -97,7 +97,7 @@ export function addLegend(pdf: jsPDF, yPos: number, isCompact: boolean = false, 
     pdf.line(0, yPos + legendHeight, 210, yPos + legendHeight);
 
     // Legend typography
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     pdf.setFontSize(fontSize);
 
     // Compute widths for tight icon-label pairs
@@ -190,13 +190,13 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
     // Left section: site attribution and edit info
     pdf.setTextColor(230, 230, 230);
     pdf.setFontSize(11);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     const siteText = "relationshipmenu.org";
     pdf.text(siteText, PDF_CONFIG.margin, firstLineY, { baseline: 'middle' });
 
     // Instructions for editing the menu
     pdf.setFontSize(8.5);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont('Nunito', 'normal');
     pdf.setTextColor(200, 200, 200);
     const editableText = "Edit this menu by importing the PDF into the app or website.";
     pdf.text(editableText, PDF_CONFIG.margin, secondLineY, { baseline: 'middle' });
@@ -220,14 +220,14 @@ export function addFooter(pdf: jsPDF, menuData: MenuData): void {
     
     // Always show page number
     pdf.setFontSize(9.5);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     pdf.setTextColor(230, 230, 230);
     const pageText = pageCount > 1 ? `Page ${i} of ${pageCount}` : `Page ${i}`;
     pdf.text(pageText, rightX, firstLineY, { align: 'right', baseline: 'middle' });
     
     // Last updated info (moved to right side, below page counter)
     pdf.setFontSize(8);
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont('Nunito', 'normal');
     pdf.setTextColor(200, 200, 200);
     pdf.text(`Last updated: ${updateDate}`, rightX, secondLineY, { align: 'right', baseline: 'middle' });
   }
@@ -251,7 +251,7 @@ export function drawSectionHeader(pdf: jsPDF, category: MenuCategory, yPos: numb
     pdf.setFillColor(COLORS.sectionHeader[0], COLORS.sectionHeader[1], COLORS.sectionHeader[2]);
     drawRoundedRect(pdf, sideMargin, yPos + 2, 210 - sideMargin * 2, sectionHeaderHeight, cornerRadius);
     pdf.setTextColor(COLORS.white[0], COLORS.white[1], COLORS.white[2]);
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     pdf.setFontSize(PDF_CONFIG.sectionTitleFontSize);
     const textY = yPos + 2 + sectionHeaderHeight / 2;
     pdf.text(category.name, PDF_CONFIG.margin, textY, { baseline: 'middle' });
@@ -287,7 +287,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     drawIcon(pdf, item.icon || null, iconX, centerY, PDF_CONFIG.iconSize);
 
     // Draw item text
-    pdf.setFont('helvetica', 'bold');
+    pdf.setFont('Nunito', 'bold');
     pdf.setFontSize(PDF_CONFIG.itemFontSize);
     pdf.setTextColor(COLORS.black[0], COLORS.black[1], COLORS.black[2]);
     const nameWidth = pdf.getTextWidth(item.name);
@@ -308,7 +308,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
   // Calculate height for this item
   if (item.note && item.note.trim().length > 0) {
     const noteCenterY = centerY + PDF_CONFIG.lineHeight + PDF_CONFIG.noteItemSpacing;
-    pdf.setFont('helvetica', 'normal');
+    pdf.setFont('Nunito', 'normal');
     pdf.setFontSize(PDF_CONFIG.noteFontSize);
     pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
     
@@ -325,7 +325,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
         if (nonEmptyLines.length > 0) {
           // Continuation indicator
           pdf.setTextColor(180, 180, 180);
-          pdf.setFont('helvetica', 'normal');
+          pdf.setFont('Nunito', 'normal');
           drawTextWithEmojis(pdf, "...  ", textStartX, noteCenterY);
           
           // Calculate prefix width
@@ -333,7 +333,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           
           // First line of continued note
           pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
-          pdf.setFont('helvetica', 'normal');
+          pdf.setFont('Nunito', 'normal');
           drawTextWithEmojis(pdf, nonEmptyLines[0], textStartX + prefixWidth, noteCenterY);
           
           // Remaining lines
@@ -362,7 +362,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           const lastLineIdx = nonEmptyLines.length - 1;
           const lastLineY = noteCenterY + lastLineIdx * PDF_CONFIG.noteLineHeight;
           
-          pdf.setFont('helvetica', 'normal');
+          pdf.setFont('Nunito', 'normal');
           const lastLine = nonEmptyLines[lastLineIdx];
           if (lastLine && lastLine.trim().length > 0) {
             drawTextWithEmojis(pdf, lastLine, textStartX, lastLineY);
@@ -371,7 +371,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           // Continuation indicator at end of line
           const lastLineWidth = lastLine && lastLine.trim().length > 0 ? computeTextWidthWithEmojis(pdf, lastLine) : 0;
           pdf.setTextColor(180, 180, 180);
-          pdf.setFont('helvetica', 'normal');
+          pdf.setFont('Nunito', 'normal');
           drawTextWithEmojis(pdf, "  ...", textStartX + lastLineWidth, lastLineY);
           
           // Reset text color

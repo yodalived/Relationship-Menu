@@ -4,6 +4,7 @@ import { MenuData } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
 import { addHeader, addCompactHeader, addLegend, addFooter, drawSectionHeader, drawMenuItem } from './components';
 import { DocumentContext } from './types';
+import { loadNunitoFonts } from './fontLoader';
 
 /**
  * Generates a PDF for the given relationship menu data
@@ -13,7 +14,13 @@ import { DocumentContext } from './types';
 export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
   // Create PDF instance
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-  pdf.setFont('helvetica');
+  
+  // Load Nunito fonts into jsPDF
+  loadNunitoFonts(pdf);
+  
+  // Set default font to Nunito
+  pdf.setFont('Nunito', 'normal');
+  
   // Subtle page background like iOS
   pdf.setFillColor((COLORS.pageBackground as number[])[0], (COLORS.pageBackground as number[])[1], (COLORS.pageBackground as number[])[2]);
   pdf.rect(0, 0, 210, 297, 'F');
@@ -119,7 +126,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
               
               if (approximateLinesFitting > 0) {
                 // Split the note text
-                pdf.setFont('helvetica', 'normal');
+                pdf.setFont('Nunito', 'normal');
                 pdf.setFontSize(PDF_CONFIG.noteFontSize);
                 const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
                 const textWidth = pageInnerWidth - PDF_CONFIG.iconOffset;
