@@ -17,19 +17,19 @@ export const COLORS: ColorTypes = {
   
   // Icon colors with background, border, and marker colors
   must: {
-    bg: [108, 157, 216], // Blue
+    bg: [94, 153, 224], // Blue
     border: [33, 150, 242],
     marker: [236, 241, 247],
     label: "Must"
   },
   like: {
-    bg: [119, 191, 105], // Green
+    bg: [114, 196, 98], // Green
     border: [77, 176, 79],
     marker: [237, 244, 236],
     label: "Like"
   },
   maybe: {
-    bg: [225, 183, 99], // Yellow
+    bg: [237, 181, 83], // Yellow
     border: [255, 194, 8],
     marker: [247, 243, 234],
     label: "Maybe"
@@ -41,19 +41,19 @@ export const COLORS: ColorTypes = {
     label: "Prefer not"
   },
   'off-limit': {
-    bg: [210, 100, 99], // Red
+    bg: [219, 79, 77], // Red
     border: [232, 74, 61],
     marker: [246, 234, 234],
     label: "Off Limits"
   },
   talk: {
-    bg: [179, 130, 222], // Purple
+    bg: [171, 110, 224], // Purple
     border: [156, 38, 176],
     marker: [248, 245, 255],
     label: "Conversation"
   },
   notSet: {
-    bg: [158, 166, 179], // Gray
+    bg: [157, 176, 191], // Gray
     border: [158, 158, 158],
     marker: [255, 255, 255, 0],
     label: "Not set"
