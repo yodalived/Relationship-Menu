@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import { MenuData, MenuCategory, MenuItem } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
 import { drawIcon, createItemMarker, drawRoundedRect } from './pdfUtils';
+import { drawTextWithEmojis, computeTextWidthWithEmojis, splitTextToSizeWithEmojis } from './emojiText';
 import { formatPeopleNames } from '../formatUtils';
 
 /**
@@ -313,10 +314,10 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     
     const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
     const textWidth = pageInnerWidth - (PDF_CONFIG.iconOffset);
-    const split = pdf.splitTextToSize(item.note, textWidth);
+    const split = splitTextToSizeWithEmojis(pdf, item.note, textWidth);
     
-    // Filter out empty lines for spacing and rendering
-    const nonEmptyLines = split.filter((line: string) => line.trim().length > 0);
+    // Preserve empty lines to retain author-intended spacing
+    const nonEmptyLines = split;
     
     if (!dryRun) {
       // Handle notes that continue from previous page
@@ -325,19 +326,24 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           // Continuation indicator
           pdf.setTextColor(180, 180, 180);
           pdf.setFont('helvetica', 'normal');
-          pdf.text("...  ", textStartX, noteCenterY);
+          drawTextWithEmojis(pdf, "...  ", textStartX, noteCenterY);
           
           // Calculate prefix width
-          const prefixWidth = pdf.getTextWidth("...  ");
+          const prefixWidth = computeTextWidthWithEmojis(pdf, "...  ");
           
           // First line of continued note
           pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
           pdf.setFont('helvetica', 'normal');
-          pdf.text(nonEmptyLines[0], textStartX + prefixWidth, noteCenterY);
+          drawTextWithEmojis(pdf, nonEmptyLines[0], textStartX + prefixWidth, noteCenterY);
           
           // Remaining lines
           for (let idx = 1; idx < nonEmptyLines.length; idx++) {
-            pdf.text(nonEmptyLines[idx], textStartX, noteCenterY + idx * PDF_CONFIG.noteLineHeight);
+            const y = noteCenterY + idx * PDF_CONFIG.noteLineHeight;
+            const line = nonEmptyLines[idx];
+            // Render empty line as spacer by skipping text but keeping y advance
+            if (line && line.trim().length > 0) {
+              drawTextWithEmojis(pdf, line, textStartX, y);
+            }
           }
         }
       } else {
@@ -345,7 +351,11 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
         if (item.continuesOnNextPage && nonEmptyLines.length > 0) {
           // Draw all lines except the last
           for (let idx = 0; idx < nonEmptyLines.length - 1; idx++) {
-            pdf.text(nonEmptyLines[idx], textStartX, noteCenterY + idx * PDF_CONFIG.noteLineHeight);
+            const y = noteCenterY + idx * PDF_CONFIG.noteLineHeight;
+            const line = nonEmptyLines[idx];
+            if (line && line.trim().length > 0) {
+              drawTextWithEmojis(pdf, line, textStartX, y);
+            }
           }
           
           // Last line with continuation indicator
@@ -354,20 +364,25 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           
           pdf.setFont('helvetica', 'normal');
           const lastLine = nonEmptyLines[lastLineIdx];
-          pdf.text(lastLine, textStartX, lastLineY);
+          if (lastLine && lastLine.trim().length > 0) {
+            drawTextWithEmojis(pdf, lastLine, textStartX, lastLineY);
+          }
           
           // Continuation indicator at end of line
-          const lastLineWidth = pdf.getTextWidth(lastLine);
+          const lastLineWidth = lastLine && lastLine.trim().length > 0 ? computeTextWidthWithEmojis(pdf, lastLine) : 0;
           pdf.setTextColor(180, 180, 180);
           pdf.setFont('helvetica', 'normal');
-          pdf.text("  ...", textStartX + lastLineWidth, lastLineY);
+          drawTextWithEmojis(pdf, "  ...", textStartX + lastLineWidth, lastLineY);
           
           // Reset text color
           pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
         } else {
           // Regular note with no continuation
           nonEmptyLines.forEach((line: string, idx: number) => {
-            pdf.text(line, textStartX, noteCenterY + idx * PDF_CONFIG.noteLineHeight);
+            const y = noteCenterY + idx * PDF_CONFIG.noteLineHeight;
+            if (line && line.trim().length > 0) {
+              drawTextWithEmojis(pdf, line, textStartX, y);
+            }
           });
         }
       }

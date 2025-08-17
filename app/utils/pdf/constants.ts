@@ -72,7 +72,7 @@ export const PDF_CONFIG = {
   itemFontSize: 13, // Menu item name font size
   noteFontSize: 11, // Menu item note text font size
   lineHeight: 7.7, // Vertical space for each menu item line
-  noteLineHeight: 3.9, // Line height for note text
+  noteLineHeight: 4.4, // Line height for note text
   iconSize: 6.4, // Size of menu item status icons
   iconOffset: 10.5, // Horizontal space between icon and text
   markerHorizontalPadding: 2, // Padding around highlighted item text
