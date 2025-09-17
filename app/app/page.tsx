@@ -2,7 +2,6 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Container } from '../components/ui/Container';
-import { IconEye } from '../components/icons';
 
 export const metadata: Metadata = {
   title: 'Relationship Menu for iPhone and iPad',
@@ -95,6 +94,7 @@ export default function IOSAppPage() {
               <h3 className="text-lg font-semibold text-[var(--main-text-color)] dark:text-[var(--main-text-color)]">Comprehensive Menu Builder</h3>
               <ul className="mt-3 list-disc pl-5 text-gray-600 dark:text-gray-300 space-y-1">
                 <li>Pre-built romantic/sexual template adaptable to your needs</li>
+                <li>More templates coming soon</li>
                 <li>20+ categories: communication, intimacy, finances, caregiving, autonomy, commitment</li>
                 <li>Intuitive preferences: Must Have, Would Like, Maybe, Prefer Not, Off-Limit</li>
               </ul>
@@ -120,7 +120,7 @@ export default function IOSAppPage() {
 
               <h3 className="mt-6 text-lg font-semibold text-[var(--main-text-color)] dark:text-[var(--main-text-color)]">International</h3>
               <ul className="mt-3 list-disc pl-5 text-gray-600 dark:text-gray-300 space-y-1">
-                <li>Supports multiple languages including English and German.</li>
+                <li>Supports multiple languages including English and German</li>
               </ul>
             </div>
           </div>
