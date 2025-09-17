@@ -30,3 +30,4 @@ export { default as IconPlusCircle } from './IconPlusCircle';
 export { default as IconPlusSolid } from './IconPlusSolid';
 export { default as IconError } from './IconError';
 export { default as IconX } from './IconX'; 
+export { default as IconEnvelope } from './IconEnvelope';
