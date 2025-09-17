@@ -127,8 +127,8 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         }
         return;
       }
-      if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu')) {
-        setError('Please select a .json, .relationshipmenu, or .pdf file');
+      if (file.type !== 'application/json' && !file.name.endsWith('.json') && !file.name.endsWith('.relationshipmenu') && !file.name.endsWith('.rmenu')) {
+        setError('Please select a .json, .rmenu, .relationshipmenu, or .pdf file');
         setIsProcessing(false);
         return;
       }
@@ -274,7 +274,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
             <input 
               id="file-input"
               type="file" 
-              accept=".json,.relationshipmenu,.pdf,application/json,application/pdf" 
+              accept=".json,.rmenu,.relationshipmenu,.pdf,application/json,application/pdf" 
               className="hidden" 
               onChange={handleFileChange} 
             />
@@ -340,7 +340,7 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
         <input 
           id="file-input"
           type="file" 
-          accept=".json,.relationshipmenu,.pdf,application/json,application/pdf" 
+          accept=".json,.rmenu,.relationshipmenu,.pdf,application/json,application/pdf" 
           className="hidden" 
           onChange={handleFileChange} 
         />

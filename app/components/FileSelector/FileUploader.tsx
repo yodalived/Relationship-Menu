@@ -60,7 +60,7 @@ export function FileUploader({
       
       {!isProcessing && (
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-          (supports pdf files created by this website, .json and .relationshipmenu files)
+          (supports pdf files created by this website, .json, .rmenu, and .relationshipmenu files)
         </p>
       )}
     </div>
