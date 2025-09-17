@@ -10,6 +10,7 @@ export default function Footer() {
   
   // Define paths where we should hide the footer
   const menuPaths = useMemo(() => ['/editor/'], []);
+  const hideSourceOnPaths = useMemo(() => ['/app'], []);
   
   useEffect(() => {
     // Don't show footer on specific menu paths
@@ -28,7 +29,10 @@ export default function Footer() {
         <div className="flex gap-4 justify-center">
           <p><Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link></p>
           <p><Link href="/legal-disclosure" className="hover:underline">Legal Disclosure</Link></p>
-          <p><Link href="https://github.com/paviro/Relationship-Menu" className="hover:underline">Source Code</Link></p>
+          <p><Link href="/support" className="hover:underline">Support</Link></p>
+          {!hideSourceOnPaths.some(path => pathname?.startsWith(path)) && (
+            <p><Link href="https://github.com/paviro/Relationship-Menu" className="hover:underline">Source Code</Link></p>
+          )}
         </div>
       </div>
     </footer>

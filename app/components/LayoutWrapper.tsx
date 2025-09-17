@@ -7,6 +7,7 @@ import React from "react";
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isOpenRoute = pathname.startsWith("/open");
+  const isAppRoute = pathname.startsWith("/app");
 
   if (isOpenRoute) {
     // For /open, render only the page content, no header/footer/wrapper
@@ -23,7 +24,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       >
         Skip to content
       </a>
-      <Header />
+      {!isAppRoute && <Header />}
       <main id="main-content" className="flex-grow" tabIndex={-1}>
         <div className="wrapper">{children}</div>
       </main>

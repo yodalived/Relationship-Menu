@@ -12,7 +12,7 @@ export function AboutSection() {
         </div>
         <Link 
           href="/editor/?id=example" 
-          className="inline-flex items-center px-3 py-1.5 bg-[rgba(148,188,194,0.2)] hover:bg-[rgba(148,188,194,0.3)] text-[rgba(79,139,149,1)] rounded-md transition-colors text-sm"
+          className="inline-flex items-center px-3 py-1.5 bg-[rgba(148,188,194,0.3)] hover:bg-[rgba(148,188,194,0.4)] text-[var(--main-text-color)] dark:text-white font-semibold rounded-md transition-colors text-sm shadow"
         >
           <IconEye className="h-4 w-4 mr-1.5" />
           Example
