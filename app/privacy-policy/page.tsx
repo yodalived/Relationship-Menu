@@ -348,7 +348,7 @@ export default function PrivacyPolicy() {
                   <h4 className="text-lg font-medium text-[var(--main-text-color)]">On‑device encryption</h4>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
-                  Your menu files are protected on this device using iOS Data Protection (NSFileProtectionComplete). This means they are encrypted at rest and are not accessible while the device is locked. Temporary files created during save, import, or export are written with the same protection. Encryption keys for on‑device data are hardware‑bound and managed by iOS and the Secure Enclave; the app never handles your passcode or device‑level encryption keys.
+                  The menu files on your device are protected using iOS Data Protection (NSFileProtectionComplete). This means they are encrypted at rest and are not accessible while the device is locked. Temporary files created during save, import, or export are written with the same protection. Encryption keys for on‑device data are hardware‑bound and managed by iOS and the Secure Enclave; the app never handles your passcode or device‑level encryption keys.
                 </p>
               </div>
 
