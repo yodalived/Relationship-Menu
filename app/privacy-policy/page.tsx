@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
         <div className="w-24 h-1 bg-[var(--main-bg-color)] mx-auto rounded-full"></div>
       </div>
       
-      {/* Privacy Features Highlight Section */}
+      {/* Core privacy principles (Web + iOS) */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8 mb-10 transition-all hover:shadow-xl border border-gray-100 dark:border-gray-700">
         <div className="flex items-center mb-6">
           <div className="w-10 h-10 rounded-full bg-[var(--main-bg-color)] bg-opacity-20 dark:bg-opacity-40 flex items-center justify-center mr-4">
@@ -17,12 +17,12 @@ export default function PrivacyPolicy() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h2 className="text-xl sm:text-2xl font-semibold text-[var(--main-text-color)]">Privacy by Design</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold text-[var(--main-text-color)]">Core privacy principles (Web + iOS)</h2>
         </div>
         
         <div className="pl-3 sm:pl-14">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 sm:mb-8 text-base sm:text-lg">
-            This application was designed with privacy at its core. Unlike most web services, your personal relationship data stays completely private.
+            The Relationship Menu website and iOS app were designed with privacy at its core. Unlike with most web services and apps these days, your personal data stays completely private.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-6">
@@ -36,7 +36,7 @@ export default function PrivacyPolicy() {
                 <h3 className="text-lg sm:text-xl font-medium text-[var(--main-text-color)]">100% Local Processing</h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
-                All menu data is processed and stored entirely within your browser using local storage. Nothing about your relationship preferences is ever transmitted to any servers without your explicit consent and initiation.
+                All menu data is processed and stored entirely within your browser using local storage or on your personal device when using the app. Nothing about your relationship preferences is ever transmitted to any servers without your explicit consent and initiation.
               </p>
             </div>
             
@@ -47,10 +47,10 @@ export default function PrivacyPolicy() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-lg sm:text-xl font-medium text-[var(--main-text-color)]">No Tracking Cookies</h3>
+                <h3 className="text-lg sm:text-xl font-medium text-[var(--main-text-color)]">No data collection without consent</h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
-                No cookies are used to track your behavior or preferences. Your browsing remains private to you.
+                Neither the website nor the iOS app collects or transmits any personal data or any other tracking data unless you explicitly choose to share a menu. Your menus remain entirely under your control at all times.
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function PrivacyPolicy() {
               <div>
                 <h3 className="text-xl font-medium mb-2 text-blue-700 dark:text-blue-400">Sharing Your Menu with Others</h3>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  There are three ways to share your relationship menu with others, both designed with your privacy in mind:
+                  There are three ways to share your relationship menu with others (Web + iOS), all designed with your privacy in mind:
                 </p>
                 
                 <div className="mt-4 space-y-4">
@@ -76,8 +76,11 @@ export default function PrivacyPolicy() {
                     </svg>
                       Share as Link
                     </h4>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6">
+                      Share a copy of your menu via an end-to-end encrypted link. Your menu is encrypted on your device and only the encrypted data is uploaded to the server.
+                    </p>
                     <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
-                      Share a copy of your menu via an end-to-end encrypted link. Your menu is encrypted on your device and only the encrypted data is uploaded to the server without the encryption key.
+                      The key to decrypt the menu is embedded in the link and never sent or visible to the server.
                     </p>
                   </div>
 
@@ -88,9 +91,11 @@ export default function PrivacyPolicy() {
                       </svg>
                       Exporting as PDF
                     </h4>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6">
                       Export your menu as a beautifully formatted PDF document that's ready for printing or sharing.
-                      The exported PDF file can be opened on any device with a PDF viewer and be edited on this website.
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
+                      The exported PDF file can be opened on any device with a PDF viewer but can only be edited on this website or in the app.
                     </p>
                   </div>
 
@@ -99,10 +104,12 @@ export default function PrivacyPolicy() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                       </svg>
-                      Downloading as JSON File
+                      Downloading as Menu File (.json, .rmenu, .relationshipmenu)
                     </h4>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6">
+                      Download your menu as a JSON encoded file. If you don't know what that means this likely isn't for you.
+                    </p>
                     <p className="text-gray-700 dark:text-gray-300 text-sm ml-3 sm:ml-6 mb-2">
-                      Download your menu as a JSON file. If you don't know what that means this likely isn't for you.
                       Can be used to put the menu into a git repository or other version control system.
                     </p>
                   </div>
@@ -121,6 +128,7 @@ export default function PrivacyPolicy() {
                       <li>Protected with end-to-end encryption</li>
                       <li>Valid for 5 days / 5 minutes after it is used</li>
                       <li>Easy to share via messaging apps</li>
+                      <li>Editable on this website or in the app</li>
                     </ul>
                   </div>
                   <div className="bg-green-50/70 dark:bg-green-900/30 p-2 rounded-lg border border-green-100 dark:border-green-800">
@@ -130,7 +138,7 @@ export default function PrivacyPolicy() {
                       <li>Ready for printing</li>
                       <li>Widely compatible format</li>
                       <li>Contains json menu data</li>
-                      <li>Editable on this website</li>
+                      <li>Editable on this website or in the app</li>
                     </ul>
                   </div>
                   <div className="bg-yellow-50/70 dark:bg-yellow-900/30 p-2 rounded-lg border border-yellow-100 dark:border-yellow-800">
@@ -139,6 +147,7 @@ export default function PrivacyPolicy() {
                       <li>Permanent offline storage</li>
                       <li>Easy backup and archiving</li>
                       <li>Version control possibilities</li>
+                      <li>Editable on this website or in the app</li>
                     </ul>
                   </div>
                 </div>
@@ -202,25 +211,31 @@ export default function PrivacyPolicy() {
             </div>
           </div>
           
-          {/* Data Collection Section */}
+          {/* Data collection (Web + iOS) */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">2. Data collection on this website</h3>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">2. Data collection (Web + iOS)</h3>
             <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl mb-6">
               <h4 className="text-lg font-medium mb-3 text-[var(--main-text-color)]">2.1. Sharing Your Menu via Link</h4>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                When you share a menu via a link, an encrypted copy of your menu is uploaded to the app's server.
+              To let you share a menu via a link, the app needs to upload your menu to its server.
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                Encryption happens locally on your device using AES-256-GCM. A new encryption key is generated each time you create a sharing link.
+                Each time you create a sharing link, your device generates a unique, random encryption key, encrypts the menu using AES-256-GCM, and uploads only the encrypted data to the server. The server then responds with a token (the ID part of the URL), which can later be used to retrieve the encrypted menu.
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                Only the encrypted data is uploaded and the decryption key is never sent to the server. Instead, it's embedded in the link as a URL fragment after the # symbol, ensuring that even I cannot decrypt your menu.
+                The generated encryption key is added to the link as a URL fragment (the part after #). This part of the URL is not transmitted to the server—ensuring that even if it wanted to, the server couldn’t decrypt your menu.
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                Shared links remain valid for up to 5 days and expire automatically 5 minutes after the menu data is requested and the menu is imported in the app or on the website. After expiration, the data is deleted from the server. To enable this, the server stores a timestamp of when the menu was uploaded.
+                Sharing links remain valid for up to 5 days and expire automatically 5 minutes after the menu data is accessed and imported into the app or website. After expiration, the data is deleted from the server. To enable this, the server stores a timestamp of when the menu was uploaded.
               </p>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                Menus are only uploaded when you explicitly choose to share them. No menus are transmitted to the server without your direct action.
+                No IP addresses or any other information that could link the encrypted data back to you are stored with the menu.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                Menus are only uploaded when you explicitly choose to share them. No data is transmitted to the server without your direct action.
+              </p>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
+                Please keep your link private and avoid sharing it through untrusted channels, as anyone with the full link can access your menu.
               </p>
               <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-600 p-4 rounded-r-lg">
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
@@ -235,7 +250,7 @@ export default function PrivacyPolicy() {
             <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl">
               <h4 className="text-lg font-medium mb-3 text-[var(--main-text-color)]">2.2. Server log files</h4>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
-                When you access the website, certain technical data is automatically collected and stored in server log files. This helps ensure the security, stability, and proper functioning of the service.
+                When you access the website or use the link sharing feature of the app, certain technical data is automatically collected and stored in server log files. This helps ensure the security, stability, and proper functioning of the service.
               </p>
               
               <div className="bg-white dark:bg-gray-600 p-4 rounded-lg border border-gray-200 dark:border-gray-500 mb-4">
@@ -271,9 +286,110 @@ export default function PrivacyPolicy() {
             </div>
           </div>
           
+          {/* Website-specific details (Website only) */}
+          <div>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">3. Website-specific details (Website only)</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl mb-6">
+              <div className="flex items-center mb-4">
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a5 5 0 10-10 0v2a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2v-7a2 2 0 00-2-2zM7 9V7a3 3 0 016 0v2" />
+                  </svg>
+                </div>
+                <h4 className="text-lg font-medium text-[var(--main-text-color)]">Local storage only</h4>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11 mb-4">
+                Your relationship menu is saved in your browser's local storage so you can safely reload the page or come back later without losing data. Clearing your browser data may also delete your menus.
+              </p>
+              <div className="flex items-center mb-4">
+                <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h4 className="text-lg font-medium text-[var(--main-text-color)]">No tracking cookies</h4>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                No cookies are used to track your behavior or preferences. Your browsing remains private to you.
+              </p>
+            </div>
+          </div>
+
+          {/* iOS app–specific details (iOS app only) */}
+          <div>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">4. iOS app–specific privacy details (iOS app only)</h3>
+            <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl space-y-6">
+              {/* Device Storage & Backups */}
+              <div>
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c1.657 0 3-.895 3-2s-1.343-2-3-2-3 .895-3 2 1.343 2 3 2zM5.5 20a2.5 2.5 0 01-2.5-2.5V12a2 2 0 012-2h14a2 2 0 012 2v5.5A2.5 2.5 0 0119.5 20h-14z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-medium text-[var(--main-text-color)]">Device storage & backups</h4>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                  All your relationship menus are stored locally on your device. If iCloud backups are enabled, your menus may be included in those backups depending on your device settings. I do not have access to these backups. For added security, you can enable end‑to‑end encryption for iCloud backups via your device settings (Settings → iCloud → Advanced Data Protection).
+                </p>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                 Advanced Data Protection may not be available in all countries. See <a href="https://support.apple.com/en-us/108756" className="text-[var(--main-text-color)] hover:underline" target="_blank" rel="noopener noreferrer">Apple’s documentation</a>.
+                </p>
+              </div>
+
+              {/* On‑Device Encryption */}
+              <div>
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c1.657 0 3-.895 3-2V7a3 3 0 10-6 0v2c0 1.105 1.343 2 3 2zM5 11h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-medium text-[var(--main-text-color)]">On‑device encryption</h4>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                  Your menu files are protected on this device using iOS Data Protection (NSFileProtectionComplete). This means they are encrypted at rest and are not accessible while the device is locked. Temporary files created during save, import, or export are written with the same protection. Encryption keys for on‑device data are hardware‑bound and managed by iOS and the Secure Enclave; the app never handles your passcode or device‑level encryption keys.
+                </p>
+              </div>
+
+              {/* App Lock */}
+              <div>
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c1.657 0 3-.895 3-2V7a3 3 0 10-6 0v2c0 1.105 1.343 2 3 2zM5 11h14v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-medium text-[var(--main-text-color)]">App Lock (Face ID / Touch ID)</h4>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                  Biometric Lock uses Face ID or Touch ID to restrict access to the app. You can choose when the app re‑locks (immediately, 30s, 1m, or 5m). The app covers its content when moving to the background and will require authentication again based on your chosen timeout. Authentication is performed by iOS and dedicated hardware (Secure Enclave). The app never receives your biometric data—only whether authentication succeeded or failed. Biometric Lock controls access to the app interface; on‑device files are protected separately by iOS Data Protection.
+                </p>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                  Learn more about Face ID / Touch ID security in <a href="https://support.apple.com/en-gb/guide/security/sec067eb0c9e/web" className="text-[var(--main-text-color)] hover:underline" target="_blank" rel="noopener noreferrer">Apple’s security guide</a>.
+                </p>
+              </div>
+
+              {/* Apple Device Analytics */}
+              <div>
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 11V7a4 4 0 10-8 0v4m0 0v4a4 4 0 004 4h4a4 4 0 004-4v-4m-8 0h8" />
+                    </svg>
+                  </div>
+                  <h4 className="text-lg font-medium text-[var(--main-text-color)]">Apple device analytics</h4>
+                </div>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
+                  Like all iOS apps, Apple may collect standard crash logs and analytics to help improve app quality. This data is anonymized by Apple and cannot be used to identify you personally. You can disable this in Settings → Privacy → Analytics & Improvements. See <a href="https://support.apple.com/en-ph/108971" className="text-[var(--main-text-color)] hover:underline" target="_blank" rel="noopener noreferrer">Apple’s analytics info</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+          
           {/* Third Party Section */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">3. Data Processing by Third-Party Providers</h3>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">5. Data Processing by Third-Party Providers</h3>
             <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-500 flex items-center justify-center mr-3">
