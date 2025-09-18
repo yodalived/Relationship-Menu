@@ -19,8 +19,7 @@ Think of relationships as customizable recipes — you and others select ingredi
 - Support for multiple menus stored within the app
 - Edit and fill modes for creating and filling out menus
 - Export menus as JSON or PDF
-- Share menus via links (not recommended currently)
-- Uses local storage to save the menus on device only
+- Share menus via end-to-end encrypted links
 - Mobile-friendly responsive design
 - Dark/light mode support
 
@@ -31,13 +30,13 @@ Think of relationships as customizable recipes — you and others select ingredi
 - PDF files can be imported back into the app, preserving all data
 
 ### Data Storage
-- All data is stored locally in the browser's localStorage
-- No server-side processing or storage of relationship data
+- By default, menus are stored locally in your browser's localStorage.
+- For link sharing an end-to-end encrypted copy is uploaded temporarily when requested by the user.
 
 ### Link sharing
-- When sharing via URL, data is compressed using LZ-String
-- Shared links use URL fragments with compressed data (`#data_v1=...`)
-- Not recommended currently as the links break easily in messangers
+- End-to-end encrypted: your device generates a random key and encrypts the menu with AES-256-GCM.
+- Only the encrypted data is uploaded; you receive a link like `https://relationshipmenu.org/open?id=TOKEN#key=URLSAFEKEY`. The `#key` fragment is never sent to the server.
+- Links expire automatically and the data can also be deleted early by going to the links page.
 
 ### Templates
 - Predefined templates available to get started quickly
