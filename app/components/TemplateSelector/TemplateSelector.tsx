@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { TemplateItem as TemplateItemType, TemplateSelectorProps } from './types';
+import { TemplateItem as TemplateItemType, TemplateSelectorProps, TemplateLocalizedText, TemplateCategoryJSON, TemplateItemJSON, TemplateJSON } from './types';
 import { MenuData } from '../../types';
-import PeopleForm from './PeopleForm';
+import TemplateSetupForm from './TemplateSetupForm';
 import TemplateItem from './TemplateItem';
-import { migrateMenuData } from '../../utils/migrations';
+import { CURRENT_SCHEMA_VERSION } from '../../utils/migrations';
 import { v4 as uuidv4 } from 'uuid';
 import { IconWarning } from '../icons';
 import { saveMenu, updateMenuList } from '../../utils/menuStorage';
@@ -23,7 +23,7 @@ function TemplateSelectorContent({
   templates: TemplateItemType[];
   selectedTemplate: TemplateItemType | null;
   handleTemplateClick: (template: TemplateItemType) => void;
-  handlePeopleSubmit: (templatePath: string, people: string[]) => Promise<void>;
+  handlePeopleSubmit: (templatePath: string, people: string[], language?: string) => Promise<void>;
   setSelectedTemplate: (template: TemplateItemType | null) => void;
 }) {
   if (isLoading) {
@@ -51,7 +51,7 @@ function TemplateSelectorContent({
     <div>
       {selectedTemplate ? (
         <div>
-          <PeopleForm 
+          <TemplateSetupForm 
             selectedTemplate={selectedTemplate} 
             onSubmit={handlePeopleSubmit}
             onCancel={() => setSelectedTemplate(null)}
@@ -91,50 +91,84 @@ export default function TemplateSelector({
     const fetchTemplates = async () => {
       try {
         setIsLoading(true);
-        // Fetch the templates metadata
+        // Fetch the templates list (now an array of paths)
         const response = await fetch('/templates/templates.json');
         if (!response.ok) {
           throw new Error(`Failed to load templates: ${response.statusText}`);
         }
         
         const data = await response.json();
-        if (!data.templates || !Array.isArray(data.templates)) {
+        if (!Array.isArray(data)) {
           throw new Error('Invalid templates format');
         }
-        
-        // For each template, fetch the actual template data to calculate stats
-        const templatesWithStats = await Promise.all(
-          data.templates.map(async (template: TemplateItemType) => {
+
+        // For each path, fetch the template file and map to TemplateItem
+        const templateItems = await Promise.all(
+          data.map(async (templatePath: string) => {
             try {
-              const templateResponse = await fetch(template.path);
+              const templateResponse = await fetch(templatePath);
               if (!templateResponse.ok) {
-                return template;
+                throw new Error(`Failed to load template at ${templatePath}`);
               }
-              
-              const templateData = await templateResponse.json() as MenuData;
-              
-              if (templateData.menu && Array.isArray(templateData.menu)) {
-                // Calculate stats
-                const sections = templateData.menu.length;
-                const items = templateData.menu.reduce((total, section) => {
-                  return total + (section.items ? section.items.length : 0);
-                }, 0);
-                
-                return {
-                  ...template,
-                  stats: { sections, items }
-                };
-              }
-              
-              return template;
+              const templateJson = await templateResponse.json() as TemplateJSON;
+
+              const categories = Array.isArray(templateJson.categories) ? templateJson.categories : [];
+              const sections = categories.length;
+              const items = categories.reduce((total: number, category: TemplateCategoryJSON) => {
+                const categoryItems = Array.isArray(category.items) ? category.items.length : 0;
+                return total + categoryItems;
+              }, 0);
+
+              const name = (templateJson?.title ?? {}) as TemplateLocalizedText;
+              const description = (templateJson?.description ?? {}) as TemplateLocalizedText;
+
+              const icon = templateJson?.icon_svg
+                ? { type: 'svg', path: templateJson.icon_svg }
+                : undefined;
+
+              const languages = Array.isArray(templateJson?.languages)
+                ? templateJson.languages as string[]
+                : undefined;
+
+              const sorting_order = typeof templateJson?.sorting_order === 'number'
+                ? templateJson.sorting_order as number
+                : undefined;
+
+              const id = templateJson?.uuid || templatePath;
+
+              const item: TemplateItemType = {
+                id,
+                name,
+                description,
+                path: templatePath,
+                icon,
+                stats: { sections, items },
+                languages,
+                sorting_order,
+              };
+
+              return item;
             } catch (error) {
-              console.error(`Error loading template ${template.id}:`, error);
-              return template;
+              console.error('Error loading template path:', templatePath, error);
+              // Skip templates that fail to load
+              return null;
             }
           })
         );
-        
-        setTemplates(templatesWithStats);
+
+        // Filter out failed templates
+        const validTemplates = (templateItems.filter(Boolean) as TemplateItemType[]);
+
+        // Sort by sorting_order if available, then by localized name (en fallback)
+        const getDisplayName = (t: TemplateItemType): string => t.name.en || Object.values(t.name)[0] || '';
+        validTemplates.sort((a, b) => {
+          const ao = a.sorting_order ?? 9999;
+          const bo = b.sorting_order ?? 9999;
+          if (ao !== bo) return ao - bo;
+          return getDisplayName(a).localeCompare(getDisplayName(b));
+        });
+
+        setTemplates(validTemplates);
       } catch (error) {
         console.error('Error loading templates:', error);
         setError('Failed to load templates. Please try again later.');
@@ -160,32 +194,38 @@ export default function TemplateSelector({
     setSelectedTemplate(template);
   };
 
-  const handlePeopleSubmit = async (templatePath: string, people: string[]) => {
+  const handlePeopleSubmit = async (templatePath: string, people: string[], language: string = 'en') => {
     try {
-      // Fetch the template data
+      // Fetch the new-style template JSON
       const response = await fetch(templatePath);
-      
       if (!response.ok) {
         throw new Error(`Error loading template: ${response.statusText}`);
       }
-      
-      // Parse the template data
-      const templateData = await response.json() as MenuData;
-      
-      // Replace default people with custom names
-      templateData.people = people;
-      
-      // Update last_update timestamp
-      templateData.last_update = new Date().toISOString();
-      
-      // Migrate the template data to ensure it's on the latest schema
-      const migratedData = migrateMenuData(templateData);
-      
-      // For templates, always generate a new UUID on load
-      migratedData.uuid = uuidv4();
-      
+      const templateJson = await response.json() as TemplateJSON;
+
+      // Convert template JSON to MenuData using the selected language
+      const categories = Array.isArray(templateJson.categories) ? templateJson.categories : [];
+      const menu = categories.map((category: TemplateCategoryJSON) => {
+        const categoryName = category?.title?.[language] || category?.title?.en || 'Untitled';
+        const items = Array.isArray(category.items) ? category.items.map((item: TemplateItemJSON) => ({
+          name: item?.title?.[language] || item?.title?.en || 'Item',
+          icon: item?.icon_name ?? null,
+          note: null,
+        })) : [];
+        return { name: categoryName, items };
+      });
+
+      const menuData: MenuData = {
+        schema_version: CURRENT_SCHEMA_VERSION,
+        last_update: new Date().toISOString(),
+        people,
+        menu,
+        uuid: uuidv4().toUpperCase(),
+        language,
+      };
+
       // Count total items to determine initial mode
-      const totalItems = migratedData.menu.reduce((total, section) => {
+      const totalItems = menuData.menu.reduce((total, section) => {
         return total + (section.items ? section.items.length : 0);
       }, 0);
       
@@ -193,8 +233,8 @@ export default function TemplateSelector({
       const initialMode = totalItems > 0 ? 'fill' : 'edit';
       
       // Save the menu to localStorage
-      saveMenu(migratedData);
-      updateMenuList(migratedData);
+      saveMenu(menuData);
+      updateMenuList(menuData);
       
       // Close the modal if it's open
       if (onClose) {
@@ -202,7 +242,7 @@ export default function TemplateSelector({
       }
       
       // Navigate to the menu page with the uuid and the initial mode
-      router.push(`/editor?id=${migratedData.uuid}&mode=${initialMode}`);
+      router.push(`/editor?id=${menuData.uuid}&mode=${initialMode}`);
       
     } catch (error) {
       console.error('Error processing template:', error);

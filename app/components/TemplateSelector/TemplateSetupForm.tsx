@@ -1,13 +1,21 @@
-import { useState } from 'react';
-import { PeopleFormProps } from './types';
+import { useMemo, useState } from 'react';
+import { TemplateSetupFormProps } from './types';
 import TemplateIcon from './TemplateIcon';
 import MenuStats from '../ui/MenuStats';
-import { IconArrowLeft, IconWarning, IconPlusSolid } from '../icons';
+import { IconArrowLeft, IconWarning, IconPlusSolid, IconChevron } from '../icons';
 import { PersonNameInput } from '../ui/PersonNameInput';
+import { getLanguageName } from '../../localization/languages';
 
-const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) => {
+const TemplateSetupForm = ({ selectedTemplate, onSubmit, onCancel }: TemplateSetupFormProps) => {
   const [people, setPeople] = useState<string[]>(['']);
+  const [language, setLanguage] = useState<string>('en');
   const [error] = useState<string | null>(null);
+
+  const showLanguagePicker = useMemo(() => {
+    const multipleLanguages = Array.isArray(selectedTemplate.languages) && selectedTemplate.languages.length > 1;
+    const hasMenuContent = (selectedTemplate.stats?.sections ?? 0) + (selectedTemplate.stats?.items ?? 0) > 0;
+    return multipleLanguages && hasMenuContent;
+  }, [selectedTemplate.languages, selectedTemplate.stats]);
 
   const handleAddPerson = () => {
     setPeople([...people, '']);
@@ -28,17 +36,15 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Process people names, using "Anonymous" for empty names
     let processedPeople = people.map(person => person.trim() === '' ? 'Anonymous' : person.trim());
-    
-    // If no names were provided at all, use one "Anonymous" entry
     if (processedPeople.length === 0) {
       processedPeople = ['Anonymous'];
     }
-    
-    onSubmit(selectedTemplate.path, processedPeople);
+    onSubmit(selectedTemplate.path, processedPeople, language);
   };
+
+  const localizedTitle = selectedTemplate.name?.[language] || selectedTemplate.name?.en || Object.values(selectedTemplate.name || {})[0] || '';
+  const localizedDescription = selectedTemplate.description?.[language] || selectedTemplate.description?.en || Object.values(selectedTemplate.description || {})[0] || '';
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow p-6">
@@ -50,7 +56,7 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
           <div className="flex-1">
             <div className="flex justify-between items-start">
               <h3 className="text-xl font-semibold text-[var(--main-text-color)] mb-1">
-                {selectedTemplate.name}
+                {localizedTitle}
               </h3>
               <button 
                 onClick={onCancel}
@@ -74,9 +80,36 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
       </div>
       
       <p className="text-gray-600 dark:text-gray-300 mb-3 sm:mb-6 leading-relaxed">
-        {selectedTemplate.description}
+        {localizedDescription}
       </p>
       
+      {showLanguagePicker && (
+        <div className="mb-6">
+          <label className="block text-lg font-medium text-[var(--main-text-color)] mb-1">
+            Preferred language
+          </label>
+          <div className="relative flex items-center group bg-[rgba(158,198,204,0.05)] dark:bg-[rgba(158,198,204,0.03)] rounded-lg p-1 pl-2 border border-[rgba(158,198,204,0.1)] hover:border-[rgba(158,198,204,0.3)] transition-colors">
+            <div className="flex-grow flex items-center">
+              <select
+                value={language}
+                onChange={(e) => { setLanguage(e.target.value); e.currentTarget.blur(); }}
+                className="w-full appearance-none p-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 focus:shadow-none transition-colors text-base"
+              >
+                {selectedTemplate.languages?.map((lang) => (
+                  <option key={lang} value={lang}>
+                    {getLanguageName(lang)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="pointer-events-none absolute right-3 text-[var(--main-text-color)]">
+              <IconChevron />
+            </div>
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">This choice will be used to populate the menu and cannot be changed later.</p>
+        </div>
+      )}
+
       {selectedTemplate.stats && (
         <div className="sm:hidden mb-6">
           <MenuStats 
@@ -139,4 +172,6 @@ const PeopleForm = ({ selectedTemplate, onSubmit, onCancel }: PeopleFormProps) =
   );
 };
 
-export default PeopleForm; 
+export default TemplateSetupForm;
+
+

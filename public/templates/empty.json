@@ -1,6 +1,22 @@
 {
-    "last_update": "2025-04-28T10:15:56.691002",
-    "people": [],
-    "menu": [],
-    "schema_version": 1.0
-}
+    "uuid": "A2F6C627-1C13-4DB9-B240-40504AEB683A",
+    "sorting_order": 100,
+    "languages": [
+      "en",
+      "de"
+    ],
+    "title": {
+      "en": "Empty",
+      "de": "Leer"
+    },
+    "description": {
+      "en": "Start with a completely empty menu you can customise to your liking.",
+      "de": "Beginne mit einem völlig leeren Menü, das du nach Belieben anpassen kannst."
+    },
+    "icon_svg": "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8h-6V2zm0 0v6h6z",
+    "icon_sf_symbol": "doc.fill",
+    "colors": ["#FFA500", "#FFA500B3"],
+    "categories": [],
+    "schema_version": "1.0"
+  }
+  

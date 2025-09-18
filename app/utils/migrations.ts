@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MenuData } from '../types';
 
 // Current schema version - update this when adding new migrations
-export const CURRENT_SCHEMA_VERSION = "1.1";
+export const CURRENT_SCHEMA_VERSION = "1.2";
 
 // Migration functions map each version to a function that upgrades to the next version
 const migrations: {
@@ -24,6 +24,17 @@ const migrations: {
       ...data,
       uuid: uuidv4(),
       schema_version: "1.1"
+    };
+  },
+  // Migrate from 1.1 to 1.2 (uppercase UUID, add language default 'en')
+  '1.1': (data: MenuData): MenuData => {
+    console.log('Migrating from 1.1 to 1.2');
+    const uppercaseUuid = data.uuid ? String(data.uuid).toUpperCase() : uuidv4().toUpperCase();
+    return {
+      ...data,
+      uuid: uppercaseUuid,
+      schema_version: "1.2",
+      language: data.language ?? 'en',
     };
   },
   // Add future migrations here, e.g.:
@@ -91,5 +102,20 @@ export function migrateMenuData(data: MenuData): MenuData {
   }
 
   console.log(`Migration complete. Final version: ${migratedData.schema_version}`);
+  // Final normalization to enforce current schema invariants even if input claims to be current
+  if (CURRENT_SCHEMA_VERSION === '1.2') {
+    // Ensure uuid exists and is uppercase
+    if (!migratedData.uuid) {
+      migratedData.uuid = uuidv4().toUpperCase();
+    } else {
+      migratedData.uuid = String(migratedData.uuid).toUpperCase();
+    }
+    // Ensure language exists
+    if (!migratedData.language) {
+      migratedData.language = 'en';
+    }
+    migratedData.schema_version = '1.2';
+  }
+
   return migratedData;
 }

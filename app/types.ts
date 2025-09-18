@@ -17,7 +17,8 @@ export type MenuData = {
   last_update: string;
   people: string[];
   menu: MenuCategory[];
-  uuid?: string; // Optional UUID field (version 1.1+)
+  uuid: string; // Required UUID field (version 1.1+)
+  language: string; // Required language for v1.2+
 };
 
 // Define available menu modes

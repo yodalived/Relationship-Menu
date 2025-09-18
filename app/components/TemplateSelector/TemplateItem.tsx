@@ -27,16 +27,16 @@ const TemplateItem = ({ template, onClick }: TemplateItemProps) => {
               <TemplateIcon icon={template.icon} />
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors break-words">
-              {template.name}
+              {template.name.en || Object.values(template.name)[0]}
             </h3>
           </div>
           
           <h3 className="hidden sm:block text-xl font-semibold text-[var(--main-text-color)] group-hover:text-[var(--main-text-color-hover)] transition-colors mb-1 break-words">
-            {template.name}
+            {template.name.en || Object.values(template.name)[0]}
           </h3>
           
           <p className="text-gray-600 dark:text-gray-300 mt-1 sm:mt-2 mb-3 sm:mb-4 leading-relaxed break-words">
-            {template.description}
+            {template.description.en || Object.values(template.description)[0]}
           </p>
           
           {template.stats ? (

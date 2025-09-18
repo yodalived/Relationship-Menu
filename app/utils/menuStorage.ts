@@ -136,8 +136,10 @@ export function saveMenu(menu: MenuData): boolean {
   if (typeof window === 'undefined' || !menu.uuid) return false;
   
   try {
-    const menuKey = `${MENU_ITEM_PREFIX}${menu.uuid}`;
-    localStorage.setItem(menuKey, JSON.stringify(menu));
+    // Always normalize to current schema before saving
+    const normalized = migrateMenuData(menu);
+    const menuKey = `${MENU_ITEM_PREFIX}${normalized.uuid}`;
+    localStorage.setItem(menuKey, JSON.stringify(normalized));
     
     // Notify components that menu data has changed
     window.dispatchEvent(new Event('menuDataChanged'));
