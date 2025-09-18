@@ -431,6 +431,14 @@ export default function PrivacyPolicy() {
         </div>
       </div>
       
+
+      {/* Apple trademark credit (very small) */}
+      <div className="mt-2 text-center">
+        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">
+          Apple, the Apple logo, iPhone, iPad, iOS, Mac, Apple Watch, Apple TV, App Store, Mac App Store, iCloud, Face ID, Touch ID, and Secure Enclave are trademarks of Apple Inc., registered in the U.S. and other countries and regions.
+        </p>
+      </div>
+
       <div className="text-center mt-8 sm:mt-12 mb-8">
         <Link 
           href="/" 
