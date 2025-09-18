@@ -242,7 +242,7 @@ export default function PrivacyPolicy() {
                   Menu data is stored and processed based on your consent under Art. 6(1)(a) and Art. 9(2)(a) of the GDPR.
                 </p>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  You may request deletion of an uploaded menu by emailing me the menu ID from the link. Please be sure to remove the decryption key before sending.
+                  You can delete an uploaded menu at any time by visiting the sharing link and clicking the "Delete this shared link" button.
                 </p>
               </div>
             </div>

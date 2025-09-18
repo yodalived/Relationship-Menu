@@ -6,18 +6,18 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { LoadingIndicator } from "../components/ui/LoadingIndicator";
-import { fetchEncryptedMenu } from '../utils/network';
+import { fetchEncryptedMenu, deleteSharedMenu } from '../utils/network';
 import { decryptMenuWithUrlSafeKey } from '../utils/crypto';
 import { useMenuImport } from '../components/FileSelector/useMenuImport';
 import { ErrorDisplay } from '../components/FileSelector/ErrorDisplay';
 import { checkMenuExists, MenuRateLimitError } from '../utils/network';
 import IconFile from '../components/icons/IconFile';
-
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/4drmtcfm";
+import IconTrash from '../components/icons/IconTrash';
+import { APP_CONFIG } from '../config';
 
 function getAppUrl(id: string | null, key: string | null) {
   if (!id) return null;
-  let url = `relationshipmenu://importMenuFromLink?id=${encodeURIComponent(id)}`;
+  let url = `${APP_CONFIG.APP_URL_SCHEME}://importMenuFromLink?id=${encodeURIComponent(id)}`;
   if (key) url += `#key=${encodeURIComponent(key)}`;
   return url;
 }
@@ -35,6 +35,8 @@ function OpenMenuContent() {
     isRateLimit: boolean;
     waitTimeMinutes: number;
   } | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const id = searchParams.get("id");
   const [key, setKey] = useState<string | null>(null);
 
@@ -111,6 +113,37 @@ function OpenMenuContent() {
       setRedirecting(false);
       setShowInstructions(true);
     }, 2000);
+  };
+
+  const handleDelete = async () => {
+    if (!id) return;
+    setDeleting(true);
+    setErrorMsg(null);
+    setRateLimitInfo(null);
+    try {
+      await deleteSharedMenu(id);
+      setExists(false);
+      setDeleted(true);
+    } catch (err: unknown) {
+      let message = 'Failed to delete menu link.';
+      if (err instanceof Error) {
+        if (err instanceof MenuRateLimitError) {
+          setRateLimitInfo({ isRateLimit: true, waitTimeMinutes: err.waitTimeMinutes });
+        } else if (err.name === 'MenuNetworkError') {
+          message = 'Network error while deleting. Please try again.';
+          setErrorMsg(message);
+        } else {
+          message = err.message;
+          setErrorMsg(message);
+        }
+        console.error('deleteSharedMenu error:', err);
+      } else {
+        console.error('deleteSharedMenu unknown error:', err);
+        setErrorMsg(message);
+      }
+    } finally {
+      setDeleting(false);
+    }
   };
 
   // Web App import logic
@@ -194,12 +227,25 @@ function OpenMenuContent() {
               </button>
             </div>
           </>
+        ) : deleted ? (
+          <>
+            <div className="flex flex-col items-center">
+              <svg width="48" height="48" fill="none" viewBox="0 0 48 48" className="mb-4">
+                <circle cx="24" cy="24" r="24" fill="#DCFCE7"/>
+                <path d="M16 24l6 6 10-12" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <h1 className="text-2xl font-bold text-[#1a202c] dark:text-[#f5f6fa] mb-2 text-center">Menu link deleted</h1>
+              <p className="text-[#222] dark:text-[#e5e7eb] text-center mb-4">The shared link was deleted successfully.</p>
+              <button onClick={() => router.replace('/')} className="mt-2 px-5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-semibold transition">Go to Home</button>
+            </div>
+          </>
         ) : !exists ? (
           <>
             <div className="flex flex-col items-center">
               <svg width="48" height="48" fill="none" viewBox="0 0 48 48" className="mb-4"><circle cx="24" cy="24" r="24" fill="#FDE68A"/><path d="M24 14v10" stroke="#B45309" strokeWidth="2.5" strokeLinecap="round"/><circle cx="24" cy="32" r="1.5" fill="#B45309"/></svg>
               <h1 className="text-2xl font-bold text-[#1a202c] dark:text-[#f5f6fa] mb-2 text-center">Menu not found or expired</h1>
-              <p className="text-[#222] dark:text-[#e5e7eb] text-center mb-4">This menu link is no longer valid. It may have expired or been deleted.</p>
+              <p className="text-[#222] dark:text-[#e5e7eb] text-center">This menu link is no longer valid.</p>
+              <p className="text-[#222] dark:text-[#e5e7eb] text-center mb-4">It may have expired or been deleted.</p>
               <button onClick={() => router.replace('/')} className="mt-2 px-5 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-500 text-[#1a202c] font-semibold transition">Go to Home</button>
             </div>
           </>
@@ -210,18 +256,18 @@ function OpenMenuContent() {
                 <IconFile className="h-6 w-6 text-[#2d5c63]" />
               </div>
               <h1 className="text-2xl font-extrabold text-[#1a202c] dark:text-[#f5f6fa] mb-2 text-center">Shared Relationship Menu</h1>
-              <p className="text-[#222] dark:text-[#e5e7eb] text-center mb-2">This link lets you open a shared Relationship Menu. You can use it in the mobile app or view it in the web version.</p>
+              <p className="text-[#222] dark:text-[#e5e7eb] text-center mb-2">You can import this menu in the app or in the web version.</p>
             </div>
             <div className="flex flex-col gap-4 w-full">
               {/* App Buttons */}
-              <a
-                href={TESTFLIGHT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[#25697f] to-[#4f8b95] text-white font-semibold text-base shadow-md hover:brightness-110 transition"
-              >
-                Install the iOS App (TestFlight)
-              </a>
+                <a
+                  href={APP_CONFIG.APP_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[#25697f] to-[#4f8b95] text-white font-semibold text-base shadow-md hover:brightness-110 transition"
+                >
+                  Get the iOS App
+                </a>
               <button
                 onClick={handleOpenInApp}
                 disabled={redirecting || !appUrl}
@@ -234,7 +280,7 @@ function OpenMenuContent() {
                 <div className="mt-4 w-full bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-600 rounded-xl p-4">
                   <h2 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Didn't work?</h2>
                   <ul className="list-disc pl-5 text-sm text-[#222] dark:text-[#e5e7eb] space-y-2">
-                    <li>Make sure the Relationship Menu app is installed via TestFlight.</li>
+                    <li>Make sure the Relationship Menu app is installed from the App Store.</li>
                     <li>If it is installed and this page didn't open the app, you can manually copy the link below:</li>
                   </ul>
                   <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-700 rounded break-all text-xs select-all text-[#222] dark:text-[#e5e7eb]">
@@ -263,12 +309,26 @@ function OpenMenuContent() {
                   {importing ? 'Importing...' : 'Open in Web Version'}
                 </button>
               )}
+
+              {/* Delete Button - Subtle placement after main actions */}
+              {id && (
+                <button
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors disabled:opacity-60 disabled:cursor-not-allowed text-sm mt-3"
+                  aria-label="Delete shared link"
+                >
+                  <IconTrash className="h-4 w-4" />
+                  {deleting ? 'Deleting link…' : 'Delete this shared link'}
+                </button>
+              )}
             </div>
             {redirecting && <LoadingIndicator message="Trying to open the app..." />}
             <ErrorDisplay error={error || errorMsg} />
           </>
         )}
       </div>
+      
     </div>
   );
 }

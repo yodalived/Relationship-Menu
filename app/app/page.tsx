@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Container } from '../components/ui/Container';
+import { APP_CONFIG } from '../config';
 
 export const metadata: Metadata = {
   title: 'Relationship Menu for iPhone and iPad',
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   other: {
-    'apple-itunes-app': 'app-id=6746169721',
+    'apple-itunes-app': `app-id=${APP_CONFIG.APP_STORE_ID}`,
   },
 };
 
@@ -28,7 +29,7 @@ const screenshots = [
   '/app/screenshots/5.jpg',
 ];
 
-const appStoreUrl = 'https://apps.apple.com/app/id6746169721';
+const appStoreUrl = APP_CONFIG.APP_STORE_URL;
 
 export default function IOSAppPage() {
   return (

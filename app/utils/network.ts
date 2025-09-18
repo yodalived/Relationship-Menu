@@ -118,3 +118,25 @@ export async function checkMenuExists(token: string): Promise<boolean> {
     throw new MenuNetworkError('Failed to check menu existence');
   }
 } 
+
+// Delete a shared menu by token
+export async function deleteSharedMenu(token: string): Promise<void> {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const res = await fetch(`${baseUrl}/menus/${token}`, { method: 'DELETE' });
+    if (res.status === 204 || res.status === 200) {
+      return; // Successfully deleted
+    } else if (res.status === 404) {
+      throw new MenuNetworkError('Menu not found');
+    } else if (res.status === 429) {
+      throw await parseRateLimitError(res);
+    } else {
+      throw new MenuNetworkError(`Unexpected status: ${res.status}`);
+    }
+  } catch (error) {
+    if (error instanceof MenuRateLimitError || error instanceof MenuNetworkError) {
+      throw error;
+    }
+    throw new MenuNetworkError('Delete failed');
+  }
+}
