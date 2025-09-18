@@ -5,7 +5,7 @@
   "license": "EUPL-1.2",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"node dev-proxy.js\"",
+    "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
     "postinstall": "node scripts/download-fonts.js"
@@ -30,11 +30,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
-    "concurrently": "^9.1.2",
+    
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
-    "express": "^5.1.0",
-    "http-proxy-middleware": "^3.0.5",
+    
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -32,8 +32,8 @@ async function parseRateLimitError(response: Response): Promise<MenuRateLimitErr
 
 function getApiBaseUrl() {
   if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    // Use proxy in dev
-    return 'http://localhost:3001/v1';
+    // Use Next.js in-app proxy during development (same-origin avoids CORS)
+    return '/api/proxy/v1';
   }
   // Use real API in prod/export
   return 'https://api.relationshipmenu.org/v1';
