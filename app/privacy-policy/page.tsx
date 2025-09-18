@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
         <div className="w-24 h-1 bg-[var(--main-bg-color)] mx-auto rounded-full"></div>
       </div>
       
-      {/* Core privacy principles (Web + iOS) */}
+      {/* Core privacy principles (Web + App) */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 sm:p-8 mb-10 transition-all hover:shadow-xl border border-gray-100 dark:border-gray-700">
         <div className="flex items-center mb-6">
           <div className="w-10 h-10 rounded-full bg-[var(--main-bg-color)] bg-opacity-20 dark:bg-opacity-40 flex items-center justify-center mr-4">
@@ -17,12 +17,12 @@ export default function PrivacyPolicy() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
           </div>
-          <h2 className="text-xl sm:text-2xl font-semibold text-[var(--main-text-color)]">Core privacy principles (Web + iOS)</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold text-[var(--main-text-color)]">Core privacy principles (web + app)</h2>
         </div>
         
         <div className="pl-3 sm:pl-14">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 sm:mb-8 text-base sm:text-lg">
-            The Relationship Menu website and iOS app were designed with privacy at its core. Unlike with most web services and apps these days, your personal data stays completely private.
+            The Relationship Menu website and app were designed with privacy at its core. Unlike with most web services and apps these days, your personal data stays completely private.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-6">
@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
                 <h3 className="text-lg sm:text-xl font-medium text-[var(--main-text-color)]">No data collection without consent</h3>
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed ml-3 sm:ml-11">
-                Neither the website nor the iOS app collects or transmits any personal data or any other tracking data unless you explicitly choose to share a menu. Your menus remain entirely under your control at all times.
+                Neither the website nor the app collects or transmits any personal data or any other tracking data unless you explicitly choose to share a menu. Your menus remain entirely under your control at all times.
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function PrivacyPolicy() {
               <div>
                 <h3 className="text-xl font-medium mb-2 text-blue-700 dark:text-blue-400">Sharing Your Menu with Others</h3>
                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  There are three ways to share your relationship menu with others (Web + iOS), all designed with your privacy in mind:
+                  There are three ways to share your relationship menu with others (web + app), all designed with your privacy in mind:
                 </p>
                 
                 <div className="mt-4 space-y-4">
@@ -211,9 +211,9 @@ export default function PrivacyPolicy() {
             </div>
           </div>
           
-          {/* Data collection (Web + iOS) */}
+          {/* Data collection (Web + App) */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">2. Data collection (Web + iOS)</h3>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">2. Data collection (web + app)</h3>
             <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl mb-6">
               <h4 className="text-lg font-medium mb-3 text-[var(--main-text-color)]">2.1. Sharing Your Menu via Link</h4>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3">
@@ -315,9 +315,9 @@ export default function PrivacyPolicy() {
             </div>
           </div>
 
-          {/* iOS app–specific details (iOS app only) */}
+          {/* App–specific details (iOS app only) */}
           <div>
-            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">4. iOS app–specific privacy details (iOS app only)</h3>
+            <h3 className="text-xl font-medium mb-3 text-[var(--main-text-color)]">4. App app–specific privacy details (iOS app only)</h3>
             <div className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-xl space-y-6">
               {/* Device Storage & Backups */}
               <div>
