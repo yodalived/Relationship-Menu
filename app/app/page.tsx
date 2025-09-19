@@ -26,7 +26,6 @@ const screenshots = [
   '/app/screenshots/2.jpg',
   '/app/screenshots/3.jpg',
   '/app/screenshots/4.jpg',
-  '/app/screenshots/5.jpg',
 ];
 
 const appStoreUrl = APP_CONFIG.APP_STORE_URL;
