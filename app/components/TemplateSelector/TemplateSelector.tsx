@@ -222,6 +222,7 @@ export default function TemplateSelector({
         menu,
         uuid: uuidv4().toUpperCase(),
         language,
+        template_uuid: (templateJson.uuid ?? null) as string | null,
       };
 
       // Count total items to determine initial mode

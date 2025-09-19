@@ -19,6 +19,7 @@ export type MenuData = {
   menu: MenuCategory[];
   uuid: string; // Required UUID field (version 1.1+)
   language: string; // Required language for v1.2+
+  template_uuid?: string | null; // Optional: UUID of template used to create the menu (v1.2+)
 };
 
 // Define available menu modes
