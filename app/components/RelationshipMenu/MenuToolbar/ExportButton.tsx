@@ -249,9 +249,9 @@ export function ExportButton({
                 >
                   <div className="flex items-center">
                     <IconFile className="h-4 w-4 mr-2 text-[var(--main-text-color)]" />
-                    <span>Download as JSON</span>
+                    <span>Download Menu File (.rmenu)</span>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">For the nerds among us.</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-6">JSON-encoded native format.</span>
                 </button>
               </div>
             )}

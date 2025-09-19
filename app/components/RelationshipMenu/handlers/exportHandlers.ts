@@ -65,7 +65,7 @@ export function createExportHandlers({
   showToast
 }: ExportHandlerProps) {
   /**
-   * Download the menu as a JSON file
+   * Download the menu as a JSON-encoded native file (.rmenu)
    */
   const handleJSONDownload = async () => {
     const currentData = isEditing ? editedData : menuData;
@@ -75,8 +75,8 @@ export function createExportHandlers({
     const jsonString = JSON.stringify(currentData, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
 
-    // Create filename with consistent format
-    const fileName = getMenuName(people, { extension: '.json', sanitizeForFilename: true });
+    // Create filename with consistent format (native extension)
+    const fileName = getMenuName(people, { extension: '.rmenu', sanitizeForFilename: true });
 
     // Use Share API on mobile if available
     if (isMobile() && isShareApiSupported()) {
@@ -87,9 +87,9 @@ export function createExportHandlers({
           await navigator.share({
             files: [file],
             title: getMenuName(people),
-            text: 'The relationship menu json file can be imported and edited on https://relationshipmenu.org'
+            text: 'The relationship menu file can be imported and edited on https://relationshipmenu.org or in the iOS app.'
           });
-          showToast('JSON shared successfully!', 'success');
+          showToast('Menu file shared successfully!', 'success');
         } else {
           // Fallback to download if sharing files not supported
           downloadFile(blob,  fileName);
@@ -100,7 +100,7 @@ export function createExportHandlers({
           return;
         }
         // Log and fallback to download on other errors
-        console.error('Error sharing JSON:', error);
+        console.error('Error sharing menu file:', error);
         downloadFile(blob, fileName);
       }
     } else {
@@ -154,7 +154,7 @@ export function createExportHandlers({
             await navigator.share({
               files: [file],
               title: getMenuName(people),
-              text: 'The relationship menu PDF file can be imported and edited on https://relationshipmenu.org or viewed directly.'
+              text: 'The relationship menu PDF file can be imported and edited on https://relationshipmenu.org and the iOS app or be viewed directly.'
             });
             showToast('PDF shared successfully!', 'success');
           } else {
