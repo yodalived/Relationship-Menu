@@ -1,1382 +1,1384 @@
 {
-    "uuid": "D3705BF9-0BA7-4145-BFC9-D0897FBB9AC9",
-    "sorting_order": 0,
-    "languages": [
-      "en",
-      "de"
-    ],
-    "title": {
-      "en": "Romantic / Sexual",
-      "de": "Romantisch / Sexuell"
+  "uuid": "D3705BF9-0BA7-4145-BFC9-D0897FBB9AC9",
+  "sorting_order": 0,
+  "languages": [
+    "en",
+    "de"
+  ],
+  "title": {
+    "en": "Romantic / Sexual",
+    "de": "Romantisch / Sexuell"
+  },
+  "description": {
+    "en": "A comprehensive template for romantic and/or sexual relationships, with categories covering communication, physical intimacy, emotional attachment, practical matters and levels of commitment.",
+    "de": "Eine umfassende Vorlage für romantische und/oder sexuelle Beziehungen mit Kategorien zu Kommunikation, körperlicher Intimität, emotionaler Bindung, praktischen Belangen und Verbindlichkeitsstufen."
+  },
+  "icon_svg": "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+  "icon_sf_symbol": "heart.fill",
+  "colors": [
+    "#e83849",
+    "#a6088f"
+  ],
+  "categories": [
+    {
+      "title": {
+        "en": "Communication",
+        "de": "Kommunikation"
+      },
+      "items": [
+        {
+          "title": {
+            "en": "Daily or frequent check ins",
+            "de": "Täglicher oder häufiger Austausch"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Texting",
+            "de": "Texten"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Phone / video calls",
+            "de": "Telefon- oder Videoanrufe"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Discussing work and hobbies",
+            "de": "Gespräche über Arbeit und Hobbys"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Discussing family, partners, relationships",
+            "de": "Gespräche über Familie, Partnerschaften, Beziehungen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Discussing politics and current events",
+            "de": "Diskussionen über Politik und aktuelle Ereignisse"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Ability to express disagreements or hurt feelings",
+            "de": "Fähigkeit, Meinungsverschiedenheiten oder verletzte Gefühle auszudrücken"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Ability to address and resolve conflict",
+            "de": "Fähigkeit, Konflikte anzusprechen und zu lösen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Relationship meetings (e.g. R.A.D.A.R.)",
+            "de": "Beziehungs-Check-ins (z.B. R.A.D.A.R.)"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Nonviolent Communication",
+            "de": "Gewaltfreie Kommunikation"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Radical honesty",
+            "de": "Radikale Ehrlichkeit"
+          },
+          "icon_name": null
+        }
+      ]
     },
-    "description": {
-      "en": "A comprehensive template for romantic and/or sexual relationships, with categories covering communication, physical intimacy, emotional attachment, practical matters and levels of commitment.",
-      "de": "Eine umfassende Vorlage für romantische und/oder sexuelle Beziehungen mit Kategorien zu Kommunikation, körperlicher Intimität, emotionaler Bindung, praktischen Belangen und Verbindlichkeitsstufen."
+    {
+      "title": {
+        "en": "Collaborative",
+        "de": "Zusammenarbeit"
+      },
+      "items": [
+        {
+          "title": {
+            "en": "Teaching each other things",
+            "de": "Sich gegenseitig Dinge beibringen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Working on projects together",
+            "de": "Gemeinsam an Projekten arbeiten"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Being creative together",
+            "de": "Gemeinsam kreativ sein"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing a hobby or interest",
+            "de": "Gemeinsame Hobbys oder Interessen"
+          },
+          "icon_name": null
+        }
+      ]
     },
-    "icon_svg": "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
-    "icon_sf_symbol": "heart.fill",
-    "colors": ["#e83849", "#a6088f"],
-    "categories": [
-      {
-        "title": {
-          "en": "Communication",
-          "de": "Kommunikation"
-        },
-        "items": [
-          {
-            "title": {
-              "en": "Daily or frequent check ins",
-              "de": "Täglicher oder häufiger Austausch"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Texting",
-              "de": "Texten"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Phone / video calls",
-              "de": "Telefon- oder Videoanrufe"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Discussing work and hobbies",
-              "de": "Gespräche über Arbeit und Hobbys"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Discussing family, partners, relationships",
-              "de": "Gespräche über Familie, Partnerschaften, Beziehungen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Discussing politics and current events",
-              "de": "Diskussionen über Politik und aktuelle Ereignisse"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Ability to express disagreements or hurt feelings",
-              "de": "Fähigkeit, Meinungsverschiedenheiten oder verletzte Gefühle auszudrücken"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Ability to address and resolve conflict",
-              "de": "Fähigkeit, Konflikte anzusprechen und zu lösen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Relationship meetings (e.g. R.A.D.A.R.)",
-              "de": "Beziehungs-Check-ins (z.B. R.A.D.A.R.)"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Nonviolent Communication",
-              "de": "Gewaltfreie Kommunikation"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Radical honesty",
-              "de": "Radikale Ehrlichkeit"
-            },
-            "icon_name": null
-          }
-        ]
+    {
+      "title": {
+        "en": "Religious / Spiritual",
+        "de": "Religiös / Spirituell"
       },
-      {
-        "title": {
-          "en": "Collaborative",
-          "de": "Zusammenarbeit"
+      "items": [
+        {
+          "title": {
+            "en": "Having shared beliefs",
+            "de": "Gemeinsame Überzeugungen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Teaching each other things",
-              "de": "Sich gegenseitig Dinge beibringen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Praying together",
+            "de": "Gemeinsames Beten"
           },
-          {
-            "title": {
-              "en": "Working on projects together",
-              "de": "Gemeinsam an Projekten arbeiten"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Having shared rituals",
+            "de": "Gemeinsame Rituale"
           },
-          {
-            "title": {
-              "en": "Being creative together",
-              "de": "Gemeinsam kreativ sein"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Ceremonies & traditions",
+            "de": "Zeremonien und Traditionen"
           },
-          {
-            "title": {
-              "en": "Sharing a hobby or interest",
-              "de": "Gemeinsame Hobbys oder Interessen"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Religious & spiritual beliefs",
+            "de": "Religiöse und spirituelle Überzeugungen"
+          },
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Professional & Work",
+        "de": "Beruf & Arbeit"
       },
-      {
-        "title": {
-          "en": "Religious / Spiritual",
-          "de": "Religiös / Spirituell"
+      "items": [
+        {
+          "title": {
+            "en": "Colleagues",
+            "de": "Kolleg:innen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Having shared beliefs",
-              "de": "Gemeinsame Überzeugungen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Business partners",
+            "de": "Geschäftspartner:innen"
           },
-          {
-            "title": {
-              "en": "Praying together",
-              "de": "Gemeinsames Beten"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Work-related stress support",
+            "de": "Unterstützung bei arbeitsbedingtem Stress"
           },
-          {
-            "title": {
-              "en": "Having shared rituals",
-              "de": "Gemeinsame Rituale"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Impact of work on the relationship",
+            "de": "Auswirkungen der Arbeit auf die Beziehung"
           },
-          {
-            "title": {
-              "en": "Ceremonies & traditions",
-              "de": "Zeremonien und Traditionen"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "Religious & spiritual beliefs",
-              "de": "Religiöse und spirituelle Überzeugungen"
-            },
-            "icon_name": "talk"
-          }
-        ]
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Technology",
+        "de": "Technologie"
       },
-      {
-        "title": {
-          "en": "Professional & Work",
-          "de": "Beruf & Arbeit"
+      "items": [
+        {
+          "title": {
+            "en": "Sharing passwords to phones or computers",
+            "de": "Zugangsdaten zu Handys und Computern teilen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Colleagues",
-              "de": "Kolleg:innen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Accessing phones or computers without asking",
+            "de": "Ohne zu fragen auf Handys oder Computer zugreifen"
           },
-          {
-            "title": {
-              "en": "Business partners",
-              "de": "Geschäftspartner:innen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing internet accounts",
+            "de": "Online-Konten teilen"
           },
-          {
-            "title": {
-              "en": "Work-related stress support",
-              "de": "Unterstützung bei arbeitsbedingtem Stress"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Real-time location sharing",
+            "de": "Standort in Echtzeit teilen"
           },
-          {
-            "title": {
-              "en": "Impact of work on the relationship",
-              "de": "Auswirkungen der Arbeit auf die Beziehung"
-            },
-            "icon_name": "talk"
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Device-free time together",
+            "de": "Gemeinsame gerätefreie Zeit"
+          },
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Partnership",
+        "de": "Partnerschaft"
       },
-      {
-        "title": {
-          "en": "Technology",
-          "de": "Technologie"
+      "items": [
+        {
+          "title": {
+            "en": "Shared goals in life",
+            "de": "Gemeinsame Ziele im Leben"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Sharing passwords to phones or computers",
-              "de": "Zugangsdaten zu Handys und Computern teilen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Shared values",
+            "de": "Gemeinsame Wertvorstellungen"
           },
-          {
-            "title": {
-              "en": "Accessing phones or computers without asking",
-              "de": "Ohne zu fragen auf Handys oder Computer zugreifen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Having a routine together",
+            "de": "Eine gemeinsame Routine haben"
           },
-          {
-            "title": {
-              "en": "Sharing internet accounts",
-              "de": "Online-Konten teilen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Embracing change in one another",
+            "de": "Offenheit für Veränderungen bei der anderen Person"
           },
-          {
-            "title": {
-              "en": "Real-time location sharing",
-              "de": "Standort in Echtzeit teilen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Consistency",
+            "de": "Konsistenz"
           },
-          {
-            "title": {
-              "en": "Device-free time together",
-              "de": "Gemeinsame gerätefreie Zeit"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Reliability",
+            "de": "Zuverlässigkeit"
+          },
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Legal",
+        "de": "Rechtliche Angelegenheiten"
       },
-      {
-        "title": {
-          "en": "Partnership",
-          "de": "Partnerschaft"
+      "items": [
+        {
+          "title": {
+            "en": "Power of attorney",
+            "de": "Vollmacht"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Shared goals in life",
-              "de": "Gemeinsame Ziele im Leben"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Executor of will",
+            "de": "Testamentsvollstreckung"
           },
-          {
-            "title": {
-              "en": "Shared values",
-              "de": "Gemeinsame Wertvorstellungen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Having a routine together",
-              "de": "Eine gemeinsame Routine haben"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Embracing change in one another",
-              "de": "Offenheit für Veränderungen bei der anderen Person"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Consistency",
-              "de": "Konsistenz"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Reliability",
-              "de": "Zuverlässigkeit"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Financial",
+        "de": "Finanzen"
       },
-      {
-        "title": {
-          "en": "Legal",
-          "de": "Rechtliche Angelegenheiten"
-        },
-        "items": [
-          {
-            "title": {
-              "en": "Power of attorney",
-              "de": "Vollmacht"
-            },
-            "icon_name": null
+      "items": [
+        {
+          "title": {
+            "en": "Shared bank account(s)",
+            "de": "Gemeinsames Bankkonto"
           },
-          {
-            "title": {
-              "en": "Executor of will",
-              "de": "Testamentsvollstreckung"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Mutual contributions to vacation / activity funds",
+            "de": "Gemeinsame Beiträge zu Urlaubs- oder Freizeitfonds"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Co-ownership of property",
+            "de": "Miteigentum an Immobilien"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Giving financial support to each other",
+            "de": "Gegenseitige finanzielle Unterstützung"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Large gifts",
+            "de": "Größere Geschenke"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Complete financial integration",
+            "de": "Vollständige finanzielle Integration"
+          },
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Quality Time",
+        "de": "Gemeinsame Zeit"
       },
-      {
-        "title": {
-          "en": "Financial",
-          "de": "Finanzen"
+      "items": [
+        {
+          "title": {
+            "en": "Regularly scheduled time together",
+            "de": "Regelmäßig eingeplante gemeinsame Zeit"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Shared bank account(s)",
-              "de": "Gemeinsames Bankkonto"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "In-person visits",
+            "de": "Persönliche Besuche"
           },
-          {
-            "title": {
-              "en": "Mutual contributions to vacation / activity funds",
-              "de": "Gemeinsame Beiträge zu Urlaubs- oder Freizeitfonds"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Date nights / outings",
+            "de": "Dates und Ausflüge"
           },
-          {
-            "title": {
-              "en": "Co-ownership of property",
-              "de": "Miteigentum an Immobilien"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Shared activities",
+            "de": "Gemeinsame Aktivitäten"
           },
-          {
-            "title": {
-              "en": "Giving financial support to each other",
-              "de": "Gegenseitige finanzielle Unterstützung"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Intellectual & philosophical discussions",
+            "de": "Intellektuelle und philosophische Diskussionen"
           },
-          {
-            "title": {
-              "en": "Large gifts",
-              "de": "Größere Geschenke"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Parallel play",
+            "de": "Gemeinsam, aber unabhängig Zeit verbringen"
           },
-          {
-            "title": {
-              "en": "Complete financial integration",
-              "de": "Vollständige finanzielle Integration"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Vacations or excursions together",
+            "de": "Gemeinsame Urlaube oder Ausflüge"
+          },
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Domestic",
+        "de": "Alltag zu Hause"
       },
-      {
-        "title": {
-          "en": "Quality Time",
-          "de": "Gemeinsame Zeit"
+      "items": [
+        {
+          "title": {
+            "en": "Sharing an apartment or a home",
+            "de": "Eine Wohnung oder ein Haus teilen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Regularly scheduled time together",
-              "de": "Regelmäßig eingeplante gemeinsame Zeit"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Having a key to each other's home",
+            "de": "Schlüssel zum Zuhause des anderen haben"
           },
-          {
-            "title": {
-              "en": "In-person visits",
-              "de": "Persönliche Besuche"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing a permanent sleeping space",
+            "de": "Einen gemeinsamen festen Schlafplatz haben"
           },
-          {
-            "title": {
-              "en": "Date nights / outings",
-              "de": "Dates und Ausflüge"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Doing sleep overs",
+            "de": "Übernachtungen beieinander"
           },
-          {
-            "title": {
-              "en": "Shared activities",
-              "de": "Gemeinsame Aktivitäten"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Cooking together",
+            "de": "Zusammen kochen"
           },
-          {
-            "title": {
-              "en": "Intellectual & philosophical discussions",
-              "de": "Intellektuelle und philosophische Diskussionen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing meals together",
+            "de": "Gemeinsame Mahlzeiten"
           },
-          {
-            "title": {
-              "en": "Parallel play",
-              "de": "Gemeinsam, aber unabhängig Zeit verbringen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Cleaning up shared messes",
+            "de": "Gemeinsam entstandene Unordnung aufräumen"
           },
-          {
-            "title": {
-              "en": "Vacations or excursions together",
-              "de": "Gemeinsame Urlaube oder Ausflüge"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Cleaning up after each other",
+            "de": "Hintereinander aufräumen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Chores & Routines",
+            "de": "Haushaltsaufgaben und Alltagsroutinen"
+          },
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Co-Caregivers",
+        "de": "Gemeinsame Betreuung"
       },
-      {
-        "title": {
-          "en": "Domestic",
-          "de": "Alltag zu Hause"
+      "items": [
+        {
+          "title": {
+            "en": "Family (sick / elderly)",
+            "de": "Kranke oder ältere Familienmitglieder"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Sharing an apartment or a home",
-              "de": "Eine Wohnung oder ein Haus teilen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Animals",
+            "de": "Tiere"
           },
-          {
-            "title": {
-              "en": "Having a key to each other's home",
-              "de": "Schlüssel zum Zuhause des anderen haben"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Plants",
+            "de": "Pflanzen"
           },
-          {
-            "title": {
-              "en": "Sharing a permanent sleeping space",
-              "de": "Einen gemeinsamen festen Schlafplatz haben"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Children (own or from other partnerships)",
+            "de": "Kinder (eigene oder aus anderen Partnerschaften)"
           },
-          {
-            "title": {
-              "en": "Doing sleep overs",
-              "de": "Übernachtungen beieinander"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Long-term commitment (for the above)",
+            "de": "Langfristige Verbindlichkeit (für die genannten Punkte)"
           },
-          {
-            "title": {
-              "en": "Cooking together",
-              "de": "Zusammen kochen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Sharing meals together",
-              "de": "Gemeinsame Mahlzeiten"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Cleaning up shared messes",
-              "de": "Gemeinsam entstandene Unordnung aufräumen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Cleaning up after each other",
-              "de": "Hintereinander aufräumen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Chores & Routines",
-              "de": "Haushaltsaufgaben und Alltagsroutinen"
-            },
-            "icon_name": "talk"
-          }
-        ]
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Emotional Intimacy",
+        "de": "Emotionale Intimität"
       },
-      {
-        "title": {
-          "en": "Co-Caregivers",
-          "de": "Gemeinsame Betreuung"
+      "items": [
+        {
+          "title": {
+            "en": "Active listening",
+            "de": "Aktives Zuhören"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Family (sick / elderly)",
-              "de": "Kranke oder ältere Familienmitglieder"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Expressing happiness and joy",
+            "de": "Glück und Freude ausdrücken"
           },
-          {
-            "title": {
-              "en": "Animals",
-              "de": "Tiere"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Expressing sadness or grief",
+            "de": "Traurigkeit oder Kummer ausdrücken"
           },
-          {
-            "title": {
-              "en": "Plants",
-              "de": "Pflanzen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Expressing affection",
+            "de": "Zuneigung bekunden"
           },
-          {
-            "title": {
-              "en": "Children (own or from other partnerships)",
-              "de": "Kinder (eigene oder aus anderen Partnerschaften)"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Expressing gratitude and appreciation",
+            "de": "Dankbarkeit und Wertschätzung zeigen"
           },
-          {
-            "title": {
-              "en": "Long-term commitment (for the above)",
-              "de": "Langfristige Verbindlichkeit (für die genannten Punkte)"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Expressing disappointment or frustration",
+            "de": "Enttäuschung oder Frustration ausdrücken"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing fears and insecurities",
+            "de": "Ängste und Unsicherheiten teilen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing dreams and aspirations",
+            "de": "Träume und Hoffnungen teilen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Having difficult conversations",
+            "de": "Schwierige Gespräche führen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing stories about the past",
+            "de": "Geschichten aus der Vergangenheit erzählen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Knowing personal likes & dislikes",
+            "de": "Persönliche Vorlieben und Abneigungen kennen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sharing about mental health challenges",
+            "de": "Über psychische Probleme offen sprechen"
+          },
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Physical Intimacy",
+        "de": "Körperliche Intimität"
       },
-      {
-        "title": {
-          "en": "Emotional Intimacy",
-          "de": "Emotionale Intimität"
+      "items": [
+        {
+          "title": {
+            "en": "Body contact",
+            "de": "Körperkontakt"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Active listening",
-              "de": "Aktives Zuhören"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Hugging each other",
+            "de": "Einander umarmen"
           },
-          {
-            "title": {
-              "en": "Expressing happiness and joy",
-              "de": "Glück und Freude ausdrücken"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Giving each other massages",
+            "de": "Einander massieren"
           },
-          {
-            "title": {
-              "en": "Expressing sadness or grief",
-              "de": "Traurigkeit oder Kummer ausdrücken"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Dancing together",
+            "de": "Zusammen tanzen"
           },
-          {
-            "title": {
-              "en": "Expressing affection",
-              "de": "Zuneigung bekunden"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Cuddling with each other",
+            "de": "Miteinander kuscheln"
           },
-          {
-            "title": {
-              "en": "Expressing gratitude and appreciation",
-              "de": "Dankbarkeit und Wertschätzung zeigen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Holding hands",
+            "de": "Händchenhalten"
           },
-          {
-            "title": {
-              "en": "Expressing disappointment or frustration",
-              "de": "Enttäuschung oder Frustration ausdrücken"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Kissing each other",
+            "de": "Einander küssen"
           },
-          {
-            "title": {
-              "en": "Sharing fears and insecurities",
-              "de": "Ängste und Unsicherheiten teilen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Being naked around each other",
+            "de": "Nackt voreinander zu sein"
           },
-          {
-            "title": {
-              "en": "Sharing dreams and aspirations",
-              "de": "Träume und Hoffnungen teilen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Co-sleeping",
+            "de": "Gemeinsames Schlafen"
           },
-          {
-            "title": {
-              "en": "Having difficult conversations",
-              "de": "Schwierige Gespräche führen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Public displays of affection",
+            "de": "Öffentliches Zeigen von Zuneigung"
           },
-          {
-            "title": {
-              "en": "Sharing stories about the past",
-              "de": "Geschichten aus der Vergangenheit erzählen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Playing with each other's hair",
+            "de": "Mit den Haaren des anderen spielen"
           },
-          {
-            "title": {
-              "en": "Knowing personal likes & dislikes",
-              "de": "Persönliche Vorlieben und Abneigungen kennen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Back scratches",
+            "de": "Rückenkratzen"
           },
-          {
-            "title": {
-              "en": "Sharing about mental health challenges",
-              "de": "Über psychische Probleme offen sprechen"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sitting close together",
+            "de": "Eng beieinander sitzen"
+          },
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Emotional Support",
+        "de": "Emotionale Unterstützung"
       },
-      {
-        "title": {
-          "en": "Physical Intimacy",
-          "de": "Körperliche Intimität"
+      "items": [
+        {
+          "title": {
+            "en": "Offering support in hard times",
+            "de": "Unterstützung in schwierigen Zeiten"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Body contact",
-              "de": "Körperkontakt"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Being asked for advice",
+            "de": "Um Rat gefragt werden"
           },
-          {
-            "title": {
-              "en": "Hugging each other",
-              "de": "Einander umarmen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Being a trusted confidant",
+            "de": "Eine Vertrauensperson sein"
           },
-          {
-            "title": {
-              "en": "Giving each other massages",
-              "de": "Einander massieren"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Showing empathy and understanding",
+            "de": "Einfühlsamkeit und Verständnis zeigen"
           },
-          {
-            "title": {
-              "en": "Dancing together",
-              "de": "Zusammen tanzen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Giving each other reassurances",
+            "de": "Sich gegenseitig Rückversicherung geben"
           },
-          {
-            "title": {
-              "en": "Cuddling with each other",
-              "de": "Miteinander kuscheln"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Supporting mental health work",
+            "de": "Arbeit an der psychischen Gesundheit unterstützen"
           },
-          {
-            "title": {
-              "en": "Holding hands",
-              "de": "Händchenhalten"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Celebrating successes together",
+            "de": "Erfolge gemeinsam feiern"
           },
-          {
-            "title": {
-              "en": "Kissing each other",
-              "de": "Einander küssen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Being naked around each other",
-              "de": "Nackt voreinander zu sein"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Co-sleeping",
-              "de": "Gemeinsames Schlafen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Public displays of affection",
-              "de": "Öffentliches Zeigen von Zuneigung"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Playing with each other's hair",
-              "de": "Mit den Haaren des anderen spielen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Back scratches",
-              "de": "Rückenkratzen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Sitting close together",
-              "de": "Eng beieinander sitzen"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Romantic",
+        "de": "Romantisches"
       },
-      {
-        "title": {
-          "en": "Emotional Support",
-          "de": "Emotionale Unterstützung"
+      "items": [
+        {
+          "title": {
+            "en": "Emotional attraction",
+            "de": "Emotionale Anziehung"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Offering support in hard times",
-              "de": "Unterstützung in schwierigen Zeiten"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Expressing love each other",
+            "de": "Liebe füreinander ausdrücken"
           },
-          {
-            "title": {
-              "en": "Being asked for advice",
-              "de": "Um Rat gefragt werden"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Unmotivated euphoria",
+            "de": "Grundlose Euphorie"
           },
-          {
-            "title": {
-              "en": "Being a trusted confidant",
-              "de": "Eine Vertrauensperson sein"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Intense focus on each other",
+            "de": "Starke Fokussierung aufeinander"
           },
-          {
-            "title": {
-              "en": "Showing empathy and understanding",
-              "de": "Einfühlsamkeit und Verständnis zeigen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Giving each other reassurances",
-              "de": "Sich gegenseitig Rückversicherung geben"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Supporting mental health work",
-              "de": "Arbeit an der psychischen Gesundheit unterstützen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Celebrating successes together",
-              "de": "Erfolge gemeinsam feiern"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Caregiving",
+        "de": "Fürsorge & Unterstützung"
       },
-      {
-        "title": {
-          "en": "Romantic",
-          "de": "Romantisches"
+      "items": [
+        {
+          "title": {
+            "en": "Helping each other out with favours",
+            "de": "Einander mit Gefallen aushelfen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Emotional attraction",
-              "de": "Emotionale Anziehung"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Emergency care and support",
+            "de": "Notfallversorgung und -unterstützung"
           },
-          {
-            "title": {
-              "en": "Expressing love each other",
-              "de": "Liebe füreinander ausdrücken"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Care in case of illness or injury",
+            "de": "Versorgung bei Krankheit oder Verletzung"
           },
-          {
-            "title": {
-              "en": "Unmotivated euphoria",
-              "de": "Grundlose Euphorie"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Age-related care",
+            "de": "Altersbedingte Pflege"
           },
-          {
-            "title": {
-              "en": "Intense focus on each other",
-              "de": "Starke Fokussierung aufeinander"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "End-of-life care",
+            "de": "Sterbebegleitung"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Disability support",
+            "de": "Unterstützung bei Behinderungen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Recovery and rehabilitation support",
+            "de": "Unterstützung bei Genesung und Rehabilitation"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Mental health support",
+            "de": "Unterstützung bei psychischen Problemen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Caregiving boundaries and limits",
+            "de": "Grenzen der Fürsorge"
+          },
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Social Integration",
+        "de": "Soziale Integration"
       },
-      {
-        "title": {
-          "en": "Caregiving",
-          "de": "Fürsorge & Unterstützung"
+      "items": [
+        {
+          "title": {
+            "en": "Meeting / spending time with friends",
+            "de": "Freunde treffen und Zeit mit ihnen verbringen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Helping each other out with favours",
-              "de": "Einander mit Gefallen aushelfen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Meeting parents/siblings/extended family",
+            "de": "Eltern, Geschwister und weitere Verwandte treffen"
           },
-          {
-            "title": {
-              "en": "Emergency care and support",
-              "de": "Notfallversorgung und -unterstützung"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Meeting children (from other partnerships)",
+            "de": "Kinder kennenlernen (aus anderen Partnerschaften)"
           },
-          {
-            "title": {
-              "en": "Care in case of illness or injury",
-              "de": "Versorgung bei Krankheit oder Verletzung"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Serving as +1 for social events",
+            "de": "Begleitung (+1) bei sozialen Anlässen sein"
           },
-          {
-            "title": {
-              "en": "Age-related care",
-              "de": "Altersbedingte Pflege"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Presenting as a couple in public settings",
+            "de": "Sich in der Öffentlichkeit als Paar präsentieren"
           },
-          {
-            "title": {
-              "en": "End-of-life care",
-              "de": "Sterbebegleitung"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Presenting as a couple on social media",
+            "de": "Sich in sozialen Medien als Paar präsentieren"
           },
-          {
-            "title": {
-              "en": "Disability support",
-              "de": "Unterstützung bei Behinderungen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Presenting as a couple in professional settings",
+            "de": "Sich in beruflichen Kontexten als Paar präsentieren"
           },
-          {
-            "title": {
-              "en": "Recovery and rehabilitation support",
-              "de": "Unterstützung bei Genesung und Rehabilitation"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Joint vacations with family or friends",
+            "de": "Gemeinsame Urlaube mit Familie oder Freunden"
           },
-          {
-            "title": {
-              "en": "Mental health support",
-              "de": "Unterstützung bei psychischen Problemen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Caregiving boundaries and limits",
-              "de": "Grenzen der Fürsorge"
-            },
-            "icon_name": "talk"
-          }
-        ]
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Sexual",
+        "de": "Sexuelles"
       },
-      {
-        "title": {
-          "en": "Social Integration",
-          "de": "Soziale Integration"
+      "items": [
+        {
+          "title": {
+            "en": "Talking about sex and sexuality",
+            "de": "Gespräche über Sex und Sexualität führen"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Meeting / spending time with friends",
-              "de": "Freunde treffen und Zeit mit ihnen verbringen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Being sexual with each other",
+            "de": "Sexualität miteinander leben"
           },
-          {
-            "title": {
-              "en": "Meeting parents/siblings/extended family",
-              "de": "Eltern, Geschwister und weitere Verwandte treffen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Mutual masturbation",
+            "de": "Gemeinsame Masturbation"
           },
-          {
-            "title": {
-              "en": "Meeting children (from other partnerships)",
-              "de": "Kinder kennenlernen (aus anderen Partnerschaften)"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Oral sex (cunnilingus & blowjobs)",
+            "de": "Oralverkehr (Lecken & Blasen)"
           },
-          {
-            "title": {
-              "en": "Serving as +1 for social events",
-              "de": "Begleitung (+1) bei sozialen Anlässen sein"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Manual sex (fingering & hand jobs)",
+            "de": "Manueller Sex (Fingern und Handjobs)"
           },
-          {
-            "title": {
-              "en": "Presenting as a couple in public settings",
-              "de": "Sich in der Öffentlichkeit als Paar präsentieren"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Penetrative vaginal sex",
+            "de": "Vaginale Penetration"
           },
-          {
-            "title": {
-              "en": "Presenting as a couple on social media",
-              "de": "Sich in sozialen Medien als Paar präsentieren"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Penetrative anal sex",
+            "de": "Anale Penetration"
           },
-          {
-            "title": {
-              "en": "Presenting as a couple in professional settings",
-              "de": "Sich in beruflichen Kontexten als Paar präsentieren"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Using sex toys",
+            "de": "Sexspielzeug benutzen"
           },
-          {
-            "title": {
-              "en": "Joint vacations with family or friends",
-              "de": "Gemeinsame Urlaube mit Familie oder Freunden"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Role and power play",
+            "de": "Rollen- und Machtspiele"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Bondage and restraint",
+            "de": "Bondage und Fesseln"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Impact play (spanking, etc.)",
+            "de": "Impact Play (z.B. Spanking etc.)"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Sensory play (blindfolds, ice, feathers, etc.)",
+            "de": "Sensorisches Spiel (z.B. Augenbinden, Eis, Federn)"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Threesomes or group sex",
+            "de": "Dreier oder Gruppensex"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Importance of orgasms",
+            "de": "Wichtigkeit von Orgasmen"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Favourite positions and preferences",
+            "de": "Lieblingspositionen und Vorlieben"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "How frequent is sex wanted",
+            "de": "Gewünschte Häufigkeit von Sex"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Giving and receiving sexual feedback",
+            "de": "Sexuelles Feedback geben und erhalten"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Safer sex practices and protection",
+            "de": "Sichere Sexualpraktiken und Schutzmaßnahmen"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "STI testing and status",
+            "de": "STI-Tests und Status"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Sexual boundaries and consent",
+            "de": "Sexuelle Grenzen und Einvernehmlichkeit"
+          },
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Autonomy",
+        "de": "Autonomie"
       },
-      {
-        "title": {
-          "en": "Sexual",
-          "de": "Sexuelles"
+      "items": [
+        {
+          "title": {
+            "en": "Alone time",
+            "de": "Zeit für sich selbst"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Talking about sex and sexuality",
-              "de": "Gespräche über Sex und Sexualität führen"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Balance of time together and apart",
+            "de": "Balance zwischen gemeinsamer Zeit und Alleinzeit"
           },
-          {
-            "title": {
-              "en": "Being sexual with each other",
-              "de": "Sexualität miteinander leben"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Support to pursue independent interests",
+            "de": "Unterstützung, eigenen Interessen nachzugehen"
           },
-          {
-            "title": {
-              "en": "Mutual masturbation",
-              "de": "Gemeinsame Masturbation"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Maintaining independent friendships",
+            "de": "Unabhängige Freundschaften aufrechterhalten"
           },
-          {
-            "title": {
-              "en": "Oral sex (cunnilingus & blowjobs)",
-              "de": "Oralverkehr (Lecken & Blasen)"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Equal distribution of relationship power",
+            "de": "Gleichberechtigte Machtverteilung in der Beziehung"
           },
-          {
-            "title": {
-              "en": "Manual sex (fingering & hand jobs)",
-              "de": "Manueller Sex (Fingern und Handjobs)"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Independent decision making",
+            "de": "Entscheidungen unabhängig treffen"
           },
-          {
-            "title": {
-              "en": "Penetrative vaginal sex",
-              "de": "Vaginale Penetration"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Penetrative anal sex",
-              "de": "Anale Penetration"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Using sex toys",
-              "de": "Sexspielzeug benutzen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Role and power play",
-              "de": "Rollen- und Machtspiele"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Bondage and restraint",
-              "de": "Bondage und Fesseln"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Impact play (spanking, etc.)",
-              "de": "Impact Play (z.B. Spanking etc.)"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Sensory play (blindfolds, ice, feathers, etc.)",
-              "de": "Sensorisches Spiel (z.B. Augenbinden, Eis, Federn)"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Threesomes or group sex",
-              "de": "Dreier oder Gruppensex"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Importance of orgasms",
-              "de": "Wichtigkeit von Orgasmen"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "Favourite positions and preferences",
-              "de": "Lieblingspositionen und Vorlieben"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "How frequent is sex wanted",
-              "de": "Gewünschte Häufigkeit von Sex"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "Giving and receiving sexual feedback",
-              "de": "Sexuelles Feedback geben und erhalten"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "Safer sex practices and protection",
-              "de": "Sichere Sexualpraktiken und Schutzmaßnahmen"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "STI testing and status",
-              "de": "STI-Tests und Status"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "Sexual boundaries and consent",
-              "de": "Sexuelle Grenzen und Einvernehmlichkeit"
-            },
-            "icon_name": "talk"
-          }
-        ]
+          "icon_name": null
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Open Relationships",
+        "de": "Offene Beziehungen"
       },
-      {
-        "title": {
-          "en": "Autonomy",
-          "de": "Autonomie"
+      "items": [
+        {
+          "title": {
+            "en": "Relationship style preferences",
+            "de": "Bevorzugte Beziehungsformen"
+          },
+          "icon_name": "talk"
         },
-        "items": [
-          {
-            "title": {
-              "en": "Alone time",
-              "de": "Zeit für sich selbst"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Meeting metamors (other partners)",
+            "de": "Treffen mit Metamoren (anderen Partner:innen)"
           },
-          {
-            "title": {
-              "en": "Balance of time together and apart",
-              "de": "Balance zwischen gemeinsamer Zeit und Alleinzeit"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Having positive relationships with metamors",
+            "de": "Positive Beziehungen zu Metamoren pflegen"
           },
-          {
-            "title": {
-              "en": "Support to pursue independent interests",
-              "de": "Unterstützung, eigenen Interessen nachzugehen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Joint vacations with metamors",
+            "de": "Gemeinsame Urlaube mit Metamoren"
           },
-          {
-            "title": {
-              "en": "Maintaining independent friendships",
-              "de": "Unabhängige Freundschaften aufrechterhalten"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Prioritisation over other partners",
+            "de": "Vorrang vor anderen Partner:innen"
           },
-          {
-            "title": {
-              "en": "Equal distribution of relationship power",
-              "de": "Gleichberechtigte Machtverteilung in der Beziehung"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Expressing compersion",
+            "de": "Mitfreude (Compersion) ausdrücken"
           },
-          {
-            "title": {
-              "en": "Independent decision making",
-              "de": "Entscheidungen unabhängig treffen"
-            },
-            "icon_name": null
-          }
-        ]
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Dealing with jealousy",
+            "de": "Umgang mit Eifersucht"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Communication about other partners",
+            "de": "Kommunikation über andere Partner:innen"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Sexual health agreements",
+            "de": "Abmachungen zu sexueller Gesundheit"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Relationship hierarchy",
+            "de": "Beziehungshierarchie"
+          },
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "New partner protocols",
+            "de": "Umgang mit neuen Partner:innen"
+          },
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Commitment",
+        "de": "Verbindlichkeit"
       },
-      {
-        "title": {
-          "en": "Open Relationships",
-          "de": "Offene Beziehungen"
+      "items": [
+        {
+          "title": {
+            "en": "Being sexually exclusive with each other",
+            "de": "Sexuelle Exklusivität miteinander"
+          },
+          "icon_name": null
         },
-        "items": [
-          {
-            "title": {
-              "en": "Relationship style preferences",
-              "de": "Bevorzugte Beziehungsformen"
-            },
-            "icon_name": "talk"
+        {
+          "title": {
+            "en": "Being romantically / emotionally exclusive",
+            "de": "Romantische und emotionale Exklusivität"
           },
-          {
-            "title": {
-              "en": "Meeting metamors (other partners)",
-              "de": "Treffen mit Metamoren (anderen Partner:innen)"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Prioritisation over friendships",
+            "de": "Vorrang vor Freundschaften"
           },
-          {
-            "title": {
-              "en": "Having positive relationships with metamors",
-              "de": "Positive Beziehungen zu Metamoren pflegen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Relationship labels",
+            "de": "Beziehungsbezeichnungen"
           },
-          {
-            "title": {
-              "en": "Joint vacations with metamors",
-              "de": "Gemeinsame Urlaube mit Metamoren"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Planning for future",
+            "de": "Zukunftsplanung"
           },
-          {
-            "title": {
-              "en": "Prioritisation over other partners",
-              "de": "Vorrang vor anderen Partner:innen"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Expectation of long term involvement",
+            "de": "Erwartung einer langfristigen Bindung"
           },
-          {
-            "title": {
-              "en": "Expressing compersion",
-              "de": "Mitfreude (Compersion) ausdrücken"
-            },
-            "icon_name": null
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Commitment to working through challenges",
+            "de": "Verbindlichkeit, Krisen zusammen durchzustehen"
           },
-          {
-            "title": {
-              "en": "Dealing with jealousy",
-              "de": "Umgang mit Eifersucht"
-            },
-            "icon_name": "talk"
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Commitment to relationship maintenance",
+            "de": "Verbindlichkeit zur kontinuierlichen Beziehungspflege"
           },
-          {
-            "title": {
-              "en": "Communication about other partners",
-              "de": "Kommunikation über andere Partner:innen"
-            },
-            "icon_name": "talk"
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Pregnancy or adopting together",
+            "de": "Gemeinsame Schwangerschaft oder Adoption"
           },
-          {
-            "title": {
-              "en": "Sexual health agreements",
-              "de": "Abmachungen zu sexueller Gesundheit"
-            },
-            "icon_name": "talk"
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Marriage or civil partnership",
+            "de": "Ehe oder eingetragene Partnerschaft"
           },
-          {
-            "title": {
-              "en": "Relationship hierarchy",
-              "de": "Beziehungshierarchie"
-            },
-            "icon_name": "talk"
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Time and energy commitment",
+            "de": "Zeit- und Energieaufwand"
           },
-          {
-            "title": {
-              "en": "New partner protocols",
-              "de": "Umgang mit neuen Partner:innen"
-            },
-            "icon_name": "talk"
-          }
-        ]
+          "icon_name": "talk"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Things to Discuss",
+        "de": "Wichtige Gesprächsthemen"
       },
-      {
-        "title": {
-          "en": "Commitment",
-          "de": "Verbindlichkeit"
+      "items": [
+        {
+          "title": {
+            "en": "Love languages",
+            "de": "Liebessprachen"
+          },
+          "icon_name": "talk"
         },
-        "items": [
-          {
-            "title": {
-              "en": "Being sexually exclusive with each other",
-              "de": "Sexuelle Exklusivität miteinander"
-            },
-            "icon_name": null
+        {
+          "title": {
+            "en": "Accountability",
+            "de": "Verantwortungsübernahme"
           },
-          {
-            "title": {
-              "en": "Being romantically / emotionally exclusive",
-              "de": "Romantische und emotionale Exklusivität"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Prioritisation over friendships",
-              "de": "Vorrang vor Freundschaften"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Relationship labels",
-              "de": "Beziehungsbezeichnungen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Planning for future",
-              "de": "Zukunftsplanung"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Expectation of long term involvement",
-              "de": "Erwartung einer langfristigen Bindung"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Commitment to working through challenges",
-              "de": "Verbindlichkeit, Krisen zusammen durchzustehen"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Commitment to relationship maintenance",
-              "de": "Verbindlichkeit zur kontinuierlichen Beziehungspflege"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Pregnancy or adopting together",
-              "de": "Gemeinsame Schwangerschaft oder Adoption"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Marriage or civil partnership",
-              "de": "Ehe oder eingetragene Partnerschaft"
-            },
-            "icon_name": null
-          },
-          {
-            "title": {
-              "en": "Time and energy commitment",
-              "de": "Zeit- und Energieaufwand"
-            },
-            "icon_name": "talk"
-          }
-        ]
-      },
-      {
-        "title": {
-          "en": "Things to Discuss",
-          "de": "Wichtige Gesprächsthemen"
+          "icon_name": "talk"
         },
-        "items": [
-          {
-            "title": {
-              "en": "Love languages",
-              "de": "Liebessprachen"
-            },
-            "icon_name": "talk"
+        {
+          "title": {
+            "en": "Privacy",
+            "de": "Privatsphäre"
           },
-          {
-            "title": {
-              "en": "Accountability",
-              "de": "Verantwortungsübernahme"
-            },
-            "icon_name": "talk"
+          "icon_name": "talk"
+        },
+        {
+          "title": {
+            "en": "Mental health & trauma",
+            "de": "Psychische Gesundheit & Trauma"
           },
-          {
-            "title": {
-              "en": "Privacy",
-              "de": "Privatsphäre"
-            },
-            "icon_name": "talk"
-          },
-          {
-            "title": {
-              "en": "Mental health & trauma",
-              "de": "Psychische Gesundheit & Trauma"
-            },
-            "icon_name": "talk"
-          }
-        ]
-      }
-    ],
-    "schema_version": "1.0"
-  }
-  
+          "icon_name": "talk"
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.0"
+}
