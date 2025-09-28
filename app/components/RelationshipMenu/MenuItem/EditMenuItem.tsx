@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MenuItem } from '../../../types';
+import { MenuItem, RichTextJSONPart } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
 import { IconChevron } from '../../icons';
+import { RichTextEditorWrapper as RichTextEditor } from '../../ui/RichTextEditorWrapper';
 
 interface EditMenuItemProps {
   catIndex: number;
@@ -9,7 +10,7 @@ interface EditMenuItemProps {
   item: MenuItem;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
-  onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
+  onNoteChange: (catIndex: number, itemIndex: number, newNote: RichTextJSONPart[] | null) => void;
   onDeleteItem: (catIndex: number, itemIndex: number) => void;
   onMoveItemUp?: (catIndex: number, itemIndex: number) => void;
   onMoveItemDown?: (catIndex: number, itemIndex: number) => void;
@@ -27,21 +28,12 @@ export function EditMenuItem({
   onDeleteItem,
   onMoveItemUp,
   onMoveItemDown,
-  autoResizeTextarea,
   itemCount = 0
 }: EditMenuItemProps) {
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const pickerWrapperRef = useRef<HTMLDivElement>(null);
-  
-  // Effect to resize textarea when the component mounts with existing content
-  useEffect(() => {
-    if (textareaRef.current && item.note) {
-      autoResizeTextarea(textareaRef.current);
-    }
-  }, [autoResizeTextarea, item.note]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -94,22 +86,17 @@ export function EditMenuItem({
         </div>
       </div>
       
-      <div className="mt-2">
+        <div className="mt-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Notes
           </label>
-          <textarea 
-            ref={textareaRef}
-            value={item.note || ''} 
-            onChange={(e) => {
-              onNoteChange(catIndex, itemIndex, e.target.value);
-              autoResizeTextarea(e.target as HTMLTextAreaElement);
-            }}
-            onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-            className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
-            placeholder="Add a note..."
-            style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
-          />
+          <div className="border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700">
+            <RichTextEditor
+              value={item.note || null}
+              onChange={(richText) => onNoteChange(catIndex, itemIndex, richText)}
+              className="text-sm"
+            />
+          </div>
         
         <div className="mt-4 p-2 sm:p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 flex flex-row justify-between items-center gap-2">
           <div className="flex items-center">

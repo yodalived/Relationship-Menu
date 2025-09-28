@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+/* Rich Text Editor Styles */
+.ProseMirror {
+  outline: none;
+  color: inherit;
+}
+
+.ProseMirror p {
+  margin: 0;
+}
+
+.ProseMirror strong {
+  font-weight: bold;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+.ProseMirror u {
+  text-decoration: underline;
+}
+
+.ProseMirror s {
+  text-decoration: line-through;
+}
+
 :root {
   --main-bg-color: rgba(148, 188, 194, 0.9);
   --main-text-color: rgba(79, 139, 149, 1);

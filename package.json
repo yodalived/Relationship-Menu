@@ -11,6 +11,12 @@
     "postinstall": "node scripts/download-fonts.js"
   },
   "dependencies": {
+    "@tiptap/extension-color": "^3.6.1",
+    "@tiptap/extension-text-style": "^3.6.1",
+    "@tiptap/extension-underline": "^3.6.1",
+    "@tiptap/pm": "^3.6.1",
+    "@tiptap/react": "^3.6.1",
+    "@tiptap/starter-kit": "^3.6.1",
     "emoji-regex-xs": "^2.0.1",
     "jspdf": "^3.0.1",
     "next": "^15.4.6",
@@ -30,10 +36,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/uuid": "^10.0.0",
-    
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
-    
     "tailwindcss": "^4",
     "typescript": "^5"
   }

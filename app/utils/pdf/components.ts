@@ -4,6 +4,7 @@ import { COLORS, PDF_CONFIG } from './constants';
 import { drawIcon, createItemMarker, drawRoundedRect } from './pdfUtils';
 import { drawTextWithEmojis, computeTextWidthWithEmojis, splitTextToSizeWithEmojis } from './emojiText';
 import { formatPeopleNames } from '../formatUtils';
+import { richTextToPlainText } from '../richTextUtils';
 
 /**
  * Adds the header section to the PDF for the first page
@@ -306,7 +307,8 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
   let itemHeight = 0;
   
   // Calculate height for this item
-  if (item.note && item.note.trim().length > 0) {
+  const notePlain = richTextToPlainText(item.note || null);
+  if (notePlain && notePlain.trim().length > 0) {
     const noteCenterY = centerY + PDF_CONFIG.lineHeight + PDF_CONFIG.noteItemSpacing;
     pdf.setFont('Nunito', 'normal');
     pdf.setFontSize(PDF_CONFIG.noteFontSize);
@@ -314,7 +316,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     
     const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
     const textWidth = pageInnerWidth - (PDF_CONFIG.iconOffset);
-    const split = splitTextToSizeWithEmojis(pdf, item.note, textWidth);
+    const split = splitTextToSizeWithEmojis(pdf, notePlain, textWidth);
     
     // Preserve empty lines to retain author-intended spacing
     const nonEmptyLines = split;

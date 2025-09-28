@@ -4,6 +4,7 @@ import { MenuData } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
 import { addHeader, addCompactHeader, addLegend, addFooter, drawSectionHeader, drawMenuItem } from './components';
 import { splitTextToSizeWithEmojis } from './emojiText';
+import { richTextToPlainText } from '../richTextUtils';
 import { DocumentContext } from './types';
 import { loadNunitoFonts } from './fontLoader';
 
@@ -111,7 +112,7 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
           break;
         } 
         // Check if we should split the note across pages
-        else if (item.note && item.note.trim().length > 0) {
+        else if (item.note && richTextToPlainText(item.note).trim().length > 0) {
           const remainingSpace = context.contentMaxY - context.yPos;
           
           // If we have significant empty space (>10mm) and it's due to the note that it doesn't fit
@@ -131,7 +132,8 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
                 pdf.setFontSize(PDF_CONFIG.noteFontSize);
                 const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
                 const textWidth = pageInnerWidth - PDF_CONFIG.iconOffset;
-                const allNoteLines = splitTextToSizeWithEmojis(pdf, item.note, textWidth);
+                const notePlain = richTextToPlainText(item.note);
+                const allNoteLines = splitTextToSizeWithEmojis(pdf, notePlain, textWidth);
                 
                 // Check if all lines fit on the first page
                 if (approximateLinesFitting >= allNoteLines.length) {
@@ -147,13 +149,15 @@ export async function generateMenuPDF(menuData: MenuData): Promise<Blob> {
                 
                 // Create a copy of the item for first page with partial note
                 const firstPageItem = { ...item };
-                firstPageItem.note = allNoteLines.slice(0, approximateLinesFitting).join('\n');
+                const firstPageText = allNoteLines.slice(0, approximateLinesFitting).join('\n');
+                firstPageItem.note = firstPageText ? [{ text: firstPageText }] : null;
                 // Add continuation indicator to the first page note
                 firstPageItem.continuesOnNextPage = true;
                 
                 // Create a copy of the item for second page with remaining note
                 const secondPageItem = { ...item };
-                secondPageItem.note = allNoteLines.slice(approximateLinesFitting).join('\n');
+                const secondPageText = allNoteLines.slice(approximateLinesFitting).join('\n');
+                secondPageItem.note = secondPageText ? [{ text: secondPageText }] : null;
                 secondPageItem.continuedNote = true;
                 
                 // Render first part of the item

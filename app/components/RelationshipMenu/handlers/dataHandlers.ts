@@ -1,4 +1,4 @@
-import { MenuData } from '../../../types';
+import { MenuData, RichTextJSONPart } from '../../../types';
 import { ToastType } from '../../ui/Toast/ToastContext';
 
 export type DataHandlerProps = {
@@ -22,9 +22,9 @@ export function createDataHandlers({
   /**
    * Update a note for a menu item
    */
-  const handleNoteChange = (catIndex: number, itemIndex: number, newNote: string) => {
+  const handleNoteChange = (catIndex: number, itemIndex: number, newNote: RichTextJSONPart[] | null) => {
     const updatedData = { ...editedData };
-    updatedData.menu[catIndex].items[itemIndex].note = newNote || null;
+    updatedData.menu[catIndex].items[itemIndex].note = newNote;
     updatedData.last_update = new Date().toISOString();
     setEditedData(updatedData);
     onSave(updatedData);

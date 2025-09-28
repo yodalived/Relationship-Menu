@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem as MenuItemType, MenuMode } from '../../../types';
+import { MenuItem as MenuItemType, MenuMode, RichTextJSONPart } from '../../../types';
 import { ViewMenuItem } from './ViewMenuItem';
 import { EditMenuItem } from './EditMenuItem';
 import { FillMenuItem } from './FillMenuItem';
@@ -13,7 +13,7 @@ interface MenuItemProps {
   isEditing?: boolean;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
-  onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
+  onNoteChange: (catIndex: number, itemIndex: number, newNote: RichTextJSONPart[] | null) => void;
   onDeleteItem: (catIndex: number, itemIndex: number) => void;
   onMoveItemUp?: (catIndex: number, itemIndex: number) => void;
   onMoveItemDown?: (catIndex: number, itemIndex: number) => void;

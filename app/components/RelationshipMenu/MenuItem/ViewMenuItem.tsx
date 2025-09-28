@@ -2,6 +2,7 @@ import React from 'react';
 import { MenuItem } from '../../../types';
 import { renderIcon, getIconLabel } from '../../ui/IconPicker';
 import { getItemSpanClasses } from './utils';
+import { renderRichText, isRichTextEmpty, richTextToPlainText } from '../../../utils/richTextUtils';
 
 interface ViewMenuItemProps {
   item: MenuItem;
@@ -23,9 +24,9 @@ export function ViewMenuItem({ item }: ViewMenuItemProps) {
         </span>
         <span className="sr-only">, {iconLabel}</span>
       </div>
-      {item.note && (
-        <div className={`${hasIcon ? 'mt-1.5' : 'mt-0.5'} ml-9 text-gray-700 dark:text-gray-50 text-[0.9em] whitespace-pre-line break-words max-sm:mt-1 max-sm:ml-8`} aria-label={`Note: ${item.note}`}>
-          {item.note}
+      {!isRichTextEmpty(item.note) && (
+        <div className={`${hasIcon ? 'mt-1.5' : 'mt-0.5'} ml-9 text-gray-700 dark:text-gray-50 text-[0.9em] whitespace-pre-line break-words max-sm:mt-1 max-sm:ml-8`} aria-label={`Note: ${richTextToPlainText(item.note)}`}>
+          {renderRichText(item.note)}
         </div>
       )}
     </>

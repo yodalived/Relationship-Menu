@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MenuItem } from '../../../types';
+import { MenuItem, RichTextJSONPart } from '../../../types';
 import { IconPicker, renderIcon, ICON_OPTIONS } from '../../ui/IconPicker';
 import { IconChevron } from '../../icons';
 import { getItemSpanClasses } from './utils';
+import { renderRichText, isRichTextEmpty } from '../../../utils/richTextUtils';
+import { RichTextEditorWrapper as RichTextEditor } from '../../ui/RichTextEditorWrapper';
 
 interface FillMenuItemProps {
   catIndex: number;
   itemIndex: number;
   item: MenuItem;
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
-  onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
+  onNoteChange: (catIndex: number, itemIndex: number, newNote: RichTextJSONPart[] | null) => void;
   autoResizeTextarea: (element: HTMLTextAreaElement) => void;
 }
 
@@ -19,12 +21,11 @@ export function FillMenuItem({
   item,
   onIconChange,
   onNoteChange,
-  autoResizeTextarea
 }: FillMenuItemProps) {
   const [isNoteExpanded, setIsNoteExpanded] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const pickerWrapperRef = useRef<HTMLDivElement>(null);
+  const noteEditorRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -40,12 +41,20 @@ export function FillMenuItem({
     };
   }, [isPickerOpen]);
 
-  // Effect to resize textarea when entering edit mode with existing content
+  // Close expanded note editor when clicking outside
   useEffect(() => {
-    if (isNoteExpanded && textareaRef.current) {
-      autoResizeTextarea(textareaRef.current);
-    }
-  }, [isNoteExpanded, autoResizeTextarea]);
+    if (!isNoteExpanded) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (noteEditorRef.current && !noteEditorRef.current.contains(target)) {
+        setIsNoteExpanded(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isNoteExpanded]);
 
   // Convert item.icon to string | null to fix type issues
   const iconType = item.icon === undefined ? null : item.icon;
@@ -101,39 +110,28 @@ export function FillMenuItem({
   // Render the note editor for fill mode
   const renderNoteEditor = () => {
     if (isNoteExpanded) {
-      // Full textarea editor when expanded
+      // Rich text editor when expanded
       return (
-        <textarea 
-          ref={textareaRef}
-          value={item.note || ''} 
-          onChange={(e) => {
-            onNoteChange(catIndex, itemIndex, e.target.value);
-            autoResizeTextarea(e.target as HTMLTextAreaElement);
-          }}
-          onInput={(e) => autoResizeTextarea(e.target as HTMLTextAreaElement)}
-          onBlur={() => setIsNoteExpanded(false)}
-          className="w-full p-2 text-sm rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-50 focus:outline-none focus:ring-1 focus:ring-[var(--main-text-color)] focus:border-[var(--main-text-color)]"
-          placeholder="Add a note..."
-          style={{ minHeight: '80px', resize: 'none', overflow: 'hidden' }}
-          autoFocus
-        />
+        <div ref={noteEditorRef} className="border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700">
+          <RichTextEditor
+            value={item.note || null}
+            onChange={(richText) => onNoteChange(catIndex, itemIndex, richText)}
+            className="text-sm"
+            autoFocus
+          />
+        </div>
       );
     } else {
       // Format the note text to preserve line breaks
-      const formattedNote = item.note ? 
-        item.note.split('\n').map((line, i) => (
-          <React.Fragment key={i}>
-            {line}
-            {i < item.note!.split('\n').length - 1 && <br />}
-          </React.Fragment>
-        )) : 
+      const formattedNote = !isRichTextEmpty(item.note) ? 
+        renderRichText(item.note) : 
         "Add a note...";
         
       // Note text that expands when clicked
       return (
         <div 
           onClick={handleExpandNote}
-          className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white cursor-text text-sm whitespace-pre-line ${!item.note ? 'text-gray-500 dark:text-gray-400' : ''}`}
+          className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white cursor-text text-sm whitespace-pre-line ${isRichTextEmpty(item.note) ? 'text-gray-500 dark:text-gray-400' : ''}`}
           style={{ 
             transform: hasIcon ? 'translateY(-0.6rem)' : 'translateY(-1rem)',
             marginBottom: hasIcon ? '-0.6rem' : '-1rem', 

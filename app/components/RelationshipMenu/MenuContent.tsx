@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuCategory, MenuItem as MenuItemType, MenuMode } from '../../types';
+import { MenuCategory, MenuItem as MenuItemType, MenuMode, RichTextJSONPart } from '../../types';
 import { MenuItem } from './MenuItem';
 import { CategoryHeader } from './CategoryHeader';
 import { IconPlus, IconPlusCircle } from '../icons';
@@ -10,7 +10,7 @@ interface MenuContentProps {
   onIconChange: (catIndex: number, itemIndex: number, newIcon: string | null) => void;
   onCategoryNameChange: (catIndex: number, newName: string) => void;
   onItemNameChange: (catIndex: number, itemIndex: number, newName: string) => void;
-  onNoteChange: (catIndex: number, itemIndex: number, newNote: string) => void;
+  onNoteChange: (catIndex: number, itemIndex: number, newNote: RichTextJSONPart[] | null) => void;
   onDeleteItem: (catIndex: number, itemIndex: number) => void;
   onAddItem: (catIndex: number) => void;
   onAddSection: () => void;
