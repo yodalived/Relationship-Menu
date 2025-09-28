@@ -278,5 +278,3 @@ export function isUniformColor(editor: Editor, color: string): boolean {
 }
 
 export default InlineColorPicker;
-
-
