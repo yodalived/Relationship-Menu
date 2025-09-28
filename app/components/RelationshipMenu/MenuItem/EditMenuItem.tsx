@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MenuItem, RichTextJSONPart } from '../../../types';
 import { IconButton, IconPicker } from '../../ui/IconPicker';
 import { IconChevron } from '../../icons';
-import { RichTextEditorWrapper as RichTextEditor } from '../../ui/RichTextEditorWrapper';
+import { RichTextEditor } from '../../ui/RichTextEditor';
 
 interface EditMenuItemProps {
   catIndex: number;

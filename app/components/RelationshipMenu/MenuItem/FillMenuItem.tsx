@@ -4,7 +4,7 @@ import { IconPicker, renderIcon, ICON_OPTIONS } from '../../ui/IconPicker';
 import { IconChevron } from '../../icons';
 import { getItemSpanClasses } from './utils';
 import { renderRichText, isRichTextEmpty } from '../../../utils/richTextUtils';
-import { RichTextEditorWrapper as RichTextEditor } from '../../ui/RichTextEditorWrapper';
+import { RichTextEditor } from '../../ui/RichTextEditor';
 
 interface FillMenuItemProps {
   catIndex: number;
