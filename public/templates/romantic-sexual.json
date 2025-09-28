@@ -1074,6 +1074,13 @@
         },
         {
           "title": {
+            "en": "Going to sexual events (play parties, workshops, etc.)",
+            "de": "Zu sexuellen Veranstaltungen gehen (Play Parties, Workshops, etc.)"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
             "en": "Importance of orgasms",
             "de": "Wichtigkeit von Orgasmen"
           },
@@ -1211,6 +1218,20 @@
           "title": {
             "en": "Prioritisation over other partners",
             "de": "Vorrang vor anderen Partner:innen"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Having veto power over other partners",
+            "de": "Vetorechte über andere Partner:innen haben"
+          },
+          "icon_name": null
+        },
+        {
+          "title": {
+            "en": "Being subject to veto power from other partners",
+            "de": "Dem Vetorecht anderer Partner:innen unterliegen"
           },
           "icon_name": null
         },
