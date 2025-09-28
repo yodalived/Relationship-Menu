@@ -14,12 +14,6 @@ export function richTextToPlainText(richText: RichTextJSONPart[] | null | undefi
 }
 
 /**
- * Converts plain text to RichTextJSONPart array
- * Used when saving plain text input as rich text
- */
-// Note: plainTextToRichText removed – not needed with rich text editor
-
-/**
  * Renders rich text as JSX for display components
  * Handles formatting like bold, italic, underline, strikethrough, and color
  */
@@ -94,15 +88,3 @@ export function isRichTextEmpty(richText: RichTextJSONPart[] | null | undefined)
   const text = richText.map(part => part.text).join('').trim();
   return text.length === 0;
 }
-
-/**
- * Creates a rich text part with specified formatting
- * Utility function for creating formatted text programmatically
- */
-// Note: createRichTextPart removed – not used by current UI
-
-/**
- * Creates a rich text array from mixed plain and formatted text
- * Utility function for testing and development
- */
-// Note: createRichText removed – only used for tests / not needed now
