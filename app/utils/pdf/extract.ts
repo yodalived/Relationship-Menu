@@ -69,10 +69,11 @@ export const extractMenuDataFromPDF = async (pdfBytes: ArrayBuffer): Promise<Men
           throw new Error('Invalid menu data structure in the PDF');
         }
         
-        // Migrate data to latest schema version
+        // Migrate data to latest schema version (may throw if newer schema than supported)
         return migrateMenuData(menuData);
       } catch (jsonError) {
-        console.error('Failed to parse JSON from PDF:', jsonError);
+        // Re-throw so callers can show a meaningful error (e.g., newer schema)
+        throw jsonError as Error;
       }
     }
     

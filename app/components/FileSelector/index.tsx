@@ -121,8 +121,9 @@ export function FileSelector({ isModal = false, onClose, onMenuPageWithNoMenu = 
           }
           setError('No relationship menu data found in this PDF');
           setIsProcessing(false);
-        } catch {
-          setError('Failed to extract data from PDF. Please select a JSON file instead.');
+        } catch (e) {
+          const err = e as Error;
+          setError(err.message || 'Failed to extract data from PDF. Please select a JSON file instead.');
           setIsProcessing(false);
         }
         return;

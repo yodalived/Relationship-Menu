@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MenuData } from '../../types';
 import { getMenuById, saveMenu, updateMenuList } from '../../utils/menuStorage';
 import { ImportConflictModal } from './ImportConflictModal';
+import { migrateMenuData } from '../../utils/migrations';
 
 interface UseMenuImportOptions {
   onComplete?: (menuId: string) => void;
@@ -22,8 +23,16 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
   // Initial import, detects conflicts
   const importMenu = useCallback((importedData: MenuData) => {
     setError(null);
+    // Migrate first to ensure compatibility and to catch newer schema errors
+    let data: MenuData;
+    try {
+      data = migrateMenuData(importedData);
+    } catch (e) {
+      const err = e as Error;
+      setError(err.message || 'Failed to import menu.');
+      return false;
+    }
     // Ensure we have a UUID
-    const data = { ...importedData };
     if (!data.uuid) {
       data.uuid = uuidv4();
     }
@@ -60,9 +69,18 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
 
   // Force import, always overwrites
   const forceImportMenu = useCallback((data: MenuData) => {
+    // Migrate first to ensure compatibility and to catch newer schema errors
+    let migrated: MenuData;
+    try {
+      migrated = migrateMenuData(data);
+    } catch (e) {
+      const err = e as Error;
+      setError(err.message || 'Failed to import menu.');
+      return;
+    }
     // Always ensure uuid
-    const menuId = data.uuid || uuidv4();
-    const menuData = { ...data, uuid: menuId };
+    const menuId = migrated.uuid || uuidv4();
+    const menuData = { ...migrated, uuid: menuId };
     saveMenu(menuData);
     updateMenuList(menuData);
     if (isModal && onClose) onClose();

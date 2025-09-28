@@ -104,6 +104,13 @@ export function migrateMenuData(data: MenuData): MenuData {
   // Convert schema_version to string for consistency
   let currentVersion = String(migratedData.schema_version);
   
+  // If incoming data is newer than what we support, stop and surface a clear error
+  if (compareVersions(currentVersion, CURRENT_SCHEMA_VERSION) > 0) {
+    throw new Error(
+      `This menu uses a newer format (v${currentVersion}) than this site supports (v${CURRENT_SCHEMA_VERSION}). Try reloading the site or waiting a few days for the latest version to be released.`
+    );
+  }
+  
   // If already at latest version, return as is
   if (currentVersion === CURRENT_SCHEMA_VERSION) {
     return migratedData;
