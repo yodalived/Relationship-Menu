@@ -28,12 +28,18 @@ function decompressFont(compressedBase64: string): string {
 export function loadNunitoFonts(pdf: jsPDF): void {
   // Check if Nunito fonts are already loaded in this instance
   const fontList = pdf.getFontList();
-  if (fontList.Nunito && fontList.Nunito.includes('normal') && fontList.Nunito.includes('bold')) {
+  if (
+    fontList.Nunito &&
+    fontList.Nunito.includes('normal') &&
+    fontList.Nunito.includes('bold') &&
+    fontList.Nunito.includes('italic') &&
+    fontList.Nunito.includes('bolditalic')
+  ) {
     return; // Fonts already loaded
   }
   
   try {
-    // Decompress and add only the Nunito font variants we actually use
+    // Decompress and add the Nunito font variants we use
     const nunitoRegular = decompressFont(NUNITO_FONTS_COMPRESSED.normal);
     pdf.addFileToVFS('Nunito-Regular.ttf', nunitoRegular);
     pdf.addFont('Nunito-Regular.ttf', 'Nunito', 'normal');
@@ -41,6 +47,14 @@ export function loadNunitoFonts(pdf: jsPDF): void {
     const nunitoBold = decompressFont(NUNITO_FONTS_COMPRESSED.bold);
     pdf.addFileToVFS('Nunito-Bold.ttf', nunitoBold);
     pdf.addFont('Nunito-Bold.ttf', 'Nunito', 'bold');
+    
+    const nunitoItalic = decompressFont(NUNITO_FONTS_COMPRESSED.italic);
+    pdf.addFileToVFS('Nunito-Italic.ttf', nunitoItalic);
+    pdf.addFont('Nunito-Italic.ttf', 'Nunito', 'italic');
+    
+    const nunitoBoldItalic = decompressFont(NUNITO_FONTS_COMPRESSED.bolditalic);
+    pdf.addFileToVFS('Nunito-BoldItalic.ttf', nunitoBoldItalic);
+    pdf.addFont('Nunito-BoldItalic.ttf', 'Nunito', 'bolditalic');
     
   } catch (error) {
     console.error('Failed to load Nunito fonts:', error);

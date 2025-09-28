@@ -2,9 +2,10 @@ import jsPDF from 'jspdf';
 import { MenuData, MenuCategory, MenuItem } from '../../types';
 import { COLORS, PDF_CONFIG } from './constants';
 import { drawIcon, createItemMarker, drawRoundedRect } from './pdfUtils';
-import { drawTextWithEmojis, computeTextWidthWithEmojis, splitTextToSizeWithEmojis } from './emojiText';
+import { drawTextWithEmojis, computeTextWidthWithEmojis } from './emojiText';
 import { formatPeopleNames } from '../formatUtils';
 import { richTextToPlainText } from '../richTextUtils';
+import { drawFormattedLineWithEmojis, wrapRichTextToLines, computeLineWidthFromSegments } from './formattedText';
 
 /**
  * Adds the header section to the PDF for the first page
@@ -316,15 +317,13 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     
     const pageInnerWidth = 210 - PDF_CONFIG.margin * 2;
     const textWidth = pageInnerWidth - (PDF_CONFIG.iconOffset);
-    const split = splitTextToSizeWithEmojis(pdf, notePlain, textWidth);
-    
-    // Preserve empty lines to retain author-intended spacing
-    const nonEmptyLines = split;
+    // Use rich run-aware wrapping for accurate layout and emoji handling
+    const richLines = wrapRichTextToLines(pdf, item.note || null, textWidth);
     
     if (!dryRun) {
       // Handle notes that continue from previous page
       if (item.continuedNote) {
-        if (nonEmptyLines.length > 0) {
+        if (richLines.length > 0) {
           // Continuation indicator
           pdf.setTextColor(180, 180, 180);
           pdf.setFont('Nunito', 'normal');
@@ -333,45 +332,46 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           // Calculate prefix width
           const prefixWidth = computeTextWidthWithEmojis(pdf, "...  ");
           
-          // First line of continued note
-          pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
-          pdf.setFont('Nunito', 'normal');
-          drawTextWithEmojis(pdf, nonEmptyLines[0], textStartX + prefixWidth, noteCenterY);
+          // First line of continued note (formatted)
+          const defaultGray: [number, number, number] = [COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]];
+          pdf.setTextColor(defaultGray[0], defaultGray[1], defaultGray[2]);
+          const firstSegments = richLines[0] || [];
+          drawFormattedLineWithEmojis(pdf, firstSegments, textStartX + prefixWidth, noteCenterY, defaultGray);
           
-          // Remaining lines
-          for (let idx = 1; idx < nonEmptyLines.length; idx++) {
+          // Remaining lines (formatted)
+          for (let idx = 1; idx < richLines.length; idx++) {
             const y = noteCenterY + idx * PDF_CONFIG.noteLineHeight;
-            const line = nonEmptyLines[idx];
-            // Render empty line as spacer by skipping text but keeping y advance
-            if (line && line.trim().length > 0) {
-              drawTextWithEmojis(pdf, line, textStartX, y);
+            const segs = richLines[idx];
+            if (segs.length > 0) {
+              drawFormattedLineWithEmojis(pdf, segs, textStartX, y, defaultGray);
             }
           }
         }
       } else {
         // Handle notes that continue to next page
-        if (item.continuesOnNextPage && nonEmptyLines.length > 0) {
+        if (item.continuesOnNextPage && richLines.length > 0) {
           // Draw all lines except the last
-          for (let idx = 0; idx < nonEmptyLines.length - 1; idx++) {
+          for (let idx = 0; idx < richLines.length - 1; idx++) {
             const y = noteCenterY + idx * PDF_CONFIG.noteLineHeight;
-            const line = nonEmptyLines[idx];
-            if (line && line.trim().length > 0) {
-              drawTextWithEmojis(pdf, line, textStartX, y);
+            const segs = richLines[idx];
+            if (segs.length > 0) {
+              drawFormattedLineWithEmojis(pdf, segs, textStartX, y, [COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]]);
             }
           }
           
           // Last line with continuation indicator
-          const lastLineIdx = nonEmptyLines.length - 1;
+          const lastLineIdx = richLines.length - 1;
           const lastLineY = noteCenterY + lastLineIdx * PDF_CONFIG.noteLineHeight;
           
           pdf.setFont('Nunito', 'normal');
-          const lastLine = nonEmptyLines[lastLineIdx];
-          if (lastLine && lastLine.trim().length > 0) {
-            drawTextWithEmojis(pdf, lastLine, textStartX, lastLineY);
+          const lastSegs = richLines[lastLineIdx];
+          if (lastSegs.length > 0) {
+            const defaultGray: [number, number, number] = [COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]];
+            drawFormattedLineWithEmojis(pdf, lastSegs, textStartX, lastLineY, defaultGray);
           }
           
           // Continuation indicator at end of line
-          const lastLineWidth = lastLine && lastLine.trim().length > 0 ? computeTextWidthWithEmojis(pdf, lastLine) : 0;
+          const lastLineWidth = computeLineWidthFromSegments(pdf, lastSegs || []);
           pdf.setTextColor(180, 180, 180);
           pdf.setFont('Nunito', 'normal');
           drawTextWithEmojis(pdf, "  ...", textStartX + lastLineWidth, lastLineY);
@@ -380,10 +380,14 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
           pdf.setTextColor(COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]);
         } else {
           // Regular note with no continuation
-          nonEmptyLines.forEach((line: string, idx: number) => {
+          const defaultGray: [number, number, number] = [COLORS.gray[0], COLORS.gray[1], COLORS.gray[2]];
+          richLines.forEach((segments, idx: number) => {
             const y = noteCenterY + idx * PDF_CONFIG.noteLineHeight;
-            if (line && line.trim().length > 0) {
-              drawTextWithEmojis(pdf, line, textStartX, y);
+            if (segments.length > 0) {
+              pdf.setFont('Nunito', 'normal');
+              pdf.setFontSize(PDF_CONFIG.noteFontSize);
+              pdf.setTextColor(defaultGray[0], defaultGray[1], defaultGray[2]);
+              drawFormattedLineWithEmojis(pdf, segments, textStartX, y, defaultGray);
             }
           });
         }
@@ -391,7 +395,7 @@ export function drawMenuItem(pdf: jsPDF, item: MenuItem & { continuedNote?: bool
     }
     
     // Calculate height including the note text
-    const noteTextHeight = nonEmptyLines.length * PDF_CONFIG.noteLineHeight;
+    const noteTextHeight = richLines.length * PDF_CONFIG.noteLineHeight;
     
     // No need for extra space for continuation indicators since they're inline
     // Calculate total item height (just base height + note height)

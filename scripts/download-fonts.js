@@ -5,15 +5,19 @@ const path = require('path');
 const pako = require('pako');
 
 // Google Fonts API URLs for TTF files (these work for jsPDF)
-// Only download weights that we actually use in PDF generation
-const FONT_WEIGHTS = {
-  'nunito-regular': '400',
-  'nunito-bold': '700'
+// Only download variants that we actually use in PDF generation
+// Key format maps to generated filenames
+const FONT_VARIANTS = {
+  'nunito-regular': { ital: 0, weight: '400' },
+  'nunito-bold': { ital: 0, weight: '700' },
+  'nunito-italic': { ital: 1, weight: '400' },
+  'nunito-bolditalic': { ital: 1, weight: '700' },
 };
 
 // Function to get font URL from Google Fonts API
-function getFontApiUrl(weight) {
-  return `https://fonts.googleapis.com/css2?family=Nunito:wght@${weight}&display=swap`;
+function getFontApiUrl(ital, weight) {
+  // Use ital,wght axis to fetch just the target variant
+  return `https://fonts.googleapis.com/css2?family=Nunito:ital,wght@${ital},${weight}&display=swap`;
 }
 
 async function extractTtfUrl(cssUrl) {
@@ -46,12 +50,12 @@ async function extractTtfUrl(cssUrl) {
 
 const FONTS_DIR = path.join(__dirname, '..', 'node_modules', '.fonts');
 
-async function downloadFont(fontName, weight) {
+async function downloadFont(fontName, ital, weight) {
   console.log(`Downloading ${fontName} (weight ${weight})...`);
   
   try {
     // First, get the CSS to extract the TTF URL
-    const cssUrl = getFontApiUrl(weight);
+    const cssUrl = getFontApiUrl(ital, weight);
     const ttfUrl = await extractTtfUrl(cssUrl);
     
     if (!ttfUrl) {
@@ -103,15 +107,19 @@ async function createFontIndex() {
   const indexContent = `// Auto-generated font index
 import { nunito_regular_compressed } from './nunito-regular';
 import { nunito_bold_compressed } from './nunito-bold';
+import { nunito_italic_compressed } from './nunito-italic';
+import { nunito_bolditalic_compressed } from './nunito-bolditalic';
 
 // Font mappings for jsPDF (compressed data)
 export const NUNITO_FONTS_COMPRESSED = {
   normal: nunito_regular_compressed,
-  bold: nunito_bold_compressed
+  bold: nunito_bold_compressed,
+  italic: nunito_italic_compressed,
+  bolditalic: nunito_bolditalic_compressed,
 };
 
 // Re-export individual fonts if needed
-export { nunito_regular_compressed, nunito_bold_compressed };
+export { nunito_regular_compressed, nunito_bold_compressed, nunito_italic_compressed, nunito_bolditalic_compressed };
 `;
   
   const indexPath = path.join(FONTS_DIR, 'index.ts');
@@ -129,8 +137,8 @@ async function main() {
   
   // Download all fonts
   const results = [];
-  for (const [name, weight] of Object.entries(FONT_WEIGHTS)) {
-    const success = await downloadFont(name, weight);
+  for (const [name, cfg] of Object.entries(FONT_VARIANTS)) {
+    const success = await downloadFont(name, cfg.ital, cfg.weight);
     results.push({ name, success });
   }
   
