@@ -39,7 +39,7 @@ export function useMenuImport({ onComplete, isModal, onClose }: UseMenuImportOpt
     const menuId = data.uuid;
 
     // Prevent importing example menu
-    if (menuId === 'example') {
+    if (typeof menuId === 'string' && menuId.toLowerCase() === 'example') {
       if (isModal && onClose) onClose();
       onComplete?.('example');
       return false;

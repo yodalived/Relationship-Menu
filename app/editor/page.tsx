@@ -95,7 +95,7 @@ function EditorContent() {
 
     // Function to update the title
     const updateTitle = () => {
-      if (menuData?.uuid === 'example') {
+      if (menuData?.uuid && menuData.uuid.toLowerCase() === 'example') {
         document.title = 'Relationship Menu - Example';
       } else if (menuData?.people && menuData.people.length > 0) {
         // Filter out empty names and join the remaining ones
@@ -177,7 +177,9 @@ function EditorContent() {
             const exampleMenu = await response.json();
             // Apply migration to ensure example menu is in the latest format
             const migratedExampleMenu = migrateMenuData(exampleMenu);
-            setMenuData(migratedExampleMenu);
+            // Preserve sentinel UUID for example menu to enable special handling
+            const exampleMenuData = { ...migratedExampleMenu, uuid: 'example' } as MenuData;
+            setMenuData(exampleMenuData);
             setIsLoading(false);
             return;
           } catch (error) {
@@ -232,7 +234,7 @@ function EditorContent() {
   const handleSaveMenu = (updatedMenu: MenuData) => {
     try {
       // Prevent saving example menu
-      if (updatedMenu.uuid === 'example') {
+      if (updatedMenu.uuid && updatedMenu.uuid.toLowerCase() === 'example') {
         console.log('Example menu changes are not saved');
         return;
       }
@@ -311,10 +313,10 @@ function EditorContent() {
   if (menuData) {
     return (
       <Container>
-        {menuData.uuid !== 'example' && (
+        {menuData.uuid && menuData.uuid.toLowerCase() !== 'example' && (
           <OnboardingWizard steps={onboardingSteps} welcomeScreen={welcomeScreen} />
         )}
-        {menuData.uuid === 'example' && (
+        {menuData.uuid && menuData.uuid.toLowerCase() === 'example' && (
           <div className="mb-4 p-4 bg-[rgba(148,188,194,0.2)] text-[rgba(79,139,149,1)] rounded-lg flex items-center">
             <IconInfo className="h-5 w-5 mr-2" />
             <span>This is an example menu. Any changes you make will not be saved.</span>
