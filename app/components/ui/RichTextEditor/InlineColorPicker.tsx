@@ -89,13 +89,13 @@ export function InlineColorPicker({ editor }: { editor: Editor }) {
           });
         }}
         title="Text color"
-        className="w-8 h-8 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-600 flex items-center justify-center"
+        className="min-w-10 w-8 h-8 rounded border border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-600 flex items-center justify-center"
       >
         <span className="w-5 h-5 rounded" style={{ backgroundColor: currentColor }} />
       </button>
       {isOpen && (
         <div
-          className="absolute z-50 mt-2 p-2 bg-white dark:bg-gray-700 rounded shadow-lg border border-gray-200 dark:border-gray-600"
+          className="absolute z-50 top-full mt-2 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 p-2 bg-white dark:bg-gray-700 rounded shadow-lg border border-gray-200 dark:border-gray-600"
           style={{ width: 220 }}
           onMouseDown={(e) => { e.stopPropagation(); pointerFromPickerRef.current = true; }}
           onPointerDown={(e) => { e.stopPropagation(); pointerFromPickerRef.current = true; }}
