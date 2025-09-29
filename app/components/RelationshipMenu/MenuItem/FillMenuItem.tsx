@@ -131,11 +131,14 @@ export function FillMenuItem({
       return (
         <div 
           onClick={handleExpandNote}
-          className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white cursor-text text-sm whitespace-pre-line ${isRichTextEmpty(item.note) ? 'text-gray-500 dark:text-gray-400' : ''}`}
+          className={`text-gray-800 dark:text-gray-50 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 cursor-text text-sm whitespace-pre-line transition-colors duration-200 rounded py-0.5 -my-0.5 ${isRichTextEmpty(item.note) ? 'text-gray-500 dark:text-gray-400' : ''}`}
           style={{ 
-            transform: hasIcon ? 'translateY(-0.6rem)' : 'translateY(-1rem)',
-            marginBottom: hasIcon ? '-0.6rem' : '-1rem', 
-            paddingLeft: '5.4rem'
+            transform: hasIcon ? 'translateY(-0.3rem)' : 'translateY(-0.7rem)',
+            marginBottom: hasIcon ? '-0.3rem' : '-0.7rem', 
+            marginLeft: '5.15rem',
+            paddingLeft: '0.25rem',
+            paddingRight: '0.25rem',
+            marginRight: '-0.25rem'
           }}
         >
           {formattedNote}
