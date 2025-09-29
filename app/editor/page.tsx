@@ -7,6 +7,7 @@ import { LoadingIndicator } from '../components/ui/LoadingIndicator';
 import { Container } from '../components/ui/Container';
 import { MenuMode, MenuData } from '../types';
 import { getMenuById, saveMenu, getAllMenus } from '../utils/menuStorage';
+import { migrateMenuData } from '../utils/migrations';
 import { ErrorModal } from '../components/ui/ErrorModal';
 import { FileSelector } from '../components/FileSelector';
 import TemplateSelector from '../components/TemplateSelector/TemplateSelector';
@@ -174,7 +175,9 @@ function EditorContent() {
               throw new Error('Failed to load example menu');
             }
             const exampleMenu = await response.json();
-            setMenuData(exampleMenu);
+            // Apply migration to ensure example menu is in the latest format
+            const migratedExampleMenu = migrateMenuData(exampleMenu);
+            setMenuData(migratedExampleMenu);
             setIsLoading(false);
             return;
           } catch (error) {
