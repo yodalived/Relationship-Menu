@@ -145,10 +145,10 @@ export function RichTextEditor({
       </div>
       
       {/* Editor Content */}
-      <div className="editor-content">
+      <div className="editor-content bg-white dark:bg-gray-800">
         <EditorContent 
           editor={editor} 
-          className="prose max-w-none p-3 min-h-[80px] focus-within:outline-none"
+          className="prose max-w-none p-3 min-h-[120px] focus-within:outline-none"
           style={{ 
             fontSize: '14px',
             lineHeight: '1.4'
@@ -176,7 +176,7 @@ function ToolbarButton({
       onClick={onClick}
       title={title}
       className={`
-        px-2 py-1 rounded text-sm font-medium transition-colors
+        min-w-10 px-3 py-1 rounded text-sm font-medium transition-colors
         ${isActive 
           ? 'bg-blue-500 text-white' 
           : 'bg-white dark:bg-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-500'
