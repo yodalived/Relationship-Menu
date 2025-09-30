@@ -4,6 +4,11 @@
 .ProseMirror {
   outline: none;
   color: inherit;
+  /* Prevent long words/URLs from expanding the container */
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: pre-wrap; /* keep newlines (TipTap uses hardBreak) while allowing wrapping */
+  hyphens: auto;
 }
 
 .ProseMirror p {

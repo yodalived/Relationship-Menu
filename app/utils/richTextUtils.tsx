@@ -65,6 +65,12 @@ function renderRichTextPart(part: RichTextJSONPart, partIndex: number): React.Re
     styles.color = part.color;
   }
   
+  // Ensure long words/URLs do not expand containers when rendering
+  styles.wordBreak = 'break-word';
+  styles.overflowWrap = 'anywhere';
+  styles.whiteSpace = 'pre-wrap';
+  styles.hyphens = 'auto';
+
   return (
     <span key={partIndex} style={styles}>
       {lines.map((line, lineIndex) => (
