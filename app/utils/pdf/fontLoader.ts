@@ -2,6 +2,17 @@ import jsPDF from 'jspdf';
 import { NUNITO_FONTS_COMPRESSED } from '../../../node_modules/.fonts';
 import { ungzip } from 'pako';
 
+// Efficiently convert a Uint8Array to base64 without exceeding the call stack
+function uint8ToBase64(bytes: Uint8Array): string {
+  let binary = '';
+  const chunkSize = 0x8000; // 32KB chunks to avoid large argument lists
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode.apply(null, Array.from(chunk));
+  }
+  return btoa(binary);
+}
+
 /**
  * Helper function to decompress font data
  */
@@ -13,8 +24,8 @@ function decompressFont(compressedBase64: string): string {
     // Decompress using pako
     const decompressedData = ungzip(compressedData);
     
-    // Convert back to base64 for jsPDF
-    return btoa(String.fromCharCode(...decompressedData));
+    // Convert back to base64 for jsPDF (chunked to avoid stack overflows in Chrome)
+    return uint8ToBase64(decompressedData);
   } catch (error) {
     console.error('Failed to decompress font:', error);
     throw error;
