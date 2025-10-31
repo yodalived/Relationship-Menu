@@ -1,4 +1,4 @@
-import { MenuData } from '../../../types';
+import { MenuData, Person } from '../../../types';
 import { ToastType } from '../../../components/ui/Toast/ToastContext';
 import { formatPeopleNames } from '../../../utils/formatUtils';
 
@@ -26,18 +26,18 @@ const isShareApiSupported = () => {
 };
 
 /**
- * Creates a consistent title or filename 
+ * Creates a consistent title or filename
  */
-const getMenuName = (people: string[], options: { 
-  extension?: string; 
+const getMenuName = (people: string[] | Person[], options: {
+  extension?: string;
   sanitizeForFilename?: boolean;
 } = {}): string => {
   // Default options
   const { extension = '', sanitizeForFilename = false } = options;
-  
+
   // Ensure there's at least one name, defaulting to "Anonymous" if empty
   const validPeople = people.length > 0 ? people : ['Anonymous'];
-  
+
   // Format people names
   const peopleNames = formatPeopleNames(validPeople);
   

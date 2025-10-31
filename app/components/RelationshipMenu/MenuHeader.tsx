@@ -1,12 +1,12 @@
 import React from 'react';
-import { MenuMode } from '../../types';
+import { MenuMode, Person } from '../../types';
 import { IconPlus } from '../icons';
 import { PersonNameInput } from '../ui/PersonNameInput';
 import { formatPeopleNames } from '../../utils/formatUtils';
 
 interface MenuHeaderProps {
   mode: MenuMode;
-  people: string[];
+  people: string[] | Person[];
   lastUpdate: string;
   onPersonNameChange: (personIndex: number, newName: string) => void;
   onAddPerson: () => void;
@@ -42,16 +42,20 @@ export function MenuHeader({
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-200 dark:border-gray-700 transition-all">
           <h2 className="text-xl font-bold mb-5 text-[var(--main-text-color)] dark:text-[var(--main-text-color)] transition-colors">Menu for:</h2>
           <div className="space-y-4 w-full max-w-xl">
-            {people.map((personName, index) => (
-              <PersonNameInput
-                key={index}
-                name={personName}
-                index={index}
-                onChange={(value) => onPersonNameChange(index, value)}
-                onDelete={people.length > 1 ? () => onDeletePerson(index) : undefined}
-                showDelete={people.length > 1}
-              />
-            ))}
+            {people.map((person, index) => {
+              const personName = typeof person === 'string' ? person : person.name;
+              const personKey = typeof person === 'string' ? index : person.id;
+              return (
+                <PersonNameInput
+                  key={personKey}
+                  name={personName}
+                  index={index}
+                  onChange={(value) => onPersonNameChange(index, value)}
+                  onDelete={people.length > 1 ? () => onDeletePerson(index) : undefined}
+                  showDelete={people.length > 1}
+                />
+              );
+            })}
             <button
               type="button"
               onClick={onAddPerson}

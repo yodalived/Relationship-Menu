@@ -1,4 +1,4 @@
-import { MenuData } from '../types';
+import { MenuData, Person } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { migrateMenuData } from './migrations';
 import { formatPeopleNames } from './formatUtils';
@@ -18,7 +18,7 @@ export type MenuInfo = {
  * Creates a title from people names
  * @deprecated Use formatPeopleNames from utils/formatUtils instead
  */
-export function createMenuTitle(people: string[]): string {
+export function createMenuTitle(people: string[] | Person[]): string {
   if (!people || people.length === 0) return "Untitled Menu";
   return formatPeopleNames(people);
 }

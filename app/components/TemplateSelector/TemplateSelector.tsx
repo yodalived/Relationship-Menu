@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { TemplateItem as TemplateItemType, TemplateSelectorProps, TemplateLocalizedText, TemplateCategoryJSON, TemplateItemJSON, TemplateJSON } from './types';
-import { MenuData } from '../../types';
+import { MenuData, Person } from '../../types';
 import TemplateSetupForm from './TemplateSetupForm';
 import TemplateItem from './TemplateItem';
 import { CURRENT_SCHEMA_VERSION } from '../../utils/migrations';
 import { v4 as uuidv4 } from 'uuid';
 import { IconWarning } from '../icons';
 import { saveMenu, updateMenuList } from '../../utils/menuStorage';
+import { createPerson } from '../../utils/personUtils';
 
 function TemplateSelectorContent({
   isLoading,
@@ -215,15 +216,20 @@ export default function TemplateSelector({
         return { name: categoryName, items };
       });
 
+      // Convert people names to Person objects for Schema 2.0
+      const peopleData: string[] | Person[] = CURRENT_SCHEMA_VERSION === '2.0'
+        ? people.map((name: string) => createPerson(name))
+        : people;
+
       const menuData: MenuData = {
         schema_version: CURRENT_SCHEMA_VERSION,
         last_update: new Date().toISOString(),
-        people,
+        people: peopleData,
         menu,
         uuid: uuidv4().toUpperCase(),
         language,
         template_uuid: (templateJson.uuid ?? null) as string | null,
-      };
+      } as MenuData;
 
       // Count total items to determine initial mode
       const totalItems = menuData.menu.reduce((total, section) => {

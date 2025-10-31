@@ -98,11 +98,14 @@ function EditorContent() {
       if (menuData?.uuid && menuData.uuid.toLowerCase() === 'example') {
         document.title = 'Relationship Menu - Example';
       } else if (menuData?.people && menuData.people.length > 0) {
-        // Filter out empty names and join the remaining ones
-        const validNames = menuData.people.filter(name => name && name.trim() !== '');
-        
-        if (validNames.length > 0) {
-          document.title = `Relationship Menu - ${formatPeopleNames(validNames)}`;
+        // Filter out people with empty names
+        const validPeople = menuData.people.filter(person => {
+          const name = typeof person === 'string' ? person : person.name;
+          return name && name.trim() !== '';
+        });
+
+        if (validPeople.length > 0) {
+          document.title = `Relationship Menu - ${formatPeopleNames(menuData.people)}`;
         } else {
           document.title = 'Relationship Menu - Editor';
         }

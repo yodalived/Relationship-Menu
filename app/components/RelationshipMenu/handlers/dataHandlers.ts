@@ -1,5 +1,12 @@
-import { MenuData, RichTextJSONPart } from '../../../types';
+import { MenuData, RichTextJSONPart, isSchema2_0 } from '../../../types';
 import { ToastType } from '../../ui/Toast/ToastContext';
+import {
+  updatePersonName,
+  addPerson,
+  removePerson,
+  initializeResponsesForPerson,
+  removeResponsesForPerson
+} from '../../../utils/personUtils';
 
 export type DataHandlerProps = {
   editedData: MenuData;
@@ -61,7 +68,16 @@ export function createDataHandlers({
    */
   const handlePersonNameChange = (personIndex: number, newName: string) => {
     const updatedData = { ...editedData };
-    updatedData.people[personIndex] = newName;
+
+    if (isSchema2_0(updatedData)) {
+      // Schema 2.0: Use Person objects with IDs
+      const personId = updatedData.people[personIndex].id;
+      updatedData.people = updatePersonName(updatedData.people, personId, newName);
+    } else {
+      // Schema 1.3: Direct string array update
+      updatedData.people[personIndex] = newName;
+    }
+
     updatedData.last_update = new Date().toISOString();
     setEditedData(updatedData);
     onSave(updatedData);
@@ -82,8 +98,19 @@ export function createDataHandlers({
    * Add a new person to the menu
    */
   const handleAddPerson = () => {
-    const updatedData = { ...editedData };
-    updatedData.people.push("New Person");
+    let updatedData = { ...editedData };
+
+    if (isSchema2_0(updatedData)) {
+      // Schema 2.0: Add Person object and initialize responses across all items
+      const { people: newPeople, newPerson } = addPerson(updatedData.people, "New Person");
+      updatedData.people = newPeople;
+      // Initialize empty responses for the new person across all menu items
+      updatedData = initializeResponsesForPerson(updatedData, newPerson.id);
+    } else {
+      // Schema 1.3: Direct string array update
+      updatedData.people.push("New Person");
+    }
+
     updatedData.last_update = new Date().toISOString();
     setEditedData(updatedData);
     onSave(updatedData);
@@ -93,13 +120,24 @@ export function createDataHandlers({
    * Remove a person from the menu
    */
   const handleDeletePerson = (personIndex: number) => {
-    const updatedData = { ...editedData };
+    let updatedData = { ...editedData };
     // Ensure we maintain at least 1 person
     if (updatedData.people.length <= 1) {
       showToast("A relationship menu must have at least 1 person.", "error", 4000);
       return;
     }
-    updatedData.people.splice(personIndex, 1);
+
+    if (isSchema2_0(updatedData)) {
+      // Schema 2.0: Remove Person object and clean up responses
+      const personId = updatedData.people[personIndex].id;
+      updatedData.people = removePerson(updatedData.people, personId);
+      // Remove all responses for this person across all menu items
+      updatedData = removeResponsesForPerson(updatedData, personId);
+    } else {
+      // Schema 1.3: Direct string array removal
+      updatedData.people.splice(personIndex, 1);
+    }
+
     updatedData.last_update = new Date().toISOString();
     setEditedData(updatedData);
     onSave(updatedData);
