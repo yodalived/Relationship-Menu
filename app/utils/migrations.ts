@@ -1,11 +1,22 @@
 import { v4 as uuidv4 } from 'uuid';
-import { MenuData, RichTextJSONPart, MenuData_1_2 } from '../types';
+import {
+  MenuData,
+  RichTextJSONPart,
+  MenuData_1_2,
+  MenuData_1_3,
+  MenuData_2_0,
+  Person,
+  ItemResponses,
+  PersonResponse,
+  DesireValue,
+  BoundaryValue
+} from '../types';
 
 // Current schema version - update this when adding new migrations
-export const CURRENT_SCHEMA_VERSION = "1.3";
+export const CURRENT_SCHEMA_VERSION = "2.0";
 
 // Migration functions map each version to a function that upgrades to the next version
-type MigrationInput = MenuData | MenuData_1_2;
+type MigrationInput = MenuData | MenuData_1_2 | MenuData_1_3 | MenuData_2_0;
 const migrations: { [key: string]: (data: MigrationInput) => MenuData } = {
   // Migrate from 1.0 to 1.1 (adds UUID)
   '1.0': (data: MigrationInput): MenuData => {
@@ -57,7 +68,7 @@ const migrations: { [key: string]: (data: MigrationInput) => MenuData } = {
             }
             return null;
           })();
-          
+
           return {
             ...item,
             note: runs
@@ -71,6 +82,108 @@ const migrations: { [key: string]: (data: MigrationInput) => MenuData } = {
     upgraded.uuid = String(upgraded.uuid ?? uuidv4()).toUpperCase();
     upgraded.language = upgraded.language ?? 'en';
     upgraded.last_update = upgraded.last_update ?? new Date().toISOString();
+    return upgraded;
+  },
+
+  // Migrate from 1.3 to 2.0 (add Person IDs, convert icon to per-person responses)
+  '1.3': (data: MigrationInput): MenuData => {
+    const legacy = data as MenuData_1_3;
+    console.log('Migrating from 1.3 to 2.0');
+
+    // Handle edge case: no people defined
+    if (!legacy.people || legacy.people.length === 0) {
+      legacy.people = ["Person 1"];
+      console.warn('No people defined in menu, adding default person');
+    }
+
+    // Create a map to track duplicate names
+    const nameMap = new Map<string, number>();
+    const peopleWithIds: Person[] = [];
+
+    // Convert string names to Person objects with unique IDs
+    // Handle duplicate names by appending numbers
+    legacy.people.forEach((name) => {
+      const count = nameMap.get(name) || 0;
+      nameMap.set(name, count + 1);
+
+      // If this is a duplicate name, append a number
+      const uniqueName = count > 0 ? `${name} ${count + 1}` : name;
+
+      // Create Person object with unique ID
+      peopleWithIds.push({
+        id: uuidv4(),
+        name: uniqueName
+      });
+
+      if (count > 0) {
+        console.warn(`Duplicate name "${name}" found, renamed to "${uniqueName}"`);
+      }
+    });
+
+    // Convert menu items with single icon to per-person responses
+    const upgradedMenu = legacy.menu.map((category) => ({
+      name: category.name,
+      items: category.items.map((item) => {
+        // Initialize responses for all people
+        const responses: ItemResponses = {};
+
+        // Handle "talk" icons specially - these are conversation prompts, not responses
+        if (item.icon === 'talk') {
+          // Talk items remain as discussion topics, no responses needed
+          return {
+            name: item.name,
+            note: item.note,
+            responses: responses, // Empty responses for talk items
+            icon: item.icon       // Keep for backward compatibility
+          };
+        }
+
+        // Convert existing icon to desire value for all people
+        if (item.icon) {
+          // Map icon values to DesireValue (they're the same in 1.3)
+          const desireValue = item.icon as DesireValue;
+
+          // Each person gets the same initial desire value
+          // Boundary defaults to null since we have no data for it
+          peopleWithIds.forEach((person) => {
+            responses[person.id] = {
+              desire: desireValue,
+              boundary: null,
+              last_updated: new Date().toISOString()
+            };
+          });
+        } else {
+          // No icon set - initialize with null for all people
+          peopleWithIds.forEach((person) => {
+            responses[person.id] = {
+              desire: null,
+              boundary: null,
+              last_updated: null
+            };
+          });
+        }
+
+        return {
+          name: item.name,
+          note: item.note,
+          responses: responses,
+          icon: item.icon  // Keep for backward compatibility during transition
+        };
+      })
+    }));
+
+    // Create the upgraded MenuData_2_0
+    const upgraded: MenuData_2_0 = {
+      schema_version: '2.0',
+      last_update: legacy.last_update || new Date().toISOString(),
+      people: peopleWithIds,
+      menu: upgradedMenu,
+      uuid: String(legacy.uuid ?? uuidv4()).toUpperCase(),
+      language: legacy.language || 'en',
+      template_uuid: legacy.template_uuid
+    };
+
+    console.log(`Migration complete: ${peopleWithIds.length} people, ${upgradedMenu.length} categories`);
     return upgraded;
   }
 };
@@ -144,7 +257,7 @@ export function migrateMenuData(data: MenuData): MenuData {
 
   console.log(`Migration complete. Final version: ${migratedData.schema_version}`);
   // Final normalization to enforce current schema invariants even if input claims to be current
-  if (CURRENT_SCHEMA_VERSION === '1.3') {
+  if (CURRENT_SCHEMA_VERSION === '2.0') {
     // Ensure uuid exists and is uppercase
     if (!migratedData.uuid) {
       migratedData.uuid = uuidv4().toUpperCase();
@@ -155,7 +268,18 @@ export function migrateMenuData(data: MenuData): MenuData {
     if (!migratedData.language) {
       migratedData.language = 'en';
     }
-    migratedData.schema_version = '1.3';
+    // For 2.0, ensure people have IDs
+    if (migratedData.schema_version === '2.0' && migratedData.people) {
+      // Check if people array contains strings (shouldn't happen, but be safe)
+      if (migratedData.people.length > 0 && typeof migratedData.people[0] === 'string') {
+        console.warn('Found string people array in 2.0 data, converting to Person objects');
+        migratedData.people = migratedData.people.map((name: any) => ({
+          id: uuidv4(),
+          name: String(name)
+        }));
+      }
+    }
+    migratedData.schema_version = '2.0';
   }
 
   return migratedData;
