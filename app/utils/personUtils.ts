@@ -166,7 +166,8 @@ export function removeResponsesForPerson(
       if (!item.responses) return item;
 
       // Remove this person's responses
-      const { [personId]: removed, ...remainingResponses } = item.responses;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [personId]: _removed, ...remainingResponses } = item.responses;
 
       return {
         ...item,
@@ -198,7 +199,8 @@ export function updatePersonIdInResponses(
 
       // Move responses from old ID to new ID
       const response = item.responses[oldPersonId];
-      const { [oldPersonId]: removed, ...otherResponses } = item.responses;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [oldPersonId]: _removed, ...otherResponses } = item.responses;
 
       return {
         ...item,

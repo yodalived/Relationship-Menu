@@ -7,9 +7,7 @@ import {
   MenuData_2_0,
   Person,
   ItemResponses,
-  PersonResponse,
-  DesireValue,
-  BoundaryValue
+  DesireValue
 } from '../types';
 
 // Current schema version - update this when adding new migrations
@@ -26,7 +24,7 @@ const migrations: { [key: string]: (data: MigrationInput) => MenuData } = {
       ...current,
       uuid: uuidv4(),
       schema_version: "1.1"
-    };
+    } as MenuData;
   },
   // Handle special case where schema_version is stored as number 1
   '1': (data: MigrationInput): MenuData => {
@@ -36,7 +34,7 @@ const migrations: { [key: string]: (data: MigrationInput) => MenuData } = {
       ...current,
       uuid: uuidv4(),
       schema_version: "1.1"
-    };
+    } as MenuData;
   },
   // Migrate from 1.1 to 1.2 (uppercase UUID, add language default 'en')
   '1.1': (data: MigrationInput): MenuData => {
@@ -48,7 +46,7 @@ const migrations: { [key: string]: (data: MigrationInput) => MenuData } = {
       uuid: uppercaseUuid,
       schema_version: "1.2",
       language: current.language ?? 'en',
-    };
+    } as MenuData;
   },
   // Migrate from 1.2 to 1.3 (convert string notes to rich text format)
   '1.2': (data: MigrationInput): MenuData => {
@@ -273,9 +271,9 @@ export function migrateMenuData(data: MenuData): MenuData {
       // Check if people array contains strings (shouldn't happen, but be safe)
       if (migratedData.people.length > 0 && typeof migratedData.people[0] === 'string') {
         console.warn('Found string people array in 2.0 data, converting to Person objects');
-        migratedData.people = migratedData.people.map((name: any) => ({
+        migratedData.people = (migratedData.people as string[]).map((name: string) => ({
           id: uuidv4(),
-          name: String(name)
+          name: name
         }));
       }
     }

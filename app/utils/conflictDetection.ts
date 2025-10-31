@@ -1,7 +1,6 @@
 import {
   MenuData_2_0,
   Person,
-  PersonResponse,
   ResponseConflict,
   MenuItem_2_0,
   isSchema2_0
