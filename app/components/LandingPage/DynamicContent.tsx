@@ -26,12 +26,14 @@ export default function DynamicContent() {
         <>
           {/* File Upload Section */}
           <FileSelector />
-          
+
           {/* Divider */}
           <Divider />
-          
+
           {/* Template Section */}
-          <TemplateSelector 
+          <TemplateSelector
+            title="Open a Menu"
+            subtitle="Choose a template to get started quickly"
             className="mb-16"
           />
         </>
@@ -39,13 +41,15 @@ export default function DynamicContent() {
         // When no saved menus, show TemplateSelector first (original order)
         <>
           {/* Template Section */}
-          <TemplateSelector 
+          <TemplateSelector
+            title="Open a Menu"
+            subtitle="Choose a template to get started quickly"
             className="mb-16"
           />
-          
+
           {/* Divider */}
           <Divider />
-          
+
           {/* File Upload Section */}
           <FileSelector />
         </>

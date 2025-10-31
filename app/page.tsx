@@ -7,7 +7,6 @@ import { AboutSection } from './components/LandingPage/AboutSection';
 import { GettingStartedSection } from './components/LandingPage/GettingStartedSection';
 import { PrivacySection } from './components/LandingPage/PrivacySection';
 import { AttributionSection } from './components/LandingPage/AttributionSection';
-import { AppPromoSection } from './components/LandingPage/AppPromoSection';
 
 export const metadata: Metadata = {
   other: {
@@ -28,22 +27,17 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-8 mt-8">
           {/* About this tool - Left column */}
           <AboutSection />
-          
+
           {/* Right column - stacked cards */}
           <div className="space-y-8">
             {/* Getting Started - Top right */}
             <GettingStartedSection />
-            
+
             {/* Privacy Information - Bottom right */}
             <PrivacySection />
           </div>
         </div>
-        
-        {/* Full-width iOS app promo below the grid */}
-        <div className="mt-8">
-          <AppPromoSection />
-        </div>
-        
+
         {/* Attribution */}
         <AttributionSection />
       </div>
